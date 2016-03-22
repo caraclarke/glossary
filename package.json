@@ -1,0 +1,30 @@
+{
+  "name": "codiscope-glossary",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "watchify src/main.jsx -v -t [ babelify --presets [ react ] ] -o public/js/main.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/caraclarke/codiscope-glossary.git"
+  },
+  "author": "Cara Clarke",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/caraclarke/codiscope-glossary#readme",
+  "dependencies": {
+    "babel-preset-react": "^6.3.13",
+    "babelify": "^7.2.0",
+    "email-validator": "^1.0.4",
+    "react": "^0.14.6",
+    "react-dom": "^0.14.6",
+    "react-router": "^2.0.0",
+    "reflux": "^0.4.0",
+    "watchify": "^3.7.0",
+    "whatwg-fetch": "^0.11.0"
+  }
+}
