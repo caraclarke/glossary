@@ -5,7 +5,10 @@ var GlossaryItem = React.createClass({
 
   render: function() {
     return (
-      <li>{this.props.title}</li>
+      <div>
+        <h4>{this.props.title}</h4>
+        <p>{this.props.content}</p>
+      </div>
     );
   }
 });

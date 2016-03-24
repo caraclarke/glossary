@@ -23978,13 +23978,15 @@ var Glossary = React.createClass({
   render: function () {
 
     var glossaryNodes = this.props.data.map(function (data, index) {
-      return React.createElement(GlossaryItem, { key: data.title.$t + index, title: data.title.$t });
+      return React.createElement(GlossaryItem, { key: data.title.$t + index, title: data.title.$t, content: data.content.$t });
     });
 
     return React.createElement(
-      'ul',
+      'div',
       null,
-      glossaryNodes
+      ' ',
+      glossaryNodes,
+      ' '
     );
   }
 });
@@ -24001,9 +24003,18 @@ var GlossaryItem = React.createClass({
 
   render: function () {
     return React.createElement(
-      'li',
+      'div',
       null,
-      this.props.title
+      React.createElement(
+        'h4',
+        null,
+        this.props.title
+      ),
+      React.createElement(
+        'p',
+        null,
+        this.props.content
+      )
     );
   }
 });
