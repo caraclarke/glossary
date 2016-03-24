@@ -23901,6 +23901,23 @@ process.umask = function() { return 0; };
 
 },{}],216:[function(require,module,exports){
 var React = require('react');
+
+var Alphabet = React.createClass({
+  displayName: 'Alphabet',
+
+  render: function () {
+    return React.createElement(
+      'p',
+      null,
+      'Test'
+    );
+  }
+});
+
+module.exports = Alphabet;
+
+},{"react":214}],217:[function(require,module,exports){
+var React = require('react');
 var NavBar = require('./nav/NavBar.jsx');
 var Glossary = require('./Glossary.jsx');
 var navLinks = [];
@@ -23949,7 +23966,7 @@ var BasePage = React.createClass({
 
 module.exports = BasePage;
 
-},{"./Glossary.jsx":217,"./nav/NavBar.jsx":220,"react":214}],217:[function(require,module,exports){
+},{"./Glossary.jsx":218,"./nav/NavBar.jsx":221,"react":214}],218:[function(require,module,exports){
 var React = require('react');
 var GlossaryItem = require('./GlossaryItem.jsx');
 var glossary = [];
@@ -23975,7 +23992,7 @@ var Glossary = React.createClass({
 
 module.exports = Glossary;
 
-},{"./GlossaryItem.jsx":218,"react":214}],218:[function(require,module,exports){
+},{"./GlossaryItem.jsx":219,"react":214}],219:[function(require,module,exports){
 var React = require('react');
 var Link = require('react-router').Link;
 
@@ -24023,7 +24040,7 @@ var GlossaryItem = React.createClass({
 
 module.exports = GlossaryItem;
 
-},{"react":214,"react-router":29}],219:[function(require,module,exports){
+},{"react":214,"react-router":29}],220:[function(require,module,exports){
 var React = require('react');
 var Glossary = require('./Glossary.jsx');
 
@@ -24057,7 +24074,7 @@ var HomePage = React.createClass({
 
 module.exports = HomePage;
 
-},{"./Glossary.jsx":217,"react":214}],220:[function(require,module,exports){
+},{"./Glossary.jsx":218,"react":214}],221:[function(require,module,exports){
 var React = require('react');
 var NavItem = require('./NavItem.jsx');
 var Link = require('react-router').Link;
@@ -24121,7 +24138,7 @@ var NavBar = React.createClass({
 
 module.exports = NavBar;
 
-},{"./NavItem.jsx":221,"react":214,"react-router":29}],221:[function(require,module,exports){
+},{"./NavItem.jsx":222,"react":214,"react-router":29}],222:[function(require,module,exports){
 var React = require('react');
 var Link = require('react-router').Link;
 
@@ -24152,14 +24169,14 @@ var NavItem = React.createClass({
 
 module.exports = NavItem;
 
-},{"react":214,"react-router":29}],222:[function(require,module,exports){
+},{"react":214,"react-router":29}],223:[function(require,module,exports){
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Routes = require('./routes.jsx');
 
 ReactDOM.render(Routes, document.getElementById('gloss'));
 
-},{"./routes.jsx":223,"react":214,"react-dom":1}],223:[function(require,module,exports){
+},{"./routes.jsx":224,"react":214,"react-dom":1}],224:[function(require,module,exports){
 var React = require('react');
 var ReactRouter = require('react-router');
 var Router = require('react-router').Router;
@@ -24170,6 +24187,7 @@ var browserHistory = require('react-router').browserHistory;
 
 var BasePage = require('./components/BasePage.jsx');
 var HomePage = require('./components/HomePage.jsx');
+var Alphabet = require('./components/Alphabet.jsx');
 
 var Routes = React.createElement(
   Router,
@@ -24177,10 +24195,11 @@ var Routes = React.createElement(
   React.createElement(
     Route,
     { path: '/', component: BasePage },
-    React.createElement(IndexRoute, { component: HomePage })
+    React.createElement(IndexRoute, { component: HomePage }),
+    React.createElement(Route, { path: '/:glossaryId', component: Alphabet })
   )
 );
 
 module.exports = Routes;
 
-},{"./components/BasePage.jsx":216,"./components/HomePage.jsx":219,"react":214,"react-router":29}]},{},[222]);
+},{"./components/Alphabet.jsx":216,"./components/BasePage.jsx":217,"./components/HomePage.jsx":220,"react":214,"react-router":29}]},{},[223]);

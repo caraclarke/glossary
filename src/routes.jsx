@@ -8,11 +8,13 @@ var browserHistory = require('react-router').browserHistory;
 
 var BasePage = require('./components/BasePage.jsx');
 var HomePage = require('./components/HomePage.jsx');
+var Alphabet = require('./components/Alphabet.jsx');
 
 var Routes = (
   <Router history={browserHistory}>
     <Route path="/" component={BasePage}>
       <IndexRoute component={HomePage}></IndexRoute>
+      <Route path="/:glossaryId" component={Alphabet} />
     </Route>
   </Router>
 );
