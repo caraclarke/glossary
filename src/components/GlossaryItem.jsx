@@ -1,11 +1,11 @@
 var React = require('react');
+var Link = require('react-router').Link;
+
 var GlossaryItem = React.createClass({
 
   render: function() {
     return (
-      <li>
-        <h4>Hey</h4>
-      </li>
+      <li>{this.props.title}</li>
     );
   }
 });

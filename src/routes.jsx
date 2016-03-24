@@ -18,5 +18,3 @@ var Routes = (
 );
 
 module.exports = Routes;
-
-// <Route path="/product/:productId" component={ProductPage}></Route>

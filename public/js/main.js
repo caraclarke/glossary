@@ -23902,6 +23902,7 @@ process.umask = function() { return 0; };
 },{}],216:[function(require,module,exports){
 var React = require('react');
 var NavBar = require('./nav/NavBar.jsx');
+var Glossary = require('./Glossary.jsx');
 var navLinks = [];
 
 var test = function (item, index) {
@@ -23915,13 +23916,30 @@ var test = function (item, index) {
   }
 }();
 
-console.log(navLinks);
-
 var BasePage = React.createClass({
   displayName: 'BasePage',
 
+  getInitialState: function () {
+    return { data: [] };
+  },
+
+  componentDidMount: function () {
+    $.ajax({
+      url: 'https://spreadsheets.google.com/feeds/list/1cupv1Po0tGnQ60YPCkKZ9ARqQJb-4diOfTZ07AnAz8s/default/public/values?alt=json',
+      dataType: 'json',
+      cache: false,
+      success: function (data) {
+        this.setState({ data: data.feed.entry });
+      }.bind(this),
+      error: function (xhr, status, err) {
+        console.log('url: ', this.props.url);
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
+  },
 
   render: function () {
+
     var style = {
       paddingTop: 15
     };
@@ -23939,7 +23957,7 @@ var BasePage = React.createClass({
           React.createElement(
             'div',
             { className: 'col-sm-8 col-md-8' },
-            this.props.children
+            React.createElement(Glossary, { data: this.state.data })
           )
         )
       )
@@ -23949,15 +23967,25 @@ var BasePage = React.createClass({
 
 module.exports = BasePage;
 
-},{"./nav/NavBar.jsx":219,"react":214}],217:[function(require,module,exports){
+},{"./Glossary.jsx":217,"./nav/NavBar.jsx":219,"react":214}],217:[function(require,module,exports){
 var React = require('react');
 var GlossaryItem = require('./GlossaryItem.jsx');
+var glossary = [];
 
 var Glossary = React.createClass({
   displayName: 'Glossary',
 
   render: function () {
-    return React.createElement(GlossaryItem, null);
+
+    var glossaryNodes = this.props.data.map(function (data, index) {
+      return React.createElement(GlossaryItem, { key: data.title.$t + index, title: data.title.$t });
+    });
+
+    return React.createElement(
+      'ul',
+      null,
+      glossaryNodes
+    );
   }
 });
 
@@ -23965,6 +23993,8 @@ module.exports = Glossary;
 
 },{"./GlossaryItem.jsx":218,"react":214}],218:[function(require,module,exports){
 var React = require('react');
+var Link = require('react-router').Link;
+
 var GlossaryItem = React.createClass({
   displayName: 'GlossaryItem',
 
@@ -23973,18 +24003,14 @@ var GlossaryItem = React.createClass({
     return React.createElement(
       'li',
       null,
-      React.createElement(
-        'h4',
-        null,
-        'Hey'
-      )
+      this.props.title
     );
   }
 });
 
 module.exports = GlossaryItem;
 
-},{"react":214}],219:[function(require,module,exports){
+},{"react":214,"react-router":29}],219:[function(require,module,exports){
 var React = require('react');
 var NavItem = require('./NavItem.jsx');
 var Link = require('react-router').Link;
@@ -24109,7 +24135,5 @@ var Routes = React.createElement(
 );
 
 module.exports = Routes;
-
-// <Route path="/product/:productId" component={ProductPage}></Route>
 
 },{"./components/BasePage.jsx":216,"./components/Glossary.jsx":217,"react":214,"react-router":29}]},{},[221]);
