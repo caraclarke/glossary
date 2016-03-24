@@ -23911,7 +23911,7 @@ var Alphabet = React.createClass({
   render: function () {
     var alphabetNodes = this.props.data.map(function (data, index) {
       if (data.title.$t.match(regex) == location.pathname[1]) {
-        return React.createElement(GlossaryItem, { key: data.title.$t + index, title: data.title.$t, content: data.content.$t });
+        return React.createElement(GlossaryItem, { key: data.title.$t + index, id: data.title.$t, title: data.title.$t, content: data.content.$t });
       } else {}
     });
 
@@ -24022,7 +24022,7 @@ var Glossary = React.createClass({
   render: function () {
 
     var glossaryNodes = this.props.data.map(function (data, index) {
-      return React.createElement(GlossaryItem, { key: data.title.$t + index, title: data.title.$t, content: data.content.$t });
+      return React.createElement(GlossaryItem, { key: data.title.$t + index, id: data.title.$t, title: data.title.$t, content: data.content.$t });
     });
 
     return React.createElement(

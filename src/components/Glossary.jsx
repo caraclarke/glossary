@@ -6,7 +6,7 @@ var Glossary = React.createClass({
   render: function() {
     
     var glossaryNodes = this.props.data.map(function(data, index) {
-      return <GlossaryItem key={data.title.$t + index} title={data.title.$t} content={data.content.$t} />
+      return <GlossaryItem key={data.title.$t + index} id={data.title.$t} title={data.title.$t} content={data.content.$t} />
     });
     
     return (
