@@ -23919,24 +23919,6 @@ var test = function (item, index) {
 var BasePage = React.createClass({
   displayName: 'BasePage',
 
-  getInitialState: function () {
-    return { data: [] };
-  },
-
-  componentDidMount: function () {
-    $.ajax({
-      url: 'https://spreadsheets.google.com/feeds/list/1cupv1Po0tGnQ60YPCkKZ9ARqQJb-4diOfTZ07AnAz8s/default/public/values?alt=json',
-      dataType: 'json',
-      cache: false,
-      success: function (data) {
-        this.setState({ data: data.feed.entry });
-      }.bind(this),
-      error: function (xhr, status, err) {
-        console.log('url: ', this.props.url);
-        console.error(this.props.url, status, err.toString());
-      }.bind(this)
-    });
-  },
 
   render: function () {
 
@@ -23957,7 +23939,7 @@ var BasePage = React.createClass({
           React.createElement(
             'div',
             { className: 'col-sm-10 col-md-10' },
-            React.createElement(Glossary, { data: this.state.data })
+            this.props.children
           )
         )
       )
@@ -23967,7 +23949,7 @@ var BasePage = React.createClass({
 
 module.exports = BasePage;
 
-},{"./Glossary.jsx":217,"./nav/NavBar.jsx":219,"react":214}],217:[function(require,module,exports){
+},{"./Glossary.jsx":217,"./nav/NavBar.jsx":220,"react":214}],217:[function(require,module,exports){
 var React = require('react');
 var GlossaryItem = require('./GlossaryItem.jsx');
 var glossary = [];
@@ -24043,6 +24025,40 @@ module.exports = GlossaryItem;
 
 },{"react":214,"react-router":29}],219:[function(require,module,exports){
 var React = require('react');
+var Glossary = require('./Glossary.jsx');
+
+var HomePage = React.createClass({
+  displayName: 'HomePage',
+
+  getInitialState: function () {
+    return { data: [] };
+  },
+
+  componentDidMount: function () {
+    $.ajax({
+      url: 'https://spreadsheets.google.com/feeds/list/1cupv1Po0tGnQ60YPCkKZ9ARqQJb-4diOfTZ07AnAz8s/default/public/values?alt=json',
+      dataType: 'json',
+      cache: false,
+      success: function (data) {
+        this.setState({ data: data.feed.entry });
+      }.bind(this),
+      error: function (xhr, status, err) {
+        console.log('url: ', this.props.url);
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
+  },
+
+  render: function () {
+
+    return React.createElement(Glossary, { data: this.state.data });
+  }
+});
+
+module.exports = HomePage;
+
+},{"./Glossary.jsx":217,"react":214}],220:[function(require,module,exports){
+var React = require('react');
 var NavItem = require('./NavItem.jsx');
 var Link = require('react-router').Link;
 
@@ -24105,7 +24121,7 @@ var NavBar = React.createClass({
 
 module.exports = NavBar;
 
-},{"./NavItem.jsx":220,"react":214,"react-router":29}],220:[function(require,module,exports){
+},{"./NavItem.jsx":221,"react":214,"react-router":29}],221:[function(require,module,exports){
 var React = require('react');
 var Link = require('react-router').Link;
 
@@ -24136,14 +24152,14 @@ var NavItem = React.createClass({
 
 module.exports = NavItem;
 
-},{"react":214,"react-router":29}],221:[function(require,module,exports){
+},{"react":214,"react-router":29}],222:[function(require,module,exports){
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Routes = require('./routes.jsx');
 
 ReactDOM.render(Routes, document.getElementById('gloss'));
 
-},{"./routes.jsx":222,"react":214,"react-dom":1}],222:[function(require,module,exports){
+},{"./routes.jsx":223,"react":214,"react-dom":1}],223:[function(require,module,exports){
 var React = require('react');
 var ReactRouter = require('react-router');
 var Router = require('react-router').Router;
@@ -24153,7 +24169,7 @@ var IndexRoute = ReactRouter.IndexRoute;
 var browserHistory = require('react-router').browserHistory;
 
 var BasePage = require('./components/BasePage.jsx');
-var Glossary = require('./components/Glossary.jsx');
+var HomePage = require('./components/HomePage.jsx');
 
 var Routes = React.createElement(
   Router,
@@ -24161,10 +24177,10 @@ var Routes = React.createElement(
   React.createElement(
     Route,
     { path: '/', component: BasePage },
-    React.createElement(IndexRoute, { component: Glossary })
+    React.createElement(IndexRoute, { component: HomePage })
   )
 );
 
 module.exports = Routes;
 
-},{"./components/BasePage.jsx":216,"./components/Glossary.jsx":217,"react":214,"react-router":29}]},{},[221]);
+},{"./components/BasePage.jsx":216,"./components/HomePage.jsx":219,"react":214,"react-router":29}]},{},[222]);

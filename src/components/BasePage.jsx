@@ -15,25 +15,7 @@ var test = (function(item, index) {
 }());
 
 var BasePage = React.createClass({
-  getInitialState: function() {
-      return  { data: [] }
-  },
-  
-  componentDidMount: function() {
-    $.ajax({
-      url: 'https://spreadsheets.google.com/feeds/list/1cupv1Po0tGnQ60YPCkKZ9ARqQJb-4diOfTZ07AnAz8s/default/public/values?alt=json',
-      dataType: 'json',
-      cache: false,
-      success: function(data) {
-        this.setState({data: data.feed.entry});
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.log('url: ', this.props.url);
-        console.error(this.props.url, status, err.toString());
-      }.bind(this)
-    });
-  },
-  
+
   render: function() {
     
     var style = {
@@ -46,7 +28,7 @@ var BasePage = React.createClass({
         <div className="container" style={style}>
           <div className="row">
             <div className="col-sm-10 col-md-10">
-              <Glossary data={this.state.data} />
+              {this.props.children}
             </div>
           </div>
         </div>

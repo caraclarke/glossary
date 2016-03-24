@@ -7,12 +7,12 @@ var IndexRoute = ReactRouter.IndexRoute;
 var browserHistory = require('react-router').browserHistory;
 
 var BasePage = require('./components/BasePage.jsx');
-var Glossary = require('./components/Glossary.jsx');
+var HomePage = require('./components/HomePage.jsx');
 
 var Routes = (
   <Router history={browserHistory}>
     <Route path="/" component={BasePage}>
-      <IndexRoute component={Glossary}></IndexRoute>
+      <IndexRoute component={HomePage}></IndexRoute>
     </Route>
   </Router>
 );
