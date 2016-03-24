@@ -23956,7 +23956,7 @@ var BasePage = React.createClass({
           { className: 'row' },
           React.createElement(
             'div',
-            { className: 'col-sm-8 col-md-8' },
+            { className: 'col-sm-10 col-md-10' },
             React.createElement(Glossary, { data: this.state.data })
           )
         )

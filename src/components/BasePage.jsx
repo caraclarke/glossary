@@ -45,7 +45,7 @@ var BasePage = React.createClass({
         <NavBar bgColor="#fff" titleColor="#3097d1" linkColor="" navData={navLinks} />
         <div className="container" style={style}>
           <div className="row">
-            <div className="col-sm-8 col-md-8">
+            <div className="col-sm-10 col-md-10">
               <Glossary data={this.state.data} />
             </div>
           </div>
