@@ -24000,21 +24000,41 @@ var Link = require('react-router').Link;
 var GlossaryItem = React.createClass({
   displayName: 'GlossaryItem',
 
+  getInitialState: function () {
+    return { showDef: false };
+  },
+
+  onClick: function () {
+    if (this.state.showDef == false) {
+      this.setState({ showDef: true });
+    } else {
+      this.setState({ showDef: false });
+    }
+  },
 
   render: function () {
+
+    var titleStyle = {
+      cursor: 'pointer'
+    };
+
+    var defStyle = {
+      paddingLeft: 25
+    };
+
     return React.createElement(
       'div',
       null,
       React.createElement(
         'h4',
-        null,
+        { onClick: this.onClick, style: titleStyle },
         this.props.title
       ),
-      React.createElement(
+      this.state.showDef ? React.createElement(
         'p',
-        null,
+        { style: defStyle },
         this.props.content
-      )
+      ) : null
     );
   }
 });
