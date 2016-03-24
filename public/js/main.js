@@ -23901,22 +23901,67 @@ process.umask = function() { return 0; };
 
 },{}],216:[function(require,module,exports){
 var React = require('react');
+var GlossaryItem = require('./GlossaryItem.jsx');
+var regex = new RegExp('^[a-zA-Z]');
 
 var Alphabet = React.createClass({
   displayName: 'Alphabet',
 
+
   render: function () {
+    var alphabetNodes = this.props.data.map(function (data, index) {
+      if (data.title.$t.match(regex) == location.pathname[1]) {
+        return React.createElement(GlossaryItem, { key: data.title.$t + index, title: data.title.$t, content: data.content.$t });
+      } else {}
+    });
+
     return React.createElement(
-      'p',
+      'div',
       null,
-      'Test'
+      ' ',
+      alphabetNodes,
+      ' '
     );
   }
 });
 
 module.exports = Alphabet;
 
-},{"react":214}],217:[function(require,module,exports){
+},{"./GlossaryItem.jsx":220,"react":214}],217:[function(require,module,exports){
+var React = require('react');
+var Alphabet = require('./Alphabet.jsx');
+
+var AlphabetBase = React.createClass({
+  displayName: 'AlphabetBase',
+
+  getInitialState: function () {
+    return { data: [] };
+  },
+
+  componentDidMount: function () {
+    $.ajax({
+      url: 'https://spreadsheets.google.com/feeds/list/1cupv1Po0tGnQ60YPCkKZ9ARqQJb-4diOfTZ07AnAz8s/default/public/values?alt=json',
+      dataType: 'json',
+      cache: false,
+      success: function (data) {
+        this.setState({ data: data.feed.entry });
+      }.bind(this),
+      error: function (xhr, status, err) {
+        console.log('url: ', this.props.url);
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
+  },
+
+  render: function () {
+
+    return React.createElement(Alphabet, { data: this.state.data });
+  }
+});
+
+module.exports = AlphabetBase;
+
+},{"./Alphabet.jsx":216,"react":214}],218:[function(require,module,exports){
 var React = require('react');
 var NavBar = require('./nav/NavBar.jsx');
 var Glossary = require('./Glossary.jsx');
@@ -23966,7 +24011,7 @@ var BasePage = React.createClass({
 
 module.exports = BasePage;
 
-},{"./Glossary.jsx":218,"./nav/NavBar.jsx":221,"react":214}],218:[function(require,module,exports){
+},{"./Glossary.jsx":219,"./nav/NavBar.jsx":222,"react":214}],219:[function(require,module,exports){
 var React = require('react');
 var GlossaryItem = require('./GlossaryItem.jsx');
 var glossary = [];
@@ -23992,7 +24037,7 @@ var Glossary = React.createClass({
 
 module.exports = Glossary;
 
-},{"./GlossaryItem.jsx":219,"react":214}],219:[function(require,module,exports){
+},{"./GlossaryItem.jsx":220,"react":214}],220:[function(require,module,exports){
 var React = require('react');
 var Link = require('react-router').Link;
 
@@ -24040,7 +24085,7 @@ var GlossaryItem = React.createClass({
 
 module.exports = GlossaryItem;
 
-},{"react":214,"react-router":29}],220:[function(require,module,exports){
+},{"react":214,"react-router":29}],221:[function(require,module,exports){
 var React = require('react');
 var Glossary = require('./Glossary.jsx');
 
@@ -24074,7 +24119,7 @@ var HomePage = React.createClass({
 
 module.exports = HomePage;
 
-},{"./Glossary.jsx":218,"react":214}],221:[function(require,module,exports){
+},{"./Glossary.jsx":219,"react":214}],222:[function(require,module,exports){
 var React = require('react');
 var NavItem = require('./NavItem.jsx');
 var Link = require('react-router').Link;
@@ -24138,7 +24183,7 @@ var NavBar = React.createClass({
 
 module.exports = NavBar;
 
-},{"./NavItem.jsx":222,"react":214,"react-router":29}],222:[function(require,module,exports){
+},{"./NavItem.jsx":223,"react":214,"react-router":29}],223:[function(require,module,exports){
 var React = require('react');
 var Link = require('react-router').Link;
 
@@ -24169,14 +24214,14 @@ var NavItem = React.createClass({
 
 module.exports = NavItem;
 
-},{"react":214,"react-router":29}],223:[function(require,module,exports){
+},{"react":214,"react-router":29}],224:[function(require,module,exports){
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Routes = require('./routes.jsx');
 
 ReactDOM.render(Routes, document.getElementById('gloss'));
 
-},{"./routes.jsx":224,"react":214,"react-dom":1}],224:[function(require,module,exports){
+},{"./routes.jsx":225,"react":214,"react-dom":1}],225:[function(require,module,exports){
 var React = require('react');
 var ReactRouter = require('react-router');
 var Router = require('react-router').Router;
@@ -24187,7 +24232,7 @@ var browserHistory = require('react-router').browserHistory;
 
 var BasePage = require('./components/BasePage.jsx');
 var HomePage = require('./components/HomePage.jsx');
-var Alphabet = require('./components/Alphabet.jsx');
+var AlphabetBase = require('./components/AlphabetBase.jsx');
 
 var Routes = React.createElement(
   Router,
@@ -24196,10 +24241,10 @@ var Routes = React.createElement(
     Route,
     { path: '/', component: BasePage },
     React.createElement(IndexRoute, { component: HomePage }),
-    React.createElement(Route, { path: '/:glossaryId', component: Alphabet })
+    React.createElement(Route, { path: '/:glossaryId', component: AlphabetBase })
   )
 );
 
 module.exports = Routes;
 
-},{"./components/Alphabet.jsx":216,"./components/BasePage.jsx":217,"./components/HomePage.jsx":220,"react":214,"react-router":29}]},{},[223]);
+},{"./components/AlphabetBase.jsx":217,"./components/BasePage.jsx":218,"./components/HomePage.jsx":221,"react":214,"react-router":29}]},{},[224]);
