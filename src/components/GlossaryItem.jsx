@@ -13,7 +13,7 @@ var GlossaryItem = React.createClass({
       this.setState({ showDef: false })
     }
   },
-    
+
   render: function()  {
     
     var titleStyle = {
