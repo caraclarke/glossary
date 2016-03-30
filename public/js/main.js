@@ -24109,9 +24109,10 @@ var Glossary = React.createClass({
         // get rid of [[Glossary: etc text with regex, replace with see also term
         var replacement = data.content.$t.replace(/(\[\[Glossary:\s)/g, "").replace(/[a-zA-z]+\]([a-zA-Z]+)(\s[a-zA-Z]+)*\]/g, seeAlsoReplace);
         // returning glossary item with edited content
+        // console.log(index, data.title.$t, replacement)
         return React.createElement(GlossaryItem, { key: index, id: data.title.$t, title: data.title.$t, content: replacement, seealso: React.createElement(
             'a',
-            { href: data.gsx$seealso.$t },
+            { id: data.gsx$seealso.$t },
             data.gsx$seealso.$t
           ) });
       } else {
@@ -24247,8 +24248,6 @@ var NavItem = React.createClass({
   handleChange: function (e) {
     alphId = this.props.id;
     this.props.onValueChange(alphId);
-    // alphId = this.props.id;
-    // console.log(alphId);
   },
 
   render: function () {
@@ -24257,7 +24256,7 @@ var NavItem = React.createClass({
       { onClick: this.handleChange, className: this.state.hover ? "active" : "", onMouseOver: this.mouseOver, onMouseOut: this.mouseOut },
       React.createElement(
         'a',
-        { style: this.props.aStyle, to: '', id: this.props.id },
+        { style: this.props.aStyle, id: this.props.id },
         this.props.title
       )
     );

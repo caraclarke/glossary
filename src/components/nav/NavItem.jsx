@@ -14,14 +14,12 @@ var NavItem = React.createClass({
   handleChange: function(e) {
     alphId = this.props.id;
     this.props.onValueChange(alphId)
-    // alphId = this.props.id;
-    // console.log(alphId);
   },
   
   render: function() {
     return (
       <li onClick={this.handleChange} className={this.state.hover ? "active" : ""} onMouseOver={this.mouseOver} onMouseOut={this.mouseOut}>
-        <a style={this.props.aStyle} to='' id={this.props.id}>{this.props.title}</a>
+        <a style={this.props.aStyle} id={this.props.id}>{this.props.title}</a>
       </li>
     );
   }
