@@ -27,7 +27,12 @@ var GlossaryItem = React.createClass({
     return (
       <div>
         <h4 onClick={this.onClick} style={titleStyle}>{this.props.title}</h4>
-        { this.state.showDef ? <p style={defStyle}>{this.props.content}</p> : null }
+        { this.state.showDef ? 
+          <div>
+            <p style={defStyle}>{this.props.content}</p>
+            <a href={this.props.seealso}>{this.props.seealso}</a>
+          </div>
+          : null }
       </div>
     );
   }

@@ -24014,6 +24014,7 @@ module.exports = BasePage;
 },{"./Glossary.jsx":219,"./nav/NavBar.jsx":222,"react":214}],219:[function(require,module,exports){
 var React = require('react');
 var GlossaryItem = require('./GlossaryItem.jsx');
+var Link = require('react-router').Link;
 var glossary = [];
 
 var Glossary = React.createClass({
@@ -24023,8 +24024,12 @@ var Glossary = React.createClass({
 
     var glossaryNodes = this.props.data.map(function (data, index) {
       var dataContent = data.content.$t;
-      var replacement = dataContent.replace(/(\[\[Glossary:\s)/g, "").replace(/\]([a-zA-Z]+)(\s[a-zA-Z]+)*\]/g, '');
-      return React.createElement(GlossaryItem, { key: data.title.$t + index, id: data.title.$t, title: data.title.$t, content: replacement });
+      if (/(\[\[Glossary:\s)/g.test(dataContent) == true) {
+        var replacement = dataContent.replace(/(\[\[Glossary:\s)/g, "").replace(/\]([a-zA-Z]+)(\s[a-zA-Z]+)*\]/g, "");
+        return React.createElement(GlossaryItem, { key: index, id: data.title.$t, title: data.title.$t, content: replacement, seealso: data.gsx$seealso.$t });
+      } else {
+        return React.createElement(GlossaryItem, { key: index, id: data.title.$t, title: data.title.$t, content: data.content.$t, seealso: data.gsx$seealso.$t });
+      }
     });
 
     return React.createElement(
@@ -24039,7 +24044,7 @@ var Glossary = React.createClass({
 
 module.exports = Glossary;
 
-},{"./GlossaryItem.jsx":220,"react":214}],220:[function(require,module,exports){
+},{"./GlossaryItem.jsx":220,"react":214,"react-router":29}],220:[function(require,module,exports){
 var React = require('react');
 var Link = require('react-router').Link;
 
@@ -24077,9 +24082,18 @@ var GlossaryItem = React.createClass({
         this.props.title
       ),
       this.state.showDef ? React.createElement(
-        'p',
-        { style: defStyle },
-        this.props.content
+        'div',
+        null,
+        React.createElement(
+          'p',
+          { style: defStyle },
+          this.props.content
+        ),
+        React.createElement(
+          'a',
+          { href: this.props.seealso },
+          this.props.seealso
+        )
       ) : null
     );
   }
