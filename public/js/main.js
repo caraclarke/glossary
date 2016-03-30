@@ -23902,6 +23902,7 @@ process.umask = function() { return 0; };
 },{}],216:[function(require,module,exports){
 var React = require('react');
 var GlossaryItem = require('./GlossaryItem.jsx');
+var NavItem = require('./nav/NavItem.jsx');
 var regex = new RegExp('^[a-zA-Z]');
 
 var Alphabet = React.createClass({
@@ -23927,7 +23928,7 @@ var Alphabet = React.createClass({
 
 module.exports = Alphabet;
 
-},{"./GlossaryItem.jsx":220,"react":214}],217:[function(require,module,exports){
+},{"./GlossaryItem.jsx":220,"./nav/NavItem.jsx":223,"react":214}],217:[function(require,module,exports){
 var React = require('react');
 var Alphabet = require('./Alphabet.jsx');
 
@@ -23965,6 +23966,7 @@ module.exports = AlphabetBase;
 var React = require('react');
 var NavBar = require('./nav/NavBar.jsx');
 var Glossary = require('./Glossary.jsx');
+var Alphabet = require('./Alphabet.jsx');
 var navLinks = [];
 
 var test = function (item, index) {
@@ -23973,7 +23975,8 @@ var test = function (item, index) {
   for (var i = 0; i < alph.length; i++) {
     navLinks.push({
       href: alph[i],
-      title: alph[i]
+      title: alph[i],
+      id: alph[i]
     });
   }
 }();
@@ -23981,6 +23984,27 @@ var test = function (item, index) {
 var BasePage = React.createClass({
   displayName: 'BasePage',
 
+
+  getInitialState: function () {
+    return { data: [] };
+  },
+
+  componentDidMount: function () {
+    $.ajax({
+      url: 'https://spreadsheets.google.com/feeds/list/1cupv1Po0tGnQ60YPCkKZ9ARqQJb-4diOfTZ07AnAz8s/default/public/values?alt=json',
+      dataType: 'json',
+      cache: false,
+      success: function (data) {
+        this.setState({ data: data.feed.entry });
+      }.bind(this),
+      error: function (xhr, status, err) {
+        console.log('url: ', this.props.url);
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
+  },
+
+  // <Alphabet data={this.state.data} />
 
   render: function () {
 
@@ -24001,7 +24025,7 @@ var BasePage = React.createClass({
           React.createElement(
             'div',
             { className: 'col-sm-10 col-md-10' },
-            this.props.children
+            React.createElement(Glossary, { data: this.state.data })
           )
         )
       )
@@ -24011,11 +24035,12 @@ var BasePage = React.createClass({
 
 module.exports = BasePage;
 
-},{"./Glossary.jsx":219,"./nav/NavBar.jsx":222,"react":214}],219:[function(require,module,exports){
+},{"./Alphabet.jsx":216,"./Glossary.jsx":219,"./nav/NavBar.jsx":222,"react":214}],219:[function(require,module,exports){
 var React = require('react');
 var GlossaryItem = require('./GlossaryItem.jsx');
 var Link = require('react-router').Link;
 var glossary = [];
+var regex = new RegExp('^[a-zA-Z]');
 
 var Glossary = React.createClass({
   displayName: 'Glossary',
@@ -24156,6 +24181,7 @@ var Link = require('react-router').Link;
 var NavBar = React.createClass({
   displayName: 'NavBar',
 
+
   render: function () {
 
     var navStyle = {
@@ -24175,7 +24201,7 @@ var NavBar = React.createClass({
     if (this.props.linkColor) linkStyle.color = this.props.linkColor;
 
     var createLinkItem = function (item, index) {
-      return React.createElement(NavItem, { aStyle: linkStyle, key: item.title + index, href: item.href, title: item.title });
+      return React.createElement(NavItem, { aStyle: linkStyle, key: item.title + index, id: item.id, href: item.href, title: item.title });
     };
 
     return React.createElement(
@@ -24215,6 +24241,20 @@ module.exports = NavBar;
 },{"./NavItem.jsx":223,"react":214,"react-router":29}],223:[function(require,module,exports){
 var React = require('react');
 var Link = require('react-router').Link;
+var Alphabet = require('../Alphabet.jsx');
+var navLinks = [];
+
+var test = function (item, index) {
+  var alph = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('');
+
+  for (var i = 0; i < alph.length; i++) {
+    navLinks.push({
+      href: alph[i],
+      title: alph[i],
+      id: alph[i]
+    });
+  }
+}();
 
 var NavItem = React.createClass({
   displayName: 'NavItem',
@@ -24228,13 +24268,17 @@ var NavItem = React.createClass({
   mouseOut: function (e) {
     this.setState({ hover: false });
   },
+  onClick: function () {
+    console.log(navLinks);
+  },
+
   render: function () {
     return React.createElement(
       'li',
-      { className: this.state.hover ? "active" : "", onMouseOver: this.mouseOver, onMouseOut: this.mouseOut },
+      { onClick: this.onClick, className: this.state.hover ? "active" : "", onMouseOver: this.mouseOver, onMouseOut: this.mouseOut },
       React.createElement(
         Link,
-        { style: this.props.aStyle, to: this.props.href },
+        { style: this.props.aStyle, to: '', id: this.props.id },
         this.props.title
       )
     );
@@ -24243,14 +24287,15 @@ var NavItem = React.createClass({
 
 module.exports = NavItem;
 
-},{"react":214,"react-router":29}],224:[function(require,module,exports){
+},{"../Alphabet.jsx":216,"react":214,"react-router":29}],224:[function(require,module,exports){
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Routes = require('./routes.jsx');
+var BasePage = require('./components/BasePage.jsx');
 
-ReactDOM.render(Routes, document.getElementById('gloss'));
+ReactDOM.render(React.createElement(BasePage, null), document.getElementById('gloss'));
 
-},{"./routes.jsx":225,"react":214,"react-dom":1}],225:[function(require,module,exports){
+},{"./components/BasePage.jsx":218,"./routes.jsx":225,"react":214,"react-dom":1}],225:[function(require,module,exports){
 var React = require('react');
 var ReactRouter = require('react-router');
 var Router = require('react-router').Router;
@@ -24266,12 +24311,7 @@ var AlphabetBase = require('./components/AlphabetBase.jsx');
 var Routes = React.createElement(
   Router,
   { history: browserHistory },
-  React.createElement(
-    Route,
-    { path: '/', component: BasePage },
-    React.createElement(IndexRoute, { component: HomePage }),
-    React.createElement(Route, { path: '/:glossaryId', component: AlphabetBase })
-  )
+  React.createElement(Route, { path: '/', component: BasePage })
 );
 
 module.exports = Routes;

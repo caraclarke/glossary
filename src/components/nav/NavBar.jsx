@@ -3,6 +3,7 @@ var NavItem = require('./NavItem.jsx');
 var Link = require('react-router').Link;
 
 var NavBar = React.createClass({
+  
   render: function() {
     
     var navStyle = {
@@ -25,7 +26,7 @@ var NavBar = React.createClass({
       linkStyle.color = this.props.linkColor;
     
     var createLinkItem = function(item, index) {
-      return <NavItem aStyle={linkStyle} key={item.title + index} href={item.href} title={item.title}/>
+      return <NavItem aStyle={linkStyle} key={item.title + index} id={item.id} href={item.href} title={item.title}/>
     };
     
     return (

@@ -1,5 +1,6 @@
 var React = require('react');
 var GlossaryItem = require('./GlossaryItem.jsx');
+var NavItem = require('./nav/NavItem.jsx');
 var regex= new RegExp('^[a-zA-Z]');
 
 var Alphabet = React.createClass({

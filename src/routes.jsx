@@ -12,10 +12,7 @@ var AlphabetBase = require('./components/AlphabetBase.jsx');
 
 var Routes = (
   <Router history={browserHistory}>
-    <Route path="/" component={BasePage}>
-      <IndexRoute component={HomePage}></IndexRoute>
-      <Route path="/:glossaryId" component={AlphabetBase}></Route>
-    </Route>
+    <Route path="/" component={BasePage}></Route>
   </Router>
 );
 

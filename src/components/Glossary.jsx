@@ -2,6 +2,7 @@ var React = require('react');
 var GlossaryItem = require('./GlossaryItem.jsx');
 var Link = require('react-router').Link;
 var glossary = [];
+var regex= new RegExp('^[a-zA-Z]');
 
 var Glossary = React.createClass({
   render: function() {
