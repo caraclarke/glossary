@@ -30,7 +30,7 @@ var GlossaryItem = React.createClass({
         { this.state.showDef ? 
           <div>
             <p style={defStyle}>{this.props.content}</p>
-            <a href={this.props.seealso}>{this.props.seealso}</a>
+            <p>{this.props.seealso}</p>
           </div>
           : null }
       </div>
@@ -39,3 +39,4 @@ var GlossaryItem = React.createClass({
 });
 
 module.exports = GlossaryItem;
+// <a href={this.props.seealso}>{this.props.seealso}</a>

@@ -24024,9 +24024,14 @@ var Glossary = React.createClass({
 
     var glossaryNodes = this.props.data.map(function (data, index) {
       var dataContent = data.content.$t;
+      var seeAlsoReplace = data.gsx$seealso.$t;
       if (/(\[\[Glossary:\s)/g.test(dataContent) == true) {
-        var replacement = dataContent.replace(/(\[\[Glossary:\s)/g, "").replace(/\]([a-zA-Z]+)(\s[a-zA-Z]+)*\]/g, "");
-        return React.createElement(GlossaryItem, { key: index, id: data.title.$t, title: data.title.$t, content: replacement, seealso: data.gsx$seealso.$t });
+        var replacement = dataContent.replace(/(\[\[Glossary:\s)/g, "").replace(/[a-zA-z]+\]([a-zA-Z]+)(\s[a-zA-Z]+)*\]/g, seeAlsoReplace);
+        return React.createElement(GlossaryItem, { key: index, id: data.title.$t, title: data.title.$t, content: replacement, seealso: React.createElement(
+            'a',
+            { href: data.gsx$seealso.$t },
+            data.gsx$seealso.$t
+          ) });
       } else {
         return React.createElement(GlossaryItem, { key: index, id: data.title.$t, title: data.title.$t, content: data.content.$t, seealso: data.gsx$seealso.$t });
       }
@@ -24090,8 +24095,8 @@ var GlossaryItem = React.createClass({
           this.props.content
         ),
         React.createElement(
-          'a',
-          { href: this.props.seealso },
+          'p',
+          null,
           this.props.seealso
         )
       ) : null
@@ -24100,6 +24105,7 @@ var GlossaryItem = React.createClass({
 });
 
 module.exports = GlossaryItem;
+// <a href={this.props.seealso}>{this.props.seealso}</a>
 
 },{"react":214,"react-router":29}],221:[function(require,module,exports){
 var React = require('react');
