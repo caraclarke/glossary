@@ -43,11 +43,10 @@ var BasePage = React.createClass({
     
   },
   
-  handleChildClick: function() {
-    console.log(this.state.alphId);
+  handleChildClick: function(event) {
+    this.setState({ alphId: alphId });
+    console.log(alphId);
   },
-  
-  test: function(item, index) {},
   
   // <Alphabet data={this.state.data} />
   // <Glossary data={this.state.data} />
@@ -77,8 +76,8 @@ var BasePage = React.createClass({
     if (this.props.linkColor)
       linkStyle.color = this.props.linkColor;
 
-    var createLinkItem = this.state.navLinks.map(function(item, index) {
-      return <NavItem onClick={this.handleChildClick.bind(null,item)} aStyle={linkStyle} key={item.title + index} id={item.id} title={item.title} />
+    var createLinkItem = this.state.navLinks.map(function(item, alphId, index) {
+      return <NavItem onValueChange={this.handleChildClick} aStyle={linkStyle} key={item.title + index} id={item.id} title={item.title} />
     }.bind(this));
     
     return(

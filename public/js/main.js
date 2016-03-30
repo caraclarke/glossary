@@ -24009,11 +24009,10 @@ var BasePage = React.createClass({
     this.setState({ navLinks: tempArray });
   },
 
-  handleChildClick: function () {
-    console.log(this.state.alphId);
+  handleChildClick: function (event) {
+    this.setState({ alphId: alphId });
+    console.log(alphId);
   },
-
-  test: function (item, index) {},
 
   // <Alphabet data={this.state.data} />
   // <Glossary data={this.state.data} />
@@ -24040,8 +24039,8 @@ var BasePage = React.createClass({
 
     if (this.props.linkColor) linkStyle.color = this.props.linkColor;
 
-    var createLinkItem = this.state.navLinks.map(function (item, index) {
-      return React.createElement(NavItem, { onClick: this.handleChildClick.bind(null, item), aStyle: linkStyle, key: item.title + index, id: item.id, title: item.title });
+    var createLinkItem = this.state.navLinks.map(function (item, alphId, index) {
+      return React.createElement(NavItem, { onValueChange: this.handleChildClick, aStyle: linkStyle, key: item.title + index, id: item.id, title: item.title });
     }.bind(this));
 
     return React.createElement(
@@ -24308,7 +24307,7 @@ var NavItem = React.createClass({
   displayName: 'NavItem',
 
   getInitialState: function () {
-    return { hover: false, alphId: '' };
+    return { hover: false };
   },
   mouseOver: function (e) {
     this.setState({ hover: true });
@@ -24316,15 +24315,17 @@ var NavItem = React.createClass({
   mouseOut: function (e) {
     this.setState({ hover: false });
   },
-  onClick: function () {
+  handleChange: function (e) {
+    alphId = this.props.id;
+    this.props.onValueChange(alphId);
     // alphId = this.props.id;
-    this.setState({ alphId: this.props.id });
+    // console.log(alphId);
   },
 
   render: function () {
     return React.createElement(
       'li',
-      { onClick: this.onClick, className: this.state.hover ? "active" : "", onMouseOver: this.mouseOver, onMouseOut: this.mouseOut },
+      { onClick: this.handleChange, className: this.state.hover ? "active" : "", onMouseOver: this.mouseOver, onMouseOut: this.mouseOut },
       React.createElement(
         'a',
         { style: this.props.aStyle, to: '', id: this.props.id },

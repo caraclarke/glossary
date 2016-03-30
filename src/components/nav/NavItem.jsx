@@ -4,7 +4,7 @@ var Alphabet = require('../Alphabet.jsx');
 
 var NavItem = React.createClass({
   getInitialState: function() {
-    return { hover: false, alphId: '' };
+    return { hover: false };
   },
   mouseOver: function(e) {
     this.setState({hover: true});
@@ -12,14 +12,16 @@ var NavItem = React.createClass({
   mouseOut: function(e) {
     this.setState({hover: false});
   },
-  onClick: function() {
+  handleChange: function(e) {
+    alphId = this.props.id;
+    this.props.onValueChange(alphId)
     // alphId = this.props.id;
-    this.setState({ alphId: this.props.id });
+    // console.log(alphId);
   },
   
   render: function() {
     return (
-      <li onClick={this.onClick} className={this.state.hover ? "active" : ""} onMouseOver={this.mouseOver} onMouseOut={this.mouseOut}>
+      <li onClick={this.handleChange} className={this.state.hover ? "active" : ""} onMouseOver={this.mouseOver} onMouseOut={this.mouseOut}>
         <a style={this.props.aStyle} to='' id={this.props.id}>{this.props.title}</a>
       </li>
     );
