@@ -23928,7 +23928,7 @@ var Alphabet = React.createClass({
 
 module.exports = Alphabet;
 
-},{"./GlossaryItem.jsx":220,"./nav/NavItem.jsx":223,"react":214}],217:[function(require,module,exports){
+},{"./GlossaryItem.jsx":220,"./nav/NavItem.jsx":222,"react":214}],217:[function(require,module,exports){
 var React = require('react');
 var Alphabet = require('./Alphabet.jsx');
 
@@ -23964,11 +23964,9 @@ module.exports = AlphabetBase;
 
 },{"./Alphabet.jsx":216,"react":214}],218:[function(require,module,exports){
 var React = require('react');
-var NavBar = require('./nav/NavBar.jsx');
 var NavItem = require('./nav/NavItem.jsx');
 var Glossary = require('./Glossary.jsx');
 var Alphabet = require('./Alphabet.jsx');
-var Link = require('react-router').Link;
 
 var BasePage = React.createClass({
   displayName: 'BasePage',
@@ -24095,11 +24093,9 @@ var BasePage = React.createClass({
 
 module.exports = BasePage;
 
-},{"./Alphabet.jsx":216,"./Glossary.jsx":219,"./nav/NavBar.jsx":222,"./nav/NavItem.jsx":223,"react":214,"react-router":29}],219:[function(require,module,exports){
+},{"./Alphabet.jsx":216,"./Glossary.jsx":219,"./nav/NavItem.jsx":222,"react":214}],219:[function(require,module,exports){
 var React = require('react');
 var GlossaryItem = require('./GlossaryItem.jsx');
-var Link = require('react-router').Link;
-var glossary = [];
 var regex = new RegExp('^[a-zA-Z]');
 
 var Glossary = React.createClass({
@@ -24135,9 +24131,8 @@ var Glossary = React.createClass({
 
 module.exports = Glossary;
 
-},{"./GlossaryItem.jsx":220,"react":214,"react-router":29}],220:[function(require,module,exports){
+},{"./GlossaryItem.jsx":220,"react":214}],220:[function(require,module,exports){
 var React = require('react');
-var Link = require('react-router').Link;
 
 var GlossaryItem = React.createClass({
   displayName: 'GlossaryItem',
@@ -24199,7 +24194,7 @@ var GlossaryItem = React.createClass({
 module.exports = GlossaryItem;
 // <a href={this.props.seealso}>{this.props.seealso}</a>
 
-},{"react":214,"react-router":29}],221:[function(require,module,exports){
+},{"react":214}],221:[function(require,module,exports){
 var React = require('react');
 var Glossary = require('./Glossary.jsx');
 
@@ -24235,72 +24230,6 @@ module.exports = HomePage;
 
 },{"./Glossary.jsx":219,"react":214}],222:[function(require,module,exports){
 var React = require('react');
-var NavItem = require('./NavItem.jsx');
-var Link = require('react-router').Link;
-
-var NavBar = React.createClass({
-  displayName: 'NavBar',
-
-
-  render: function () {
-
-    var navStyle = {
-      WebkitBoxShadow: "0 0 4px rgba(0,0,0.4)",
-      MozBoxShadow: "0 0 4px rgba(0,0,0.4)",
-      boxShadow: "0 0 4px rgba(0,0,0.4)",
-      borderRadius: 0
-    };
-
-    var titleStyle = {};
-    var linkStyle = {};
-
-    if (this.props.bgColor) navStyle.background = this.props.bgColor;
-
-    if (this.props.titleColor) titleStyle.color = this.props.titleColor;
-
-    if (this.props.linkColor) linkStyle.color = this.props.linkColor;
-
-    var createLinkItem = function (item, index) {
-      return React.createElement(NavItem, { aStyle: linkStyle, key: item.title + index, id: item.id, href: item.href, title: item.title });
-    };
-
-    return React.createElement(
-      'nav',
-      { style: navStyle, className: 'navbar navbar-default navbar-fixed-top' },
-      React.createElement(
-        'div',
-        { className: 'navbar-header' },
-        React.createElement(
-          'button',
-          { type: 'button', className: 'navbar-toggle collapsed', 'data-toggle': 'collapse', 'data-target': '#nav-collapse' },
-          React.createElement('span', { className: 'icon-bar' }),
-          React.createElement('span', { className: 'icon-bar' }),
-          React.createElement('span', { className: 'icon-bar' })
-        ),
-        React.createElement(
-          Link,
-          { style: titleStyle, className: 'navbar-brand', to: '/' },
-          'Glossary'
-        )
-      ),
-      React.createElement(
-        'div',
-        { className: 'collapse navbar-collapse', id: 'nav-collapse' },
-        React.createElement(
-          'ul',
-          { className: 'nav navbar-nav' },
-          this.props.navData.map(createLinkItem)
-        )
-      )
-    );
-  } // end render
-});
-
-module.exports = NavBar;
-
-},{"./NavItem.jsx":223,"react":214,"react-router":29}],223:[function(require,module,exports){
-var React = require('react');
-var Link = require('react-router').Link;
 var Alphabet = require('../Alphabet.jsx');
 
 var NavItem = React.createClass({
@@ -24337,7 +24266,7 @@ var NavItem = React.createClass({
 
 module.exports = NavItem;
 
-},{"../Alphabet.jsx":216,"react":214,"react-router":29}],224:[function(require,module,exports){
+},{"../Alphabet.jsx":216,"react":214}],223:[function(require,module,exports){
 var React = require('react');
 var ReactDOM = require('react-dom');
 var Routes = require('./routes.jsx');
@@ -24345,7 +24274,7 @@ var BasePage = require('./components/BasePage.jsx');
 
 ReactDOM.render(React.createElement(BasePage, { bgColor: '#fff', titleColor: '#3097d1', linkColor: '' }), document.getElementById('gloss'));
 
-},{"./components/BasePage.jsx":218,"./routes.jsx":225,"react":214,"react-dom":1}],225:[function(require,module,exports){
+},{"./components/BasePage.jsx":218,"./routes.jsx":224,"react":214,"react-dom":1}],224:[function(require,module,exports){
 var React = require('react');
 var ReactRouter = require('react-router');
 var Router = require('react-router').Router;
@@ -24366,4 +24295,4 @@ var Routes = React.createElement(
 
 module.exports = Routes;
 
-},{"./components/AlphabetBase.jsx":217,"./components/BasePage.jsx":218,"./components/HomePage.jsx":221,"react":214,"react-router":29}]},{},[224]);
+},{"./components/AlphabetBase.jsx":217,"./components/BasePage.jsx":218,"./components/HomePage.jsx":221,"react":214,"react-router":29}]},{},[223]);

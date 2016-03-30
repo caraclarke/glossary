@@ -1,5 +1,4 @@
 var React = require('react');
-var Link = require('react-router').Link;
 
 var GlossaryItem = React.createClass({
   getInitialState: function() {

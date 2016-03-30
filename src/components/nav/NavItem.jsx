@@ -1,5 +1,4 @@
 var React = require('react');
-var Link = require('react-router').Link;
 var Alphabet = require('../Alphabet.jsx');
 
 var NavItem = React.createClass({

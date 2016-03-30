@@ -1,9 +1,7 @@
 var React = require('react');
-var NavBar = require('./nav/NavBar.jsx');
 var NavItem = require('./nav/NavItem.jsx');
 var Glossary = require('./Glossary.jsx');
 var Alphabet = require('./Alphabet.jsx');
-var Link = require('react-router').Link;
 
 var BasePage = React.createClass({
   
