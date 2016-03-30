@@ -7,7 +7,7 @@ var Alphabet = React.createClass({
   
   render: function() {
     var alphabetNodes = this.props.data.map(function(data, index) {
-      if (data.title.$t.match(regex) == location.pathname[1]) {
+      if (data.title.$t.match(regex) == alphId) {
         return <GlossaryItem key={data.title.$t + index} id={data.title.$t} title={data.title.$t} content={data.content.$t} />
       } else {}
     });
