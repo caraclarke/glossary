@@ -12,7 +12,7 @@ var Glossary = React.createClass({
         var replacement = data.content.$t.replace(/(\[\[Glossary:\s)/g, "").replace(/[a-zA-z]+\]([a-zA-Z]+)(\s[a-zA-Z]+)*\]/g, seeAlsoReplace);
         // returning glossary item with edited content
         // console.log(index, data.title.$t, replacement)
-        return <GlossaryItem key={index} id={data.title.$t} title={data.title.$t} content={replacement} seealso={<a id={data.gsx$seealso.$t}>{data.gsx$seealso.$t}</a>} />
+        return <GlossaryItem key={index} id={data.title.$t} title={data.title.$t} content={replacement} seealso={data.gsx$seealso.$t} />
       } else {
         return <GlossaryItem key={index} id={data.title.$t} title={data.title.$t} content={data.content.$t} seealso={data.gsx$seealso.$t} />
       }

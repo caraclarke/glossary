@@ -24110,11 +24110,7 @@ var Glossary = React.createClass({
         var replacement = data.content.$t.replace(/(\[\[Glossary:\s)/g, "").replace(/[a-zA-z]+\]([a-zA-Z]+)(\s[a-zA-Z]+)*\]/g, seeAlsoReplace);
         // returning glossary item with edited content
         // console.log(index, data.title.$t, replacement)
-        return React.createElement(GlossaryItem, { key: index, id: data.title.$t, title: data.title.$t, content: replacement, seealso: React.createElement(
-            'a',
-            { id: data.gsx$seealso.$t },
-            data.gsx$seealso.$t
-          ) });
+        return React.createElement(GlossaryItem, { key: index, id: data.title.$t, title: data.title.$t, content: replacement, seealso: data.gsx$seealso.$t });
       } else {
         return React.createElement(GlossaryItem, { key: index, id: data.title.$t, title: data.title.$t, content: data.content.$t, seealso: data.gsx$seealso.$t });
       }
@@ -24185,7 +24181,11 @@ var GlossaryItem = React.createClass({
             'See Also'
           ),
           ': ',
-          this.props.seealso
+          React.createElement(
+            'a',
+            { id: this.props.seealso },
+            this.props.seealso
+          )
         )
       ) : null
     );
