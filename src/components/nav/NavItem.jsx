@@ -2,6 +2,7 @@ var React = require('react');
 var Link = require('react-router').Link;
 var Alphabet = require('../Alphabet.jsx');
 var navLinks = [];
+var alphId;
 
 var test = (function(item, index) {
   var alph = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('');
@@ -17,7 +18,7 @@ var test = (function(item, index) {
 
 var NavItem = React.createClass({
   getInitialState: function() {
-    return {hover: false};
+    return { hover: false };
   },
   mouseOver: function(e) {
     this.setState({hover: true});
@@ -26,13 +27,13 @@ var NavItem = React.createClass({
     this.setState({hover: false});
   },
   onClick: function() {
-    console.log(navLinks);
+    alphId = this.props.id;
   },
   
   render: function() {
     return (
-      <li onClick={this.onClick} className={this.state.hover ? "active" : ""} onMouseOver={this.mouseOver} onMouseOut={this.mouseOut}>
-        <Link style={this.props.aStyle} to='' id={this.props.id}>{this.props.title}</Link>
+      <li onClick={this.props.onClick} className={this.state.hover ? "active" : ""} onMouseOver={this.mouseOver} onMouseOut={this.mouseOut}>
+        <a style={this.props.aStyle} to='' id={this.props.id}>{this.props.title}</a>
       </li>
     );
   }

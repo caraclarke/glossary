@@ -1,8 +1,11 @@
 var React = require('react');
 var NavBar = require('./nav/NavBar.jsx');
+var NavItem = require('./nav/NavItem.jsx');
 var Glossary = require('./Glossary.jsx');
 var Alphabet = require('./Alphabet.jsx');
+var Link = require('react-router').Link;
 var navLinks = [];
+var alphId;
 
 var test = (function(item, index) {
   var alph = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('');
@@ -19,7 +22,10 @@ var test = (function(item, index) {
 var BasePage = React.createClass({
   
   getInitialState: function() {
-      return  { data: [] }
+      return  {
+        data: [],
+        alphId: ''
+      }
   },
   
   componentDidMount: function() {
@@ -28,7 +34,7 @@ var BasePage = React.createClass({
       dataType: 'json',
       cache: false,
       success: function(data) {
-        this.setState({data: data.feed.entry});
+        this.setState({ data: data.feed.entry });
       }.bind(this),
       error: function(xhr, status, err) {
         console.log('url: ', this.props.url);
@@ -37,7 +43,12 @@ var BasePage = React.createClass({
     });
   },
   
+  onClick: function() {
+    console.log(this.state.alphId);
+  },
+  
   // <Alphabet data={this.state.data} />
+  // <Glossary data={this.state.data} />
 
   render: function() {
     
@@ -45,9 +56,44 @@ var BasePage = React.createClass({
       paddingTop: 15
     }
     
+    var navStyle = {
+      WebkitBoxShadow: "0 0 4px rgba(0,0,0.4)",
+      MozBoxShadow: "0 0 4px rgba(0,0,0.4)",
+      boxShadow: "0 0 4px rgba(0,0,0.4)",
+      borderRadius: 0
+    };
+    
+    var titleStyle = {};
+    var linkStyle = {}
+    
+    if (this.props.bgColor)
+      navStyle.background = this.props.bgColor;
+    
+    if (this.props.titleColor)
+      titleStyle.color = this.props.titleColor;
+      
+    if (this.props.linkColor)
+      linkStyle.color = this.props.linkColor;
+    
+    var createLinkItem = function(item, index) {
+      return <NavItem aStyle={linkStyle} key={item.title + index} id={item.id} href={item.href} title={item.title}/>
+    };
+    
     return(
       <div>
-        <NavBar bgColor="#fff" titleColor="#3097d1" linkColor="" navData={navLinks} />
+        <nav style={navStyle} className="navbar navbar-default navbar-fixed-top">
+          <div className="navbar-header">
+            <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-collapse">
+              <span className="icon-bar"></span>
+              <span className="icon-bar"></span>
+              <span className="icon-bar"></span>
+            </button>
+            <Link style={titleStyle} className="navbar-brand" to="/">Glossary</Link>
+          </div>
+          <div className="collapse navbar-collapse" id="nav-collapse">
+            <ul className="nav navbar-nav">{navLinks.map(createLinkItem)}</ul>
+          </div>
+        </nav>
         <div className="container" style={style}>
           <div className="row">
             <div className="col-sm-10 col-md-10">

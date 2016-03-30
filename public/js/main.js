@@ -23965,9 +23965,12 @@ module.exports = AlphabetBase;
 },{"./Alphabet.jsx":216,"react":214}],218:[function(require,module,exports){
 var React = require('react');
 var NavBar = require('./nav/NavBar.jsx');
+var NavItem = require('./nav/NavItem.jsx');
 var Glossary = require('./Glossary.jsx');
 var Alphabet = require('./Alphabet.jsx');
+var Link = require('react-router').Link;
 var navLinks = [];
+var alphId;
 
 var test = function (item, index) {
   var alph = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('');
@@ -23986,7 +23989,10 @@ var BasePage = React.createClass({
 
 
   getInitialState: function () {
-    return { data: [] };
+    return {
+      data: [],
+      alphId: ''
+    };
   },
 
   componentDidMount: function () {
@@ -24004,7 +24010,12 @@ var BasePage = React.createClass({
     });
   },
 
+  onClick: function () {
+    console.log(this.state.alphId);
+  },
+
   // <Alphabet data={this.state.data} />
+  // <Glossary data={this.state.data} />
 
   render: function () {
 
@@ -24012,10 +24023,58 @@ var BasePage = React.createClass({
       paddingTop: 15
     };
 
+    var navStyle = {
+      WebkitBoxShadow: "0 0 4px rgba(0,0,0.4)",
+      MozBoxShadow: "0 0 4px rgba(0,0,0.4)",
+      boxShadow: "0 0 4px rgba(0,0,0.4)",
+      borderRadius: 0
+    };
+
+    var titleStyle = {};
+    var linkStyle = {};
+
+    if (this.props.bgColor) navStyle.background = this.props.bgColor;
+
+    if (this.props.titleColor) titleStyle.color = this.props.titleColor;
+
+    if (this.props.linkColor) linkStyle.color = this.props.linkColor;
+
+    var createLinkItem = function (item, index) {
+      return React.createElement(NavItem, { aStyle: linkStyle, key: item.title + index, id: item.id, href: item.href, title: item.title });
+    };
+
     return React.createElement(
       'div',
       null,
-      React.createElement(NavBar, { bgColor: '#fff', titleColor: '#3097d1', linkColor: '', navData: navLinks }),
+      React.createElement(
+        'nav',
+        { style: navStyle, className: 'navbar navbar-default navbar-fixed-top' },
+        React.createElement(
+          'div',
+          { className: 'navbar-header' },
+          React.createElement(
+            'button',
+            { type: 'button', className: 'navbar-toggle collapsed', 'data-toggle': 'collapse', 'data-target': '#nav-collapse' },
+            React.createElement('span', { className: 'icon-bar' }),
+            React.createElement('span', { className: 'icon-bar' }),
+            React.createElement('span', { className: 'icon-bar' })
+          ),
+          React.createElement(
+            Link,
+            { style: titleStyle, className: 'navbar-brand', to: '/' },
+            'Glossary'
+          )
+        ),
+        React.createElement(
+          'div',
+          { className: 'collapse navbar-collapse', id: 'nav-collapse' },
+          React.createElement(
+            'ul',
+            { className: 'nav navbar-nav' },
+            navLinks.map(createLinkItem)
+          )
+        )
+      ),
       React.createElement(
         'div',
         { className: 'container', style: style },
@@ -24035,7 +24094,7 @@ var BasePage = React.createClass({
 
 module.exports = BasePage;
 
-},{"./Alphabet.jsx":216,"./Glossary.jsx":219,"./nav/NavBar.jsx":222,"react":214}],219:[function(require,module,exports){
+},{"./Alphabet.jsx":216,"./Glossary.jsx":219,"./nav/NavBar.jsx":222,"./nav/NavItem.jsx":223,"react":214,"react-router":29}],219:[function(require,module,exports){
 var React = require('react');
 var GlossaryItem = require('./GlossaryItem.jsx');
 var Link = require('react-router').Link;
@@ -24243,6 +24302,7 @@ var React = require('react');
 var Link = require('react-router').Link;
 var Alphabet = require('../Alphabet.jsx');
 var navLinks = [];
+var alphId;
 
 var test = function (item, index) {
   var alph = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('');
@@ -24269,15 +24329,15 @@ var NavItem = React.createClass({
     this.setState({ hover: false });
   },
   onClick: function () {
-    console.log(navLinks);
+    alphId = this.props.id;
   },
 
   render: function () {
     return React.createElement(
       'li',
-      { onClick: this.onClick, className: this.state.hover ? "active" : "", onMouseOver: this.mouseOver, onMouseOut: this.mouseOut },
+      { onClick: this.props.onClick, className: this.state.hover ? "active" : "", onMouseOver: this.mouseOver, onMouseOut: this.mouseOut },
       React.createElement(
-        Link,
+        'a',
         { style: this.props.aStyle, to: '', id: this.props.id },
         this.props.title
       )
@@ -24293,7 +24353,7 @@ var ReactDOM = require('react-dom');
 var Routes = require('./routes.jsx');
 var BasePage = require('./components/BasePage.jsx');
 
-ReactDOM.render(React.createElement(BasePage, null), document.getElementById('gloss'));
+ReactDOM.render(React.createElement(BasePage, { bgColor: '#fff', titleColor: '#3097d1', linkColor: '' }), document.getElementById('gloss'));
 
 },{"./components/BasePage.jsx":218,"./routes.jsx":225,"react":214,"react-dom":1}],225:[function(require,module,exports){
 var React = require('react');
