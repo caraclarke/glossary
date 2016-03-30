@@ -24011,11 +24011,7 @@ var BasePage = React.createClass({
 
   handleChildClick: function (event) {
     this.setState({ alphId: alphId });
-    console.log(alphId);
   },
-
-  // <Alphabet data={this.state.data} />
-  // <Glossary data={this.state.data} />
 
   render: function () {
 
@@ -24084,7 +24080,7 @@ var BasePage = React.createClass({
           React.createElement(
             'div',
             { className: 'col-sm-10 col-md-10' },
-            React.createElement(Glossary, { data: this.state.data })
+            this.state.alphId ? React.createElement(Alphabet, { data: this.state.data }) : React.createElement(Glossary, { data: this.state.data })
           )
         )
       )

@@ -40,16 +40,12 @@ var BasePage = React.createClass({
       })
     }
     this.setState({ navLinks: tempArray });
-    
+
   },
   
   handleChildClick: function(event) {
-    this.setState({ alphId: alphId });
-    console.log(alphId);
+    this.setState({  alphId: alphId });
   },
-  
-  // <Alphabet data={this.state.data} />
-  // <Glossary data={this.state.data} />
 
   render: function() {
     
@@ -98,7 +94,7 @@ var BasePage = React.createClass({
         <div className="container" style={style}>
           <div className="row">
             <div className="col-sm-10 col-md-10">
-              <Glossary data={this.state.data} />
+            { this.state.alphId ? <Alphabet data={this.state.data} /> : <Glossary data={this.state.data} /> }
             </div>
           </div>
         </div>
