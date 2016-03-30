@@ -44,7 +44,11 @@ var BasePage = React.createClass({
   },
   
   handleChildClick: function(event) {
-    this.setState({  alphId: alphId });
+    this.setState({ alphId: alphId });
+  },
+  
+  onClick: function(event) {
+    this.setState({ alphId: '' });
   },
 
   render: function() {
@@ -85,7 +89,7 @@ var BasePage = React.createClass({
               <span className="icon-bar"></span>
               <span className="icon-bar"></span>
             </button>
-            <Link style={titleStyle} className="navbar-brand" to="/">Glossary</Link>
+            <a style={titleStyle} className="navbar-brand" onClick={this.onClick}>Glossary</a>
           </div>
           <div className="collapse navbar-collapse" id="nav-collapse">
             <ul className="nav navbar-nav">{createLinkItem}</ul>

@@ -24013,6 +24013,10 @@ var BasePage = React.createClass({
     this.setState({ alphId: alphId });
   },
 
+  onClick: function (event) {
+    this.setState({ alphId: '' });
+  },
+
   render: function () {
 
     var style = {
@@ -24056,8 +24060,8 @@ var BasePage = React.createClass({
             React.createElement('span', { className: 'icon-bar' })
           ),
           React.createElement(
-            Link,
-            { style: titleStyle, className: 'navbar-brand', to: '/' },
+            'a',
+            { style: titleStyle, className: 'navbar-brand', onClick: this.onClick },
             'Glossary'
           )
         ),
