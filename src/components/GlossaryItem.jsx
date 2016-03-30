@@ -30,7 +30,7 @@ var GlossaryItem = React.createClass({
         { this.state.showDef ? 
           <div>
             <p style={defStyle}>{this.props.content}</p>
-            <p>{this.props.seealso}</p>
+            <p style={defStyle}><strong>See Also</strong>: {this.props.seealso}</p>
           </div>
           : null }
       </div>

@@ -29,7 +29,7 @@ var NavBar = React.createClass({
     };
     
     return (
-      <nav style={navStyle} className="navbar navbar-default">
+      <nav style={navStyle} className="navbar navbar-default navbar-fixed-top">
         <div className="navbar-header">
           <button type="button" className="navbar-toggle collapsed" data-toggle="collapse" data-target="#nav-collapse">
             <span className="icon-bar"></span>

@@ -7,10 +7,11 @@ var Glossary = React.createClass({
   render: function() {
     
     var glossaryNodes = this.props.data.map(function(data, index) {
-      var dataContent = data.content.$t;
-      var seeAlsoReplace = data.gsx$seealso.$t;
-      if ((/(\[\[Glossary:\s)/g).test(dataContent) == true) {
-        var replacement = dataContent.replace(/(\[\[Glossary:\s)/g, "").replace(/[a-zA-z]+\]([a-zA-Z]+)(\s[a-zA-Z]+)*\]/g, seeAlsoReplace);
+      if ((/(\[\[Glossary:\s)/g).test(data.content.$t) == true) {
+        var seeAlsoReplace = data.gsx$seealso.$t;
+        // get rid of [[Glossary: etc text with regex, replace with see also term
+        var replacement = data.content.$t.replace(/(\[\[Glossary:\s)/g, "").replace(/[a-zA-z]+\]([a-zA-Z]+)(\s[a-zA-Z]+)*\]/g, seeAlsoReplace);
+        // returning glossary item with edited content
         return <GlossaryItem key={index} id={data.title.$t} title={data.title.$t} content={replacement} seealso={<a href={data.gsx$seealso.$t}>{data.gsx$seealso.$t}</a>} />
       } else {
         return <GlossaryItem key={index} id={data.title.$t} title={data.title.$t} content={data.content.$t} seealso={data.gsx$seealso.$t} />
