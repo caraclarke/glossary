@@ -23969,20 +23969,6 @@ var NavItem = require('./nav/NavItem.jsx');
 var Glossary = require('./Glossary.jsx');
 var Alphabet = require('./Alphabet.jsx');
 var Link = require('react-router').Link;
-var navLinks = [];
-var alphId;
-
-var test = function (item, index) {
-  var alph = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('');
-
-  for (var i = 0; i < alph.length; i++) {
-    navLinks.push({
-      href: alph[i],
-      title: alph[i],
-      id: alph[i]
-    });
-  }
-}();
 
 var BasePage = React.createClass({
   displayName: 'BasePage',
@@ -23991,6 +23977,7 @@ var BasePage = React.createClass({
   getInitialState: function () {
     return {
       data: [],
+      navLinks: [],
       alphId: ''
     };
   },
@@ -24008,11 +23995,25 @@ var BasePage = React.createClass({
         console.error(this.props.url, status, err.toString());
       }.bind(this)
     });
+
+    var alph = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('');
+    var tempArray = [];
+
+    for (var i = 0; i < alph.length; i++) {
+      tempArray.push({
+        href: alph[i],
+        title: alph[i],
+        id: alph[i]
+      });
+    }
+    this.setState({ navLinks: tempArray });
   },
 
-  onClick: function () {
+  handleChildClick: function () {
     console.log(this.state.alphId);
   },
+
+  test: function (item, index) {},
 
   // <Alphabet data={this.state.data} />
   // <Glossary data={this.state.data} />
@@ -24039,9 +24040,9 @@ var BasePage = React.createClass({
 
     if (this.props.linkColor) linkStyle.color = this.props.linkColor;
 
-    var createLinkItem = function (item, index) {
-      return React.createElement(NavItem, { aStyle: linkStyle, key: item.title + index, id: item.id, href: item.href, title: item.title });
-    };
+    var createLinkItem = this.state.navLinks.map(function (item, index) {
+      return React.createElement(NavItem, { onClick: this.handleChildClick.bind(null, item), aStyle: linkStyle, key: item.title + index, id: item.id, title: item.title });
+    }.bind(this));
 
     return React.createElement(
       'div',
@@ -24071,7 +24072,7 @@ var BasePage = React.createClass({
           React.createElement(
             'ul',
             { className: 'nav navbar-nav' },
-            navLinks.map(createLinkItem)
+            createLinkItem
           )
         )
       ),
@@ -24090,6 +24091,7 @@ var BasePage = React.createClass({
       )
     );
   }
+
 });
 
 module.exports = BasePage;
@@ -24301,26 +24303,12 @@ module.exports = NavBar;
 var React = require('react');
 var Link = require('react-router').Link;
 var Alphabet = require('../Alphabet.jsx');
-var navLinks = [];
-var alphId;
-
-var test = function (item, index) {
-  var alph = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('');
-
-  for (var i = 0; i < alph.length; i++) {
-    navLinks.push({
-      href: alph[i],
-      title: alph[i],
-      id: alph[i]
-    });
-  }
-}();
 
 var NavItem = React.createClass({
   displayName: 'NavItem',
 
   getInitialState: function () {
-    return { hover: false };
+    return { hover: false, alphId: '' };
   },
   mouseOver: function (e) {
     this.setState({ hover: true });
@@ -24329,13 +24317,14 @@ var NavItem = React.createClass({
     this.setState({ hover: false });
   },
   onClick: function () {
-    alphId = this.props.id;
+    // alphId = this.props.id;
+    this.setState({ alphId: this.props.id });
   },
 
   render: function () {
     return React.createElement(
       'li',
-      { onClick: this.props.onClick, className: this.state.hover ? "active" : "", onMouseOver: this.mouseOver, onMouseOut: this.mouseOut },
+      { onClick: this.onClick, className: this.state.hover ? "active" : "", onMouseOver: this.mouseOver, onMouseOut: this.mouseOut },
       React.createElement(
         'a',
         { style: this.props.aStyle, to: '', id: this.props.id },

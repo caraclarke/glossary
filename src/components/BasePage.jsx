@@ -4,26 +4,13 @@ var NavItem = require('./nav/NavItem.jsx');
 var Glossary = require('./Glossary.jsx');
 var Alphabet = require('./Alphabet.jsx');
 var Link = require('react-router').Link;
-var navLinks = [];
-var alphId;
-
-var test = (function(item, index) {
-  var alph = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('');
-  
-  for (var i = 0; i < alph.length; i++) {
-    navLinks.push({
-      href: alph[i],
-      title: alph[i],
-      id: alph[i]
-    })
-  }
-}());
 
 var BasePage = React.createClass({
   
   getInitialState: function() {
       return  {
         data: [],
+        navLinks: [],
         alphId: ''
       }
   },
@@ -41,11 +28,26 @@ var BasePage = React.createClass({
         console.error(this.props.url, status, err.toString());
       }.bind(this)
     });
+    
+    var alph = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('');
+    var tempArray = [];
+    
+    for (var i = 0; i < alph.length; i++) {
+      tempArray.push({
+        href: alph[i],
+        title: alph[i],
+        id: alph[i]
+      })
+    }
+    this.setState({ navLinks: tempArray });
+    
   },
   
-  onClick: function() {
+  handleChildClick: function() {
     console.log(this.state.alphId);
   },
+  
+  test: function(item, index) {},
   
   // <Alphabet data={this.state.data} />
   // <Glossary data={this.state.data} />
@@ -74,10 +76,10 @@ var BasePage = React.createClass({
       
     if (this.props.linkColor)
       linkStyle.color = this.props.linkColor;
-    
-    var createLinkItem = function(item, index) {
-      return <NavItem aStyle={linkStyle} key={item.title + index} id={item.id} href={item.href} title={item.title}/>
-    };
+
+    var createLinkItem = this.state.navLinks.map(function(item, index) {
+      return <NavItem onClick={this.handleChildClick.bind(null,item)} aStyle={linkStyle} key={item.title + index} id={item.id} title={item.title} />
+    }.bind(this));
     
     return(
       <div>
@@ -91,7 +93,7 @@ var BasePage = React.createClass({
             <Link style={titleStyle} className="navbar-brand" to="/">Glossary</Link>
           </div>
           <div className="collapse navbar-collapse" id="nav-collapse">
-            <ul className="nav navbar-nav">{navLinks.map(createLinkItem)}</ul>
+            <ul className="nav navbar-nav">{createLinkItem}</ul>
           </div>
         </nav>
         <div className="container" style={style}>
@@ -104,6 +106,7 @@ var BasePage = React.createClass({
       </div>
     );
   }
+  
 });
 
 module.exports = BasePage;
