@@ -24013,7 +24013,7 @@ var BasePage = React.createClass({
     this.setState({ alphId: alphId });
   },
 
-  onClick: function (event) {
+  resetAllTerms: function (event) {
     this.setState({ alphId: '' });
   },
 
@@ -24061,7 +24061,7 @@ var BasePage = React.createClass({
           ),
           React.createElement(
             'a',
-            { style: titleStyle, className: 'navbar-brand', onClick: this.onClick },
+            { style: titleStyle, className: 'navbar-brand', onClick: this.resetAllTerms },
             'Glossary'
           )
         ),

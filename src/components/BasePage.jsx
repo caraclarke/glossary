@@ -47,7 +47,7 @@ var BasePage = React.createClass({
     this.setState({ alphId: alphId });
   },
   
-  onClick: function(event) {
+  resetAllTerms: function(event) {
     this.setState({ alphId: '' });
   },
 
@@ -89,7 +89,7 @@ var BasePage = React.createClass({
               <span className="icon-bar"></span>
               <span className="icon-bar"></span>
             </button>
-            <a style={titleStyle} className="navbar-brand" onClick={this.onClick}>Glossary</a>
+            <a style={titleStyle} className="navbar-brand" onClick={this.resetAllTerms}>Glossary</a>
           </div>
           <div className="collapse navbar-collapse" id="nav-collapse">
             <ul className="nav navbar-nav">{createLinkItem}</ul>
