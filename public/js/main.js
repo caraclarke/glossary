@@ -19118,10 +19118,6 @@ var BasePage = React.createClass({
     this.setState({ alphId: '' });
   },
 
-  resetClickSearch: function (event) {
-    this.setState({ alphId: '' });
-  },
-
   render: function () {
 
     var style = {
@@ -19253,12 +19249,8 @@ var GlossaryItem = React.createClass({
     }
   },
 
-  goToTerm: function (e) {
-    var term = this.props.seealso;
-    // not a direct child of base page so not resetting alphId
-    // test = document.getElementById(term);
-    // console.log(test);
-    // document.getElementById(term).scrollIntoView();
+  goToTerm: function (element) {
+    var term = '#' + this.props.seealso;
   },
 
   render: function () {
@@ -19276,7 +19268,7 @@ var GlossaryItem = React.createClass({
       null,
       React.createElement(
         'h4',
-        { onClick: this.onClick, style: titleStyle },
+        { id: this.props.title, onClick: this.onClick, style: titleStyle },
         this.props.title
       ),
       this.state.showDef ? React.createElement(
@@ -19295,10 +19287,10 @@ var GlossaryItem = React.createClass({
             null,
             'See Also'
           ),
-          ': ',
+          ':',
           React.createElement(
             'a',
-            { onClick: this.goToTerm, id: this.props.seealso },
+            { onClick: this.goToTerm, href: '#' + this.props.seealso, id: this.props.seealso },
             this.props.seealso
           )
         )
@@ -19308,7 +19300,6 @@ var GlossaryItem = React.createClass({
 });
 
 module.exports = GlossaryItem;
-// <a href={this.props.seealso}>{this.props.seealso}</a>
 
 },{"react":157}],163:[function(require,module,exports){
 var React = require('react');

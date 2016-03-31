@@ -12,6 +12,11 @@ var GlossaryItem = React.createClass({
       this.setState({ showDef: false })
     }
   },
+  
+  goToTerm: function(element) {
+    var term = '#' + this.props.seealso;
+  
+  },
 
   render: function()  {
     
@@ -25,11 +30,13 @@ var GlossaryItem = React.createClass({
     
     return (
       <div>
-        <h4 onClick={this.onClick} style={titleStyle}>{this.props.title}</h4>
+        <h4 id={this.props.title} onClick={this.onClick} style={titleStyle}>{this.props.title}</h4>
         { this.state.showDef ? 
           <div>
             <p style={defStyle}>{this.props.content}</p>
-            <p style={defStyle}><strong>See Also</strong>: {<a id={this.props.seealso}>{this.props.seealso}</a>}</p>
+            <p style={defStyle}><strong>See Also</strong>:  
+              {<a onClick={this.goToTerm} href={'#' + this.props.seealso} id={this.props.seealso}>{this.props.seealso}</a>}
+            </p>
           </div>
           : null }
       </div>
@@ -38,4 +45,3 @@ var GlossaryItem = React.createClass({
 });
 
 module.exports = GlossaryItem;
-// <a href={this.props.seealso}>{this.props.seealso}</a>
