@@ -19082,7 +19082,8 @@ var BasePage = React.createClass({
       data: [],
       navLinks: [],
       alphId: '',
-      moveThis: ''
+      moveThis: '',
+      showDef: false
     };
   },
 
@@ -19115,11 +19116,6 @@ var BasePage = React.createClass({
 
   handleChildClick: function (event) {
     this.setState({ alphId: alphId });
-  },
-
-  baseHandleMoveClick: function (event) {
-    this.setState({ moveThis: moveThis });
-    console.log('from base page data: ', moveThis);
   },
 
   resetAllTerms: function (event) {
@@ -19193,7 +19189,7 @@ var BasePage = React.createClass({
           React.createElement(
             'div',
             { className: 'col-sm-10 col-md-10' },
-            this.state.alphId ? React.createElement(Alphabet, { data: this.state.data }) : React.createElement(Glossary, { data: this.state.data, onValueMove: this.baseHandleMoveClick })
+            this.state.alphId ? React.createElement(Alphabet, { data: this.state.data }) : React.createElement(Glossary, { data: this.state.data })
           )
         )
       )
@@ -19214,13 +19210,8 @@ var Glossary = React.createClass({
 
 
   handleMoveClick: function (event) {
-    // now the glossary has what it wants to move to and access to the whole array
     this.setState({ moveThis: moveThis });
-    console.log('glossary actual: ', moveThis); // Encryption
-    this.props.onValueMove(moveThis);
-    // var name = document.getElementById(moveThis); // moveThis not the id?
-    // this.props.data[i].title.$t
-
+    // TODO: when it scrolls to the thing set showDef to true
     for (var i = 0; i < this.props.data.length; i++) {
       var item = this.props.data[i].title.$t;
       document.getElementById(moveThis).scrollIntoView();
@@ -19273,7 +19264,6 @@ var GlossaryItem = React.createClass({
   },
 
   clickMove: function (e) {
-    // using this.props.seealso we get the name of where we want to go
     moveThis = this.props.seealso;
     this.props.onValueChange(moveThis);
   },

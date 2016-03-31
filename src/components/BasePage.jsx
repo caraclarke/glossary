@@ -12,7 +12,8 @@ var BasePage = React.createClass({
         data: [],
         navLinks: [],
         alphId: '',
-        moveThis: ''
+        moveThis: '',
+        showDef: false
       }
   },
   
@@ -46,11 +47,6 @@ var BasePage = React.createClass({
   
   handleChildClick: function(event) {
     this.setState({ alphId: alphId });
-  },
-  
-  baseHandleMoveClick: function(event) {
-    this.setState({moveThis: moveThis});
-    console.log('from base page data: ', moveThis);
   },
   
   resetAllTerms: function(event) {
@@ -104,7 +100,7 @@ var BasePage = React.createClass({
         <div className="container" style={style}>
           <div className="row">
             <div className="col-sm-10 col-md-10">
-            { this.state.alphId ? <Alphabet data={this.state.data} /> : <Glossary  data={this.state.data} onValueMove={this.baseHandleMoveClick} /> }
+            { this.state.alphId ? <Alphabet data={this.state.data} /> : <Glossary  data={this.state.data} /> }
             </div>
           </div>
         </div>

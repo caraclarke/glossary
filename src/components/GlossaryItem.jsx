@@ -14,7 +14,6 @@ var GlossaryItem = React.createClass({
   },
   
   clickMove: function(e) {
-    // using this.props.seealso we get the name of where we want to go
     moveThis = this.props.seealso;
     this.props.onValueChange(moveThis);
   },
