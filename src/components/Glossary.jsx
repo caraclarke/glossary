@@ -4,12 +4,28 @@ var regex= new RegExp('^[a-zA-Z]');
 
 var Glossary = React.createClass({
   
-  handleMoveClick: function(element) {
-    this.setState({moveThis: moveThis});
+  getInitialState: function() {
+      return {
+        moveThis: '',
+        showDef: false
+      }
+  },
+  
+  handleMoveClick: function(element, showDef) {
+    var pageLocation = ($(window).scrollTop() + $(window).height());
+    console.log(pageLocation);
+    this.setState({
+      moveThis: moveThis,
+      // showDef: true // this is setting showDef as true for element being clicked not element it is scrolling to
+    });
     var moveIt = '#' + moveThis;
     // TODO: when it scrolls to the thing set showDef to true
     // TODO: in alphabet needs to reset to full page then go click
-    $('html, body').animate({scrollTop: $(moveIt).offset().top - 200 }, 'slow');
+    var change = $(moveIt).offset().top - 200;
+    $('html, body').animate({scrollTop: change }, 'slow');
+    if (pageLocation < change) {
+      this.setState({ showDef: true });
+    } else {}
   },
   
   render: function() {

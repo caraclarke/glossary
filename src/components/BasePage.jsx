@@ -12,8 +12,7 @@ var BasePage = React.createClass({
         data: [],
         navLinks: [],
         alphId: '',
-        moveThis: '',
-        showDef: false
+        moveThis: ''
       }
   },
   

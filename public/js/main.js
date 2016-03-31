@@ -19082,8 +19082,7 @@ var BasePage = React.createClass({
       data: [],
       navLinks: [],
       alphId: '',
-      moveThis: '',
-      showDef: false
+      moveThis: ''
     };
   },
 
@@ -19209,12 +19208,28 @@ var Glossary = React.createClass({
   displayName: 'Glossary',
 
 
-  handleMoveClick: function (element) {
-    this.setState({ moveThis: moveThis });
+  getInitialState: function () {
+    return {
+      moveThis: '',
+      showDef: false
+    };
+  },
+
+  handleMoveClick: function (element, showDef) {
+    var pageLocation = $(window).scrollTop() + $(window).height();
+    console.log(pageLocation);
+    this.setState({
+      moveThis: moveThis
+    });
+    // showDef: true // this is setting showDef as true for element being clicked not element it is scrolling to
     var moveIt = '#' + moveThis;
     // TODO: when it scrolls to the thing set showDef to true
     // TODO: in alphabet needs to reset to full page then go click
-    $('html, body').animate({ scrollTop: $(moveIt).offset().top - 200 }, 'slow');
+    var change = $(moveIt).offset().top - 200;
+    $('html, body').animate({ scrollTop: change }, 'slow');
+    if (pageLocation < change) {
+      this.setState({ showDef: true });
+    } else {}
   },
 
   render: function () {
@@ -19264,8 +19279,10 @@ var GlossaryItem = React.createClass({
   clickMove: function (e) {
     e.preventDefault();
     moveThis = this.props.seealso;
-    this.props.onValueChange(moveThis);
+    showDef = true;
+    this.props.onValueChange(moveThis, showDef);
   },
+  // if showDef wasnt a state but a class that toggled on and off on click then it would be a lot easier (maybe) to turn it off when you scroll to a thing
 
   render: function () {
 

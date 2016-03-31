@@ -16,8 +16,10 @@ var GlossaryItem = React.createClass({
   clickMove: function(e) {
     e.preventDefault();
     moveThis = this.props.seealso;
-    this.props.onValueChange(moveThis);
+    showDef = true;
+    this.props.onValueChange(moveThis, showDef);
   },
+  // if showDef wasnt a state but a class that toggled on and off on click then it would be a lot easier (maybe) to turn it off when you scroll to a thing
 
   render: function()  {
     
