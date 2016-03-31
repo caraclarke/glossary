@@ -19209,14 +19209,12 @@ var Glossary = React.createClass({
   displayName: 'Glossary',
 
 
-  handleMoveClick: function (event) {
+  handleMoveClick: function (element) {
     this.setState({ moveThis: moveThis });
+    var moveIt = '#' + moveThis;
     // TODO: when it scrolls to the thing set showDef to true
-    for (var i = 0; i < this.props.data.length; i++) {
-      var item = this.props.data[i].title.$t;
-      document.getElementById(moveThis).scrollIntoView();
-      break;
-    }
+    // TODO: in alphabet needs to reset to full page then go click
+    $('html, body').animate({ scrollTop: $(moveIt).offset().top - 200 }, 'slow');
   },
 
   render: function () {
@@ -19264,6 +19262,7 @@ var GlossaryItem = React.createClass({
   },
 
   clickMove: function (e) {
+    e.preventDefault();
     moveThis = this.props.seealso;
     this.props.onValueChange(moveThis);
   },

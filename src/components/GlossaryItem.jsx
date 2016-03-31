@@ -14,6 +14,7 @@ var GlossaryItem = React.createClass({
   },
   
   clickMove: function(e) {
+    e.preventDefault();
     moveThis = this.props.seealso;
     this.props.onValueChange(moveThis);
   },
