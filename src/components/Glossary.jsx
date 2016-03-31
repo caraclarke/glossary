@@ -5,10 +5,18 @@ var regex= new RegExp('^[a-zA-Z]');
 var Glossary = React.createClass({
   
   handleMoveClick: function(event) {
+    // now the glossary has what it wants to move to and access to the whole array
     this.setState({moveThis: moveThis});
-    console.log('glossary actual: ', moveThis);
+    console.log('glossary actual: ', moveThis); // Encryption
     this.props.onValueMove(moveThis);
-    console.log(this.props.data);
+    // var name = document.getElementById(moveThis); // moveThis not the id?
+    // this.props.data[i].title.$t
+    
+    for (var i = 0; i < this.props.data.length; i++) {
+      var item = this.props.data[i].title.$t;
+        document.getElementById(moveThis).scrollIntoView();
+        break;
+    }
   },
   
   render: function() {

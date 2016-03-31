@@ -36,7 +36,7 @@ var GlossaryItem = React.createClass({
           <div>
             <p style={defStyle}>{this.props.content}</p>
             <p style={defStyle}><strong>See Also</strong>:  
-              {<a onClick={this.clickMove} href={'#' + this.props.seealso} id={this.props.seealso}>{this.props.seealso}</a>}
+              {<a onClick={this.clickMove} href={'#' + this.props.seealso}>{this.props.seealso}</a>}
             </p>
           </div>
           : null }
