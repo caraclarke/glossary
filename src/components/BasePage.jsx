@@ -2,6 +2,8 @@ var React = require('react');
 var NavItem = require('./nav/NavItem.jsx');
 var Glossary = require('./Glossary.jsx');
 var Alphabet = require('./Alphabet.jsx');
+var GlossaryItem = require('./GlossaryItem.jsx');
+var regex= new RegExp('^[a-zA-Z]');
 
 var BasePage = React.createClass({
   
@@ -9,7 +11,8 @@ var BasePage = React.createClass({
       return  {
         data: [],
         navLinks: [],
-        alphId: ''
+        alphId: '',
+        moveThis: ''
       }
   },
   
@@ -43,6 +46,11 @@ var BasePage = React.createClass({
   
   handleChildClick: function(event) {
     this.setState({ alphId: alphId });
+  },
+  
+  baseHandleMoveClick: function(event) {
+    this.setState({moveThis: moveThis});
+    console.log('from base page data: ', moveThis);
   },
   
   resetAllTerms: function(event) {
@@ -96,7 +104,7 @@ var BasePage = React.createClass({
         <div className="container" style={style}>
           <div className="row">
             <div className="col-sm-10 col-md-10">
-            { this.state.alphId ? <Alphabet data={this.state.data} /> : <Glossary data={this.state.data} /> }
+            { this.state.alphId ? <Alphabet data={this.state.data} /> : <Glossary  data={this.state.data} onValueMove={this.baseHandleMoveClick} /> }
             </div>
           </div>
         </div>

@@ -13,9 +13,10 @@ var GlossaryItem = React.createClass({
     }
   },
   
-  goToTerm: function(element) {
-    var term = '#' + this.props.seealso;
-  
+  clickMove: function(e) {
+    // using this.props.seealso we get the name of where we want to go
+    moveThis = this.props.seealso;
+    this.props.onValueChange(moveThis);
   },
 
   render: function()  {
@@ -35,7 +36,7 @@ var GlossaryItem = React.createClass({
           <div>
             <p style={defStyle}>{this.props.content}</p>
             <p style={defStyle}><strong>See Also</strong>:  
-              {<a onClick={this.goToTerm} href={'#' + this.props.seealso} id={this.props.seealso}>{this.props.seealso}</a>}
+              {<a onClick={this.clickMove} href={'#' + this.props.seealso} id={this.props.seealso}>{this.props.seealso}</a>}
             </p>
           </div>
           : null }

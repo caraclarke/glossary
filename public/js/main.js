@@ -19070,6 +19070,8 @@ var React = require('react');
 var NavItem = require('./nav/NavItem.jsx');
 var Glossary = require('./Glossary.jsx');
 var Alphabet = require('./Alphabet.jsx');
+var GlossaryItem = require('./GlossaryItem.jsx');
+var regex = new RegExp('^[a-zA-Z]');
 
 var BasePage = React.createClass({
   displayName: 'BasePage',
@@ -19079,7 +19081,8 @@ var BasePage = React.createClass({
     return {
       data: [],
       navLinks: [],
-      alphId: ''
+      alphId: '',
+      moveThis: ''
     };
   },
 
@@ -19112,6 +19115,11 @@ var BasePage = React.createClass({
 
   handleChildClick: function (event) {
     this.setState({ alphId: alphId });
+  },
+
+  baseHandleMoveClick: function (event) {
+    this.setState({ moveThis: moveThis });
+    console.log('from base page data: ', moveThis);
   },
 
   resetAllTerms: function (event) {
@@ -19185,7 +19193,7 @@ var BasePage = React.createClass({
           React.createElement(
             'div',
             { className: 'col-sm-10 col-md-10' },
-            this.state.alphId ? React.createElement(Alphabet, { data: this.state.data }) : React.createElement(Glossary, { data: this.state.data })
+            this.state.alphId ? React.createElement(Alphabet, { data: this.state.data }) : React.createElement(Glossary, { data: this.state.data, onValueMove: this.baseHandleMoveClick })
           )
         )
       )
@@ -19196,13 +19204,21 @@ var BasePage = React.createClass({
 
 module.exports = BasePage;
 
-},{"./Alphabet.jsx":159,"./Glossary.jsx":161,"./nav/NavItem.jsx":163,"react":157}],161:[function(require,module,exports){
+},{"./Alphabet.jsx":159,"./Glossary.jsx":161,"./GlossaryItem.jsx":162,"./nav/NavItem.jsx":163,"react":157}],161:[function(require,module,exports){
 var React = require('react');
 var GlossaryItem = require('./GlossaryItem.jsx');
 var regex = new RegExp('^[a-zA-Z]');
 
 var Glossary = React.createClass({
   displayName: 'Glossary',
+
+
+  handleMoveClick: function (event) {
+    this.setState({ moveThis: moveThis });
+    console.log('glossary actual: ', moveThis);
+    this.props.onValueMove(moveThis);
+    console.log(this.props.data);
+  },
 
   render: function () {
 
@@ -19212,12 +19228,11 @@ var Glossary = React.createClass({
         // get rid of [[Glossary: etc text with regex, replace with see also term
         var replacement = data.content.$t.replace(/(\[\[Glossary:\s)/g, "").replace(/[a-zA-z]+\]([a-zA-Z]+)(\s[a-zA-Z]+)*\]/g, seeAlsoReplace);
         // returning glossary item with edited content
-        // console.log(index, data.title.$t, replacement)
-        return React.createElement(GlossaryItem, { key: index, id: data.title.$t, title: data.title.$t, content: replacement, seealso: data.gsx$seealso.$t });
+        return React.createElement(GlossaryItem, { onValueChange: this.handleMoveClick, key: index, id: data.title.$t, title: data.title.$t, content: replacement, seealso: data.gsx$seealso.$t });
       } else {
-        return React.createElement(GlossaryItem, { key: index, id: data.title.$t, title: data.title.$t, content: data.content.$t, seealso: data.gsx$seealso.$t });
+        return React.createElement(GlossaryItem, { onValueChange: this.handleMoveClick, key: index, id: data.title.$t, title: data.title.$t, content: data.content.$t, seealso: data.gsx$seealso.$t });
       }
-    });
+    }.bind(this));
 
     return React.createElement(
       'div',
@@ -19249,8 +19264,10 @@ var GlossaryItem = React.createClass({
     }
   },
 
-  goToTerm: function (element) {
-    var term = '#' + this.props.seealso;
+  clickMove: function (e) {
+    // using this.props.seealso we get the name of where we want to go
+    moveThis = this.props.seealso;
+    this.props.onValueChange(moveThis);
   },
 
   render: function () {
@@ -19290,7 +19307,7 @@ var GlossaryItem = React.createClass({
           ':',
           React.createElement(
             'a',
-            { onClick: this.goToTerm, href: '#' + this.props.seealso, id: this.props.seealso },
+            { onClick: this.clickMove, href: '#' + this.props.seealso, id: this.props.seealso },
             this.props.seealso
           )
         )
