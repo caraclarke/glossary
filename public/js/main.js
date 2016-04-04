@@ -19209,27 +19209,23 @@ var Glossary = React.createClass({
 
 
   getInitialState: function () {
-    return {
-      moveThis: '',
-      showDef: false
-    };
+    return { moveThis: '' };
   },
 
   handleMoveClick: function (element) {
     var pageLocation = $(window).scrollTop() + $(window).height();
-    this.setState({
-      moveThis: moveThis
-    });
+
+    this.setState({ moveThis: moveThis });
     var moveIt = '#' + moveThis;
+
     var change = $(moveIt).offset().top - 200;
     $('html, body').animate({ scrollTop: change }, 'slow');
+
     if (pageLocation < change) {
-      // this.setState({ showDef: true });
-      // showDef = true;
-      // console.log(showDef);
-      // var stuff = document.getElementById(this.props.id);
       $(moveIt).toggleClass('hideMe');
-    } else {}
+    } else {
+      console.log('check Glossary.jsx error');
+    }
   },
 
   render: function () {
@@ -19269,15 +19265,14 @@ var GlossaryItem = React.createClass({
     return { moveThis: '' };
   },
 
-  onClick: function (element) {
-    var stuff = document.getElementById(this.props.id);
-    $(stuff).toggleClass('hideMe');
+  onClick: function () {
+    var parentElement = document.getElementById(this.props.id);
+    $(parentElement).toggleClass('hideMe');
   },
 
-  clickMove: function (e) {
-    e.preventDefault();
-    var thing = document.getElementById(this.props.id);
-    $(thing).toggleClass('hideMe');
+  clickMove: function () {
+    var clickedElement = document.getElementById(this.props.id);
+    $(clickedElement).toggleClass('hideMe');
     moveThis = this.props.seealso;
     this.props.onValueChange(moveThis);
   },
@@ -19297,7 +19292,7 @@ var GlossaryItem = React.createClass({
       { className: 'hideMe', id: this.props.id },
       React.createElement(
         'h4',
-        { className: 'child', onClick: this.onClick, style: titleStyle },
+        { onClick: this.onClick, style: titleStyle },
         this.props.title
       ),
       React.createElement(

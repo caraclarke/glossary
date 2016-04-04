@@ -5,23 +5,23 @@ var regex= new RegExp('^[a-zA-Z]');
 var Glossary = React.createClass({
   
   getInitialState: function() {
-      return {
-        moveThis: '',
-        showDef: false
-      }
+      return { moveThis: '' }
   },
   
   handleMoveClick: function(element) {
     var pageLocation = ($(window).scrollTop() + $(window).height());
-    this.setState({
-      moveThis: moveThis,
-    });
+    
+    this.setState({ moveThis: moveThis });
     var moveIt = '#' + moveThis;
+    
     var change = $(moveIt).offset().top - 200;
     $('html, body').animate({scrollTop: change }, 'slow');
+    
     if (pageLocation < change) {
       $(moveIt).toggleClass('hideMe');
-    } else {}
+    } else {
+      console.log('check Glossary.jsx error');
+    }
   },
   
   render: function() {
