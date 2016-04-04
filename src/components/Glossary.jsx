@@ -20,10 +20,6 @@ var Glossary = React.createClass({
     var change = $(moveIt).offset().top - 200;
     $('html, body').animate({scrollTop: change }, 'slow');
     if (pageLocation < change) {
-      // this.setState({ showDef: true });
-      // showDef = true;
-      // console.log(showDef);
-      // var stuff = document.getElementById(this.props.id);
       $(moveIt).toggleClass('hideMe');
     } else {}
   },
