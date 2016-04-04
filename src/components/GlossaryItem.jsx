@@ -6,15 +6,14 @@ var GlossaryItem = React.createClass({
     return { moveThis: '' }
   },
   
-  onClick: function(element) {
-    var stuff = document.getElementById(this.props.id);
-    $(stuff).toggleClass('hideMe');
+  onClick: function() {
+    var parentElement = document.getElementById(this.props.id);
+    $(parentElement).toggleClass('hideMe');
   },
   
-  clickMove: function(e) {
-    e.preventDefault();
-    var thing = document.getElementById(this.props.id);
-    $(thing).toggleClass('hideMe');
+  clickMove: function() {
+    var clickedElement = document.getElementById(this.props.id);
+    $(clickedElement).toggleClass('hideMe');
     moveThis = this.props.seealso;
     this.props.onValueChange(moveThis);
   },
@@ -31,7 +30,7 @@ var GlossaryItem = React.createClass({
     
     return (
       <div className="hideMe" id={this.props.id}>
-        <h4 className="child" onClick={this.onClick} style={titleStyle}>{this.props.title}</h4>
+        <h4 onClick={this.onClick} style={titleStyle}>{this.props.title}</h4>
           <div>
             <p style={defStyle}>{this.props.content}</p>
             <p style={defStyle}><strong>See Also</strong>:  
