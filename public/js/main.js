@@ -19227,6 +19227,8 @@ var Glossary = React.createClass({
       // this.setState({ showDef: true });
       // showDef = true;
       // console.log(showDef);
+      // var stuff = document.getElementById(this.props.id);
+      $(moveIt).toggleClass('hideMe');
     } else {}
   },
 
