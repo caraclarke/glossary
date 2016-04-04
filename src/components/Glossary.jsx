@@ -18,7 +18,13 @@ var Glossary = React.createClass({
     $('html, body').animate({scrollTop: change }, 'slow');
     
     if (pageLocation < change) {
-      $(moveIt).toggleClass('hideMe');
+      var newElement = document.getElementById(moveThis);
+      var classCheck = newElement.getAttribute("class")
+      if (classCheck == "hideMe") {
+        newElement.className = "";
+      } else {
+        newElement.className = "hideMe";
+      }
     } else {
       console.log('check Glossary.jsx error');
     }

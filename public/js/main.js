@@ -19223,7 +19223,13 @@ var Glossary = React.createClass({
     $('html, body').animate({ scrollTop: change }, 'slow');
 
     if (pageLocation < change) {
-      $(moveIt).toggleClass('hideMe');
+      var newElement = document.getElementById(moveThis);
+      var classCheck = newElement.getAttribute("class");
+      if (classCheck == "hideMe") {
+        newElement.className = "";
+      } else {
+        newElement.className = "hideMe";
+      }
     } else {
       console.log('check Glossary.jsx error');
     }
@@ -19263,12 +19269,19 @@ var GlossaryItem = React.createClass({
 
 
   getInitialState: function () {
-    return { moveThis: '' };
+    return {
+      moveThis: ''
+    };
   },
 
   onClick: function () {
     var parentElement = document.getElementById(this.props.id);
-    $(parentElement).toggleClass('hideMe');
+    var checkClass = parentElement.getAttribute("class");
+    if (checkClass == "hideMe") {
+      parentElement.className = "";
+    } else {
+      parentElement.className = "hideMe";
+    }
   },
 
   clickMove: function () {

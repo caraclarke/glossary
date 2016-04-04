@@ -3,12 +3,19 @@ var React = require('react');
 var GlossaryItem = React.createClass({
   
   getInitialState: function() {
-    return { moveThis: '' }
+    return {
+      moveThis: ''
+    }
   },
   
   onClick: function() {
     var parentElement = document.getElementById(this.props.id);
-    $(parentElement).toggleClass('hideMe');
+    var checkClass = parentElement.getAttribute("class")
+    if (checkClass == "hideMe") {
+      parentElement.className = "";
+    } else {
+      parentElement.className = "hideMe";
+    }
   },
   
   clickMove: function() {
