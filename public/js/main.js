@@ -19276,6 +19276,8 @@ var GlossaryItem = React.createClass({
 
   clickMove: function (e) {
     e.preventDefault();
+    var thing = document.getElementById(this.props.id);
+    $(thing).toggleClass('hideMe');
     moveThis = this.props.seealso;
     this.props.onValueChange(moveThis);
   },
