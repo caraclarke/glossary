@@ -30,7 +30,7 @@ var Glossary = React.createClass({
       if ((/(\[\[Glossary:\s)/g).test(data.content.$t) == true) {
         var seeAlsoReplace = data.gsx$seealso.$t;
         // get rid of [[Glossary: etc text with regex, replace with see also term
-        var replacement = data.content.$t.replace(/(\[\[Glossary:\s)(.+\])(.+)\]/g, seeAlsoReplace);
+        var replacement = data.content.$t.replace(/(\[\[Glossary:\s)(.+\])(.+)\]/g, seeAlsoReplace).replace(/(\,\s)(seealso:\s)+(.+)*/g, '');
         // returning glossary item with edited content
         return <GlossaryItem onValueChange={this.handleMoveClick} key={index} id={data.title.$t} title={data.title.$t} content={replacement} seealso={data.gsx$seealso.$t} />
       } else {
