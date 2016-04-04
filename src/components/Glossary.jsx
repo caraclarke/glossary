@@ -13,18 +13,16 @@ var Glossary = React.createClass({
   
   handleMoveClick: function(element, showDef) {
     var pageLocation = ($(window).scrollTop() + $(window).height());
-    console.log(pageLocation);
     this.setState({
       moveThis: moveThis,
-      // showDef: true // this is setting showDef as true for element being clicked not element it is scrolling to
     });
     var moveIt = '#' + moveThis;
-    // TODO: when it scrolls to the thing set showDef to true
-    // TODO: in alphabet needs to reset to full page then go click
     var change = $(moveIt).offset().top - 200;
     $('html, body').animate({scrollTop: change }, 'slow');
     if (pageLocation < change) {
-      this.setState({ showDef: true });
+      // this.setState({ showDef: true });
+      // showDef = true;
+      // console.log(showDef);
     } else {}
   },
   

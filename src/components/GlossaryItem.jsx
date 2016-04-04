@@ -1,25 +1,21 @@
 var React = require('react');
 
 var GlossaryItem = React.createClass({
-  getInitialState: function() {
-      return { showDef: false }
+  // getInitialState: function() {
+  //     // return { visibility: 'hidden' }
+  // },
+  
+  onClick: function(element) {
+    var stuff = document.getElementById(this.props.id);
+    $(stuff).toggleClass('hideMe');
   },
   
-  onClick: function() {
-    if (this.state.showDef == false ){
-      this.setState({showDef: true});
-    } else {
-      this.setState({ showDef: false })
-    }
-  },
-  
-  clickMove: function(e) {
-    e.preventDefault();
-    moveThis = this.props.seealso;
-    showDef = true;
-    this.props.onValueChange(moveThis, showDef);
-  },
-  // if showDef wasnt a state but a class that toggled on and off on click then it would be a lot easier (maybe) to turn it off when you scroll to a thing
+  // clickMove: function(e) {
+  //   e.preventDefault();
+  //   moveThis = this.props.seealso;
+  //   showDef = true;
+  //   this.props.onValueChange(moveThis, showDef);
+  // },
 
   render: function()  {
     
@@ -32,16 +28,14 @@ var GlossaryItem = React.createClass({
     };
     
     return (
-      <div>
-        <h4 id={this.props.title} onClick={this.onClick} style={titleStyle}>{this.props.title}</h4>
-        { this.state.showDef ? 
+      <div className="hideMe" id={this.props.id}>
+        <h4 className="child" onClick={this.onClick} style={titleStyle}>{this.props.title}</h4>
           <div>
             <p style={defStyle}>{this.props.content}</p>
             <p style={defStyle}><strong>See Also</strong>:  
               {<a onClick={this.clickMove} href={'#' + this.props.seealso}>{this.props.seealso}</a>}
             </p>
           </div>
-          : null }
       </div>
     );
   }

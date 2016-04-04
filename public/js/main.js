@@ -19217,18 +19217,16 @@ var Glossary = React.createClass({
 
   handleMoveClick: function (element, showDef) {
     var pageLocation = $(window).scrollTop() + $(window).height();
-    console.log(pageLocation);
     this.setState({
       moveThis: moveThis
     });
-    // showDef: true // this is setting showDef as true for element being clicked not element it is scrolling to
     var moveIt = '#' + moveThis;
-    // TODO: when it scrolls to the thing set showDef to true
-    // TODO: in alphabet needs to reset to full page then go click
     var change = $(moveIt).offset().top - 200;
     $('html, body').animate({ scrollTop: change }, 'slow');
     if (pageLocation < change) {
-      this.setState({ showDef: true });
+      // this.setState({ showDef: true });
+      // showDef = true;
+      // console.log(showDef);
     } else {}
   },
 
@@ -19264,25 +19262,21 @@ var React = require('react');
 var GlossaryItem = React.createClass({
   displayName: 'GlossaryItem',
 
-  getInitialState: function () {
-    return { showDef: false };
+  // getInitialState: function() {
+  //     // return { visibility: 'hidden' }
+  // },
+
+  onClick: function (element) {
+    var stuff = document.getElementById(this.props.id);
+    $(stuff).toggleClass('hideMe');
   },
 
-  onClick: function () {
-    if (this.state.showDef == false) {
-      this.setState({ showDef: true });
-    } else {
-      this.setState({ showDef: false });
-    }
-  },
-
-  clickMove: function (e) {
-    e.preventDefault();
-    moveThis = this.props.seealso;
-    showDef = true;
-    this.props.onValueChange(moveThis, showDef);
-  },
-  // if showDef wasnt a state but a class that toggled on and off on click then it would be a lot easier (maybe) to turn it off when you scroll to a thing
+  // clickMove: function(e) {
+  //   e.preventDefault();
+  //   moveThis = this.props.seealso;
+  //   showDef = true;
+  //   this.props.onValueChange(moveThis, showDef);
+  // },
 
   render: function () {
 
@@ -19296,13 +19290,13 @@ var GlossaryItem = React.createClass({
 
     return React.createElement(
       'div',
-      null,
+      { className: 'hideMe', id: this.props.id },
       React.createElement(
         'h4',
-        { id: this.props.title, onClick: this.onClick, style: titleStyle },
+        { className: 'child', onClick: this.onClick, style: titleStyle },
         this.props.title
       ),
-      this.state.showDef ? React.createElement(
+      React.createElement(
         'div',
         null,
         React.createElement(
@@ -19325,7 +19319,7 @@ var GlossaryItem = React.createClass({
             this.props.seealso
           )
         )
-      ) : null
+      )
     );
   }
 });
