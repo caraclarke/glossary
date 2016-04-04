@@ -11,7 +11,7 @@ var Glossary = React.createClass({
       }
   },
   
-  handleMoveClick: function(element, showDef) {
+  handleMoveClick: function(element) {
     var pageLocation = ($(window).scrollTop() + $(window).height());
     this.setState({
       moveThis: moveThis,

@@ -19215,7 +19215,7 @@ var Glossary = React.createClass({
     };
   },
 
-  handleMoveClick: function (element, showDef) {
+  handleMoveClick: function (element) {
     var pageLocation = $(window).scrollTop() + $(window).height();
     this.setState({
       moveThis: moveThis
@@ -19262,21 +19262,21 @@ var React = require('react');
 var GlossaryItem = React.createClass({
   displayName: 'GlossaryItem',
 
-  // getInitialState: function() {
-  //     // return { visibility: 'hidden' }
-  // },
+
+  getInitialState: function () {
+    return { moveThis: '' };
+  },
 
   onClick: function (element) {
     var stuff = document.getElementById(this.props.id);
     $(stuff).toggleClass('hideMe');
   },
 
-  // clickMove: function(e) {
-  //   e.preventDefault();
-  //   moveThis = this.props.seealso;
-  //   showDef = true;
-  //   this.props.onValueChange(moveThis, showDef);
-  // },
+  clickMove: function (e) {
+    e.preventDefault();
+    moveThis = this.props.seealso;
+    this.props.onValueChange(moveThis);
+  },
 
   render: function () {
 
