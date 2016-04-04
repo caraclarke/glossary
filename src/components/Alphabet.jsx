@@ -7,10 +7,11 @@ var Alphabet = React.createClass({
   
   render: function() {
     var alphabetNodes = this.props.data.map(function(data, index) {
+      // console.log(data);
       if (data.title.$t.match(regex) == alphId) {
         if ((/(\[\[Glossary:\s)/g).test(data.content.$t) == true) {
           var seeAlsoReplace = data.gsx$seealso.$t;
-          var replacement = data.content.$t.replace(/(\[\[Glossary:\s)/g, "").replace(/[a-zA-z]+\]([a-zA-Z]+)(\s[a-zA-Z]+)*\]/g, seeAlsoReplace);
+          var replacement = data.content.$t.replace(/(\[\[Glossary:\s)(.+\])(.+)\]/g, seeAlsoReplace);
           return <GlossaryItem key={index} id={data.title.$t} title={data.title.$t} content={replacement} seealso={data.gsx$seealso.$t} />
         } else {
           return <GlossaryItem key={index} id={data.title.$t} title={data.title.$t} content={data.content.$t} seealso={data.gsx$seealso.$t} />

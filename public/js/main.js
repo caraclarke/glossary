@@ -19042,10 +19042,11 @@ var Alphabet = React.createClass({
 
   render: function () {
     var alphabetNodes = this.props.data.map(function (data, index) {
+      // console.log(data);
       if (data.title.$t.match(regex) == alphId) {
         if (/(\[\[Glossary:\s)/g.test(data.content.$t) == true) {
           var seeAlsoReplace = data.gsx$seealso.$t;
-          var replacement = data.content.$t.replace(/(\[\[Glossary:\s)/g, "").replace(/[a-zA-z]+\]([a-zA-Z]+)(\s[a-zA-Z]+)*\]/g, seeAlsoReplace);
+          var replacement = data.content.$t.replace(/(\[\[Glossary:\s)(.+\])(.+)\]/g, seeAlsoReplace);
           return React.createElement(GlossaryItem, { key: index, id: data.title.$t, title: data.title.$t, content: replacement, seealso: data.gsx$seealso.$t });
         } else {
           return React.createElement(GlossaryItem, { key: index, id: data.title.$t, title: data.title.$t, content: data.content.$t, seealso: data.gsx$seealso.$t });
@@ -19234,7 +19235,7 @@ var Glossary = React.createClass({
       if (/(\[\[Glossary:\s)/g.test(data.content.$t) == true) {
         var seeAlsoReplace = data.gsx$seealso.$t;
         // get rid of [[Glossary: etc text with regex, replace with see also term
-        var replacement = data.content.$t.replace(/(\[\[Glossary:\s)/g, "").replace(/[a-zA-z]+\]([a-zA-Z]+)(\s[a-zA-Z]+)*\]/g, seeAlsoReplace);
+        var replacement = data.content.$t.replace(/(\[\[Glossary:\s)(.+\])(.+)\]/g, seeAlsoReplace);
         // returning glossary item with edited content
         return React.createElement(GlossaryItem, { onValueChange: this.handleMoveClick, key: index, id: data.title.$t, title: data.title.$t, content: replacement, seealso: data.gsx$seealso.$t });
       } else {
