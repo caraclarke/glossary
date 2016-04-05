@@ -20,11 +20,10 @@ var GlossaryItem = React.createClass({
   
   clickMove: function(item, e) {
     e.preventDefault();
+    
     var clickedElement = document.getElementById(this.props.id);
     $(clickedElement).toggleClass('hideMe');
-    // this.props.seealso will make it have the correct action
-    // the problem is when you click a link thats part of an array seealso is the whole array
-    // we need to know how to find which one was clicked
+    
     moveThis = item;
     this.props.onValueChange(moveThis);
   },
