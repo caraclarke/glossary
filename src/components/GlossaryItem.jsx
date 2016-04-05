@@ -18,14 +18,20 @@ var GlossaryItem = React.createClass({
     }
   },
   
-  clickMove: function() {
+  clickMove: function(item, e) {
+    e.preventDefault();
     var clickedElement = document.getElementById(this.props.id);
     $(clickedElement).toggleClass('hideMe');
-    moveThis = this.props.seealso;
+    // this.props.seealso will make it have the correct action
+    // the problem is when you click a link thats part of an array seealso is the whole array
+    // we need to know how to find which one was clicked
+    moveThis = item;
     this.props.onValueChange(moveThis);
   },
 
   render: function()  {
+    
+    var self = this;
     
     var titleStyle = {
         cursor: 'pointer'
@@ -35,16 +41,21 @@ var GlossaryItem = React.createClass({
       paddingLeft: 25
     };
     
+    var seeAlsoNodes = this.props.seealso.map(function(item, index) {
+      return (
+        <a onClick={self.clickMove.bind(null, item)} key={item + index} href={'#'+item} id={item}>{item}</a>
+      );
+    }, this
+  );
+    
     return (
       <div className="hideMe" id={this.props.id}>
         <h4 onClick={this.onClick} style={titleStyle}>{this.props.title}</h4>
           <div>
             <p style={defStyle}>{this.props.content}</p>
-            <p style={defStyle}><strong>See Also</strong>:  
-            {this.props.seealso.map(function(item, index) {
-              return <a onClick={this.clickMove} key={index} href={'#'+item}>{item}</a>
-            })}
-            </p>
+            <div style={defStyle}><strong>See Also</strong>:  
+            {seeAlsoNodes}
+            </div>
           </div>
       </div>
     );
