@@ -19042,14 +19042,14 @@ var Alphabet = React.createClass({
 
   render: function () {
     var alphabetNodes = this.props.data.map(function (data, index) {
-      // console.log(data);
+      var seeAlsoReplace = data.gsx$seealso.$t;
+      var seeAlsoArray = seeAlsoReplace.trim().split(', ');
       if (data.title.$t.match(regex) == alphId) {
         if (/(\[\[Glossary:\s)/g.test(data.content.$t) == true) {
-          var seeAlsoReplace = data.gsx$seealso.$t;
           var replacement = data.content.$t.replace(/(\[\[Glossary:\s)(.+\])(.+)\]/g, seeAlsoReplace).replace(/(\,\s)(seealso:\s)+(.+)*/g, '');
-          return React.createElement(GlossaryItem, { key: index, id: data.title.$t, title: data.title.$t, content: replacement, seealso: data.gsx$seealso.$t });
+          return React.createElement(GlossaryItem, { onValueChange: this.handleMoveClick, key: index, id: data.title.$t, title: data.title.$t, content: replacement, seealso: seeAlsoArray });
         } else {
-          return React.createElement(GlossaryItem, { key: index, id: data.title.$t, title: data.title.$t, content: data.content.$t, seealso: data.gsx$seealso.$t });
+          return React.createElement(GlossaryItem, { key: index, id: data.title.$t, title: data.title.$t, content: data.content.$t, seealso: seeAlsoArray });
         }
       } else {}
     });
@@ -19069,6 +19069,7 @@ module.exports = Alphabet;
 },{"./GlossaryItem.jsx":162,"./nav/NavItem.jsx":163,"react":157}],160:[function(require,module,exports){
 var React = require('react');
 var NavItem = require('./nav/NavItem.jsx');
+var Alphabet = require('./Alphabet.jsx');
 var Glossary = require('./Glossary.jsx');
 
 var BasePage = React.createClass({
@@ -19186,7 +19187,7 @@ var BasePage = React.createClass({
           React.createElement(
             'div',
             { className: 'col-sm-10 col-md-10' },
-            React.createElement(Glossary, { data: this.state.data })
+            this.state.alphId ? React.createElement(Alphabet, { data: this.state.data }) : React.createElement(Glossary, { data: this.state.data })
           )
         )
       )
@@ -19197,7 +19198,7 @@ var BasePage = React.createClass({
 
 module.exports = BasePage;
 
-},{"./Glossary.jsx":161,"./nav/NavItem.jsx":163,"react":157}],161:[function(require,module,exports){
+},{"./Alphabet.jsx":159,"./Glossary.jsx":161,"./nav/NavItem.jsx":163,"react":157}],161:[function(require,module,exports){
 var React = require('react');
 var GlossaryItem = require('./GlossaryItem.jsx');
 var regex = new RegExp('^[a-zA-Z]');
@@ -19235,14 +19236,15 @@ var Glossary = React.createClass({
   render: function () {
 
     var glossaryNodes = this.props.data.map(function (data, index) {
+      var seeAlsoReplace = data.gsx$seealso.$t;
+      var seeAlsoArray = seeAlsoReplace.split(', ');
       if (/(\[\[Glossary:\s)/g.test(data.content.$t) == true) {
-        var seeAlsoReplace = data.gsx$seealso.$t;
         // get rid of [[Glossary: etc text with regex, replace with see also term
         var replacement = data.content.$t.replace(/(\[\[Glossary:\s)(.+\])(.+)\]/g, seeAlsoReplace).replace(/(\,\s)(seealso:\s)+(.+)*/g, '');
         // returning glossary item with edited content
-        return React.createElement(GlossaryItem, { onValueChange: this.handleMoveClick, key: index, id: data.title.$t, title: data.title.$t, content: replacement, seealso: data.gsx$seealso.$t });
+        return React.createElement(GlossaryItem, { onValueChange: this.handleMoveClick, key: index, id: data.title.$t, title: data.title.$t, content: replacement, seealso: seeAlsoArray });
       } else {
-        return React.createElement(GlossaryItem, { onValueChange: this.handleMoveClick, key: index, id: data.title.$t, title: data.title.$t, content: data.content.$t, seealso: data.gsx$seealso.$t });
+        return React.createElement(GlossaryItem, { onValueChange: this.handleMoveClick, key: index, id: data.title.$t, title: data.title.$t, content: data.content.$t, seealso: seeAlsoArray });
       }
     }.bind(this));
 
@@ -19323,11 +19325,13 @@ var GlossaryItem = React.createClass({
             'See Also'
           ),
           ':',
-          React.createElement(
-            'a',
-            { onClick: this.clickMove, href: '#' + this.props.seealso },
-            this.props.seealso
-          )
+          this.props.seealso.map(function (item, index) {
+            return React.createElement(
+              'a',
+              { onClick: this.clickMove, key: index, href: '#' + item },
+              item
+            );
+          })
         )
       )
     );

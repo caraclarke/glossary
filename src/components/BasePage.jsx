@@ -1,5 +1,6 @@
 var React = require('react');
 var NavItem = require('./nav/NavItem.jsx');
+var Alphabet = require('./Alphabet.jsx');
 var Glossary = require('./Glossary.jsx');
 
 var BasePage = React.createClass({
@@ -96,7 +97,7 @@ var BasePage = React.createClass({
         <div className="container" style={style}>
           <div className="row">
             <div className="col-sm-10 col-md-10">
-            <Glossary data={this.state.data} />
+            { this.state.alphId ? <Alphabet data={this.state.data} /> : <Glossary  data={this.state.data} /> }
             </div>
           </div>
         </div>

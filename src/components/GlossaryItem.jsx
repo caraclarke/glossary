@@ -41,7 +41,9 @@ var GlossaryItem = React.createClass({
           <div>
             <p style={defStyle}>{this.props.content}</p>
             <p style={defStyle}><strong>See Also</strong>:  
-              {<a onClick={this.clickMove} href={'#' + this.props.seealso}>{this.props.seealso}</a>}
+            {this.props.seealso.map(function(item, index) {
+              return <a onClick={this.clickMove} key={index} href={'#'+item}>{item}</a>
+            })}
             </p>
           </div>
       </div>
