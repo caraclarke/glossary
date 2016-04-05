@@ -19,7 +19,7 @@ var Glossary = React.createClass({
     
     if (pageLocation < change) {
       var newElement = document.getElementById(moveThis);
-      var classCheck = newElement.getAttribute("class")
+      var classCheck = newElement.getAttribute("class");
       if (classCheck == "hideMe") {
         newElement.className = "";
       } else {
