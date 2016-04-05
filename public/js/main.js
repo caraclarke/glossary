@@ -19289,7 +19289,6 @@ var GlossaryItem = React.createClass({
     $(clickedElement).toggleClass('hideMe');
 
     moveThis = item;
-    console.log(moveThis);
     this.props.onValueChange(moveThis);
   },
 
@@ -19306,7 +19305,7 @@ var GlossaryItem = React.createClass({
     var seeAlsoNodes = this.props.seealso.map(function (item, index) {
       return React.createElement(
         'a',
-        { onClick: this.clickMove.bind(null, item), key: item + index, href: '#' + item },
+        { onClick: this.clickMove.bind(null, item), key: item + index },
         item
       );
     }, this);
