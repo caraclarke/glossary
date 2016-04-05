@@ -19070,9 +19070,6 @@ module.exports = Alphabet;
 var React = require('react');
 var NavItem = require('./nav/NavItem.jsx');
 var Glossary = require('./Glossary.jsx');
-var Alphabet = require('./Alphabet.jsx');
-var GlossaryItem = require('./GlossaryItem.jsx');
-var regex = new RegExp('^[a-zA-Z]');
 
 var BasePage = React.createClass({
   displayName: 'BasePage',
@@ -19189,7 +19186,7 @@ var BasePage = React.createClass({
           React.createElement(
             'div',
             { className: 'col-sm-10 col-md-10' },
-            this.state.alphId ? React.createElement(Alphabet, { data: this.state.data }) : React.createElement(Glossary, { data: this.state.data })
+            React.createElement(Glossary, { data: this.state.data })
           )
         )
       )
@@ -19200,7 +19197,7 @@ var BasePage = React.createClass({
 
 module.exports = BasePage;
 
-},{"./Alphabet.jsx":159,"./Glossary.jsx":161,"./GlossaryItem.jsx":162,"./nav/NavItem.jsx":163,"react":157}],161:[function(require,module,exports){
+},{"./Glossary.jsx":161,"./nav/NavItem.jsx":163,"react":157}],161:[function(require,module,exports){
 var React = require('react');
 var GlossaryItem = require('./GlossaryItem.jsx');
 var regex = new RegExp('^[a-zA-Z]');
