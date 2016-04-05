@@ -33,14 +33,15 @@ var Glossary = React.createClass({
   render: function() {
     
     var glossaryNodes = this.props.data.map(function(data, index) {
+      var seeAlsoReplace = data.gsx$seealso.$t;
+      var seeAlsoArray = seeAlsoReplace.split(', ');
       if ((/(\[\[Glossary:\s)/g).test(data.content.$t) == true) {
-        var seeAlsoReplace = data.gsx$seealso.$t;
         // get rid of [[Glossary: etc text with regex, replace with see also term
         var replacement = data.content.$t.replace(/(\[\[Glossary:\s)(.+\])(.+)\]/g, seeAlsoReplace).replace(/(\,\s)(seealso:\s)+(.+)*/g, '');
         // returning glossary item with edited content
-        return <GlossaryItem onValueChange={this.handleMoveClick} key={index} id={data.title.$t} title={data.title.$t} content={replacement} seealso={data.gsx$seealso.$t} />
+        return <GlossaryItem onValueChange={this.handleMoveClick} key={index} id={data.title.$t} title={data.title.$t} content={replacement} seealso={seeAlsoArray} />
       } else {
-        return <GlossaryItem onValueChange={this.handleMoveClick} key={index} id={data.title.$t} title={data.title.$t} content={data.content.$t} seealso={data.gsx$seealso.$t} />
+        return <GlossaryItem onValueChange={this.handleMoveClick} key={index} id={data.title.$t} title={data.title.$t} content={data.content.$t} seealso={seeAlsoArray} />
       }
     }.bind(this));
     

@@ -19042,14 +19042,14 @@ var Alphabet = React.createClass({
 
   render: function () {
     var alphabetNodes = this.props.data.map(function (data, index) {
-      // console.log(data);
+      var seeAlsoReplace = data.gsx$seealso.$t;
+      var seeAlsoArray = seeAlsoReplace.trim().split(', ');
       if (data.title.$t.match(regex) == alphId) {
         if (/(\[\[Glossary:\s)/g.test(data.content.$t) == true) {
-          var seeAlsoReplace = data.gsx$seealso.$t;
           var replacement = data.content.$t.replace(/(\[\[Glossary:\s)(.+\])(.+)\]/g, seeAlsoReplace).replace(/(\,\s)(seealso:\s)+(.+)*/g, '');
-          return React.createElement(GlossaryItem, { key: index, id: data.title.$t, title: data.title.$t, content: replacement, seealso: data.gsx$seealso.$t });
+          return React.createElement(GlossaryItem, { onValueChange: this.handleMoveClick, key: index, id: data.title.$t, title: data.title.$t, content: replacement, seealso: seeAlsoArray });
         } else {
-          return React.createElement(GlossaryItem, { key: index, id: data.title.$t, title: data.title.$t, content: data.content.$t, seealso: data.gsx$seealso.$t });
+          return React.createElement(GlossaryItem, { key: index, id: data.title.$t, title: data.title.$t, content: data.content.$t, seealso: seeAlsoArray });
         }
       } else {}
     });
@@ -19238,14 +19238,15 @@ var Glossary = React.createClass({
   render: function () {
 
     var glossaryNodes = this.props.data.map(function (data, index) {
+      var seeAlsoReplace = data.gsx$seealso.$t;
+      var seeAlsoArray = seeAlsoReplace.split(', ');
       if (/(\[\[Glossary:\s)/g.test(data.content.$t) == true) {
-        var seeAlsoReplace = data.gsx$seealso.$t;
         // get rid of [[Glossary: etc text with regex, replace with see also term
         var replacement = data.content.$t.replace(/(\[\[Glossary:\s)(.+\])(.+)\]/g, seeAlsoReplace).replace(/(\,\s)(seealso:\s)+(.+)*/g, '');
         // returning glossary item with edited content
-        return React.createElement(GlossaryItem, { onValueChange: this.handleMoveClick, key: index, id: data.title.$t, title: data.title.$t, content: replacement, seealso: data.gsx$seealso.$t });
+        return React.createElement(GlossaryItem, { onValueChange: this.handleMoveClick, key: index, id: data.title.$t, title: data.title.$t, content: replacement, seealso: seeAlsoArray });
       } else {
-        return React.createElement(GlossaryItem, { onValueChange: this.handleMoveClick, key: index, id: data.title.$t, title: data.title.$t, content: data.content.$t, seealso: data.gsx$seealso.$t });
+        return React.createElement(GlossaryItem, { onValueChange: this.handleMoveClick, key: index, id: data.title.$t, title: data.title.$t, content: data.content.$t, seealso: seeAlsoArray });
       }
     }.bind(this));
 
@@ -19326,11 +19327,13 @@ var GlossaryItem = React.createClass({
             'See Also'
           ),
           ':',
-          React.createElement(
-            'a',
-            { onClick: this.clickMove, href: '#' + this.props.seealso },
-            this.props.seealso
-          )
+          this.props.seealso.map(function (item, index) {
+            return React.createElement(
+              'a',
+              { onClick: this.clickMove, href: '#' + item, key: item },
+              item
+            );
+          })
         )
       )
     );
