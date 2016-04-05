@@ -19,18 +19,16 @@ var GlossaryItem = React.createClass({
   },
   
   clickMove: function(item, e) {
-    e.preventDefault();
     
     var clickedElement = document.getElementById(this.props.id);
     $(clickedElement).toggleClass('hideMe');
     
     moveThis = item;
+    console.log(moveThis);
     this.props.onValueChange(moveThis);
   },
 
   render: function()  {
-    
-    var self = this;
     
     var titleStyle = {
         cursor: 'pointer'
@@ -42,7 +40,7 @@ var GlossaryItem = React.createClass({
     
     var seeAlsoNodes = this.props.seealso.map(function(item, index) {
       return (
-        <a onClick={self.clickMove.bind(null, item)} key={item + index} href={'#'+item} id={item}>{item}</a>
+        <a onClick={this.clickMove.bind(null, item)} key={item + index} href={'#'+item}>{item}</a>
       );
     }, this
   );

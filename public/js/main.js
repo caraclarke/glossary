@@ -19231,6 +19231,7 @@ var Glossary = React.createClass({
     } else {
       console.log('check Glossary.jsx error');
     }
+    this.setState({ moveThis: '' });
   },
 
   render: function () {
@@ -19283,10 +19284,13 @@ var GlossaryItem = React.createClass({
     }
   },
 
-  clickMove: function () {
+  clickMove: function (item, e) {
+
     var clickedElement = document.getElementById(this.props.id);
     $(clickedElement).toggleClass('hideMe');
-    moveThis = this.props.seealso;
+
+    moveThis = item;
+    console.log(moveThis);
     this.props.onValueChange(moveThis);
   },
 
@@ -19299,6 +19303,14 @@ var GlossaryItem = React.createClass({
     var defStyle = {
       paddingLeft: 25
     };
+
+    var seeAlsoNodes = this.props.seealso.map(function (item, index) {
+      return React.createElement(
+        'a',
+        { onClick: this.clickMove.bind(null, item), key: item + index, href: '#' + item },
+        item
+      );
+    }, this);
 
     return React.createElement(
       'div',
@@ -19317,7 +19329,7 @@ var GlossaryItem = React.createClass({
           this.props.content
         ),
         React.createElement(
-          'p',
+          'div',
           { style: defStyle },
           React.createElement(
             'strong',
@@ -19325,13 +19337,7 @@ var GlossaryItem = React.createClass({
             'See Also'
           ),
           ':',
-          this.props.seealso.map(function (item, index) {
-            return React.createElement(
-              'a',
-              { onClick: this.clickMove, key: index, href: '#' + item },
-              item
-            );
-          })
+          seeAlsoNodes
         )
       )
     );

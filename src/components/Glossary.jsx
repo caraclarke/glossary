@@ -28,6 +28,7 @@ var Glossary = React.createClass({
     } else {
       console.log('check Glossary.jsx error');
     }
+    this.setState({ moveThis: '' });
   },
   
   render: function() {
