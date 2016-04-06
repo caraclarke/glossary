@@ -138,7 +138,7 @@ var BasePage = React.createClass({
         <div className="container" style={style}>
           <div className="row">
             <div className="col-sm-10 col-md-10">
-              <Glossary data={this.state.data} />
+              <Glossary data={this.state.data} constantArray={this.state.constantArray} />
             </div>
           </div>
         </div>

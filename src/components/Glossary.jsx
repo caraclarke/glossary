@@ -12,7 +12,7 @@ var Glossary = React.createClass({
   
   // clickHandler to handle moveThis passed up from GlossaryItem
   handleMoveClick: function(element) {
-    
+
     // get current page location
     var pageLocation = ($(window).scrollTop() + $(window).height());
     

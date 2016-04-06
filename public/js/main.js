@@ -19192,7 +19192,7 @@ var BasePage = React.createClass({
           React.createElement(
             'div',
             { className: 'col-sm-10 col-md-10' },
-            React.createElement(Glossary, { data: this.state.data })
+            React.createElement(Glossary, { data: this.state.data, constantArray: this.state.constantArray })
           )
         )
       )
@@ -19333,6 +19333,7 @@ var GlossaryItem = React.createClass({
       paddingRight: 5
     };
 
+    // check if array has more than one element
     var multiple = this.props.seealso.length >= 2;
 
     // indent definition left 25px
