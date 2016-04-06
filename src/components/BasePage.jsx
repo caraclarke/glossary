@@ -61,7 +61,6 @@ var BasePage = React.createClass({
     this.setState({ alphId: alphId });
 
     var alphArray = [];
-    // var oldArray = [];
     // reset data to whole data array from google everytime
     this.state.data = this.state.constantArray;
     

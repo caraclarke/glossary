@@ -19095,7 +19095,6 @@ var BasePage = React.createClass({
     this.setState({ alphId: alphId });
 
     var alphArray = [];
-    var oldArray = [];
     // reset data to whole data array from google everytime
     this.state.data = this.state.constantArray;
 
@@ -19221,7 +19220,6 @@ var Glossary = React.createClass({
   // clickHandler to handle moveThis passed up from GlossaryItem
   handleMoveClick: function (element) {
 
-    // get current page location
     var pageLocation = $(window).scrollTop() + $(window).height();
 
     // set moveThis to moveThis recieved from GlossaryItem
@@ -19243,6 +19241,8 @@ var Glossary = React.createClass({
 
     // map data passed from BasePage, return individual <GlossaryItem />
     var glossaryNodes = this.props.data.map(function (data, index) {
+      // console.log(this.props.constantArray[1].title);
+
       // get see also terms from google object
       var seeAlsoReplace = data.gsx$seealso.$t;
 
@@ -19314,7 +19314,7 @@ var GlossaryItem = React.createClass({
     var clickedElement = document.getElementById(this.props.id);
     $(clickedElement).toggleClass('hideMe');
 
-    // get rid of spaces in <a /> id
+    // get rid of spaces in <a /> id and turn to lower case
     // assign to moveThis and pass to parent <Glossary />
     moveThis = item.split(' ').join('').toLowerCase();
     this.props.onValueChange(moveThis);
