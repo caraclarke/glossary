@@ -19076,6 +19076,8 @@ var BasePage = React.createClass({
   displayName: 'BasePage',
 
 
+  // data from google spreadsheet, navLinks for navbar,
+  // alphId to filter, moveThis to scroll to seealso term
   getInitialState: function () {
     return {
       data: [],
@@ -19091,6 +19093,7 @@ var BasePage = React.createClass({
       dataType: 'json',
       cache: false,
       success: function (data) {
+        // set data to data array recieved from google spreadsheet
         this.setState({ data: data.feed.entry });
       }.bind(this),
       error: function (xhr, status, err) {
@@ -19099,9 +19102,11 @@ var BasePage = React.createClass({
       }.bind(this)
     });
 
+    // split alphabet into array
     var alph = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('');
     var tempArray = [];
 
+    // loop through alphabet and push into temp array with keys and values
     for (var i = 0; i < alph.length; i++) {
       tempArray.push({
         href: alph[i],
@@ -19109,19 +19114,24 @@ var BasePage = React.createClass({
         id: alph[i]
       });
     }
+    // set state of navLinks from temporary array
     this.setState({ navLinks: tempArray });
   },
 
+  // set state in basePage of alphId so it knows to switch to <Alphabet />
   handleChildClick: function (event) {
     this.setState({ alphId: alphId });
   },
 
+  // click Glossary title to get rid of alphId and reset it to showing all terms
   resetAllTerms: function (event) {
     this.setState({ alphId: '' });
   },
 
   render: function () {
 
+    // styling for navbar below
+    // can pass in colors in main.jsx <BasePage />
     var style = {
       paddingTop: 15
     };
@@ -19136,12 +19146,14 @@ var BasePage = React.createClass({
     var titleStyle = {};
     var linkStyle = {};
 
+    // three if statements below changing nav background, link (navLink) and title colors
     if (this.props.bgColor) navStyle.background = this.props.bgColor;
 
     if (this.props.titleColor) titleStyle.color = this.props.titleColor;
 
     if (this.props.linkColor) linkStyle.color = this.props.linkColor;
 
+    // map navLinks, return <NavItem /> to be rendered
     var createLinkItem = this.state.navLinks.map(function (item, alphId, index) {
       return React.createElement(NavItem, { onValueChange: this.handleChildClick, aStyle: linkStyle, key: item.title + index, id: item.id, title: item.title });
     }.bind(this));
@@ -19207,32 +19219,34 @@ var Glossary = React.createClass({
   displayName: 'Glossary',
 
 
+  // initial state of variable to move is empty
   getInitialState: function () {
     return { moveThis: '' };
   },
 
+  // clickHandler to handle moveThis passed up from GlossaryItem
   handleMoveClick: function (element) {
+    // get current page location
     var pageLocation = $(window).scrollTop() + $(window).height();
 
+    // set moveThis to moveThis recieved from GlossaryItem
     this.setState({ moveThis: moveThis });
     var moveIt = $('#' + moveThis);
 
+    // scrollTop to scroll to new term
     var change = moveIt.offset().top - 200;
-
     $('html, body').animate({ scrollTop: change }, 'slow');
 
+    //  detect whether element scrolling to has "hideMe" class
+    // remove hideMe class to show or hide description
     var newElement = document.getElementById(moveThis);
     var classCheck = newElement.getAttribute("class");
-
-    if (classCheck == "hideMe") {
-      newElement.className = "";
-    } else {
-      newElement.className = "hideMe";
-    }
+    newElement.className = "";
   },
 
   render: function () {
 
+    // map data passed from BasePage, return individual <GlossaryItem />
     var glossaryNodes = this.props.data.map(function (data, index) {
       // get see also terms from google object
       var seeAlsoReplace = data.gsx$seealso.$t;
@@ -19273,15 +19287,20 @@ var GlossaryItem = React.createClass({
   displayName: 'GlossaryItem',
 
 
+  // initial state of variable to move is empty
   getInitialState: function () {
-    return {
-      moveThis: ''
-    };
+    return { moveThis: '' };
   },
 
+  // onClick to toggle visibility of definition
   onClick: function () {
+    // get id of parent class
     var parentElement = document.getElementById(this.props.id);
+    // get name of classes on parent element
     var checkClass = parentElement.getAttribute("class");
+    // toggle hideMe class
+    // responsible for showing/hiding definition
+    // hideMe is in main_style.css sheet in public folder
     if (checkClass == "hideMe") {
       parentElement.className = "";
     } else {
@@ -19289,29 +19308,42 @@ var GlossaryItem = React.createClass({
     }
   },
 
+  // click handler to help move to see also term when <a /> clicked
   clickMove: function (item, e) {
 
+    // get Id of parent element clicked,
+    // toggle the class so definition hides when scroll away
     var clickedElement = document.getElementById(this.props.id);
     $(clickedElement).toggleClass('hideMe');
 
+    // get rid of spaces in <a /> id
+    // assign to moveThis and pass to parent <Glossary />
     moveThis = item.split(' ').join('');
     this.props.onValueChange(moveThis);
   },
 
   render: function () {
 
+    // style for glossary items
     var titleStyle = {
       cursor: 'pointer'
     };
 
+    // pointer over <a /> tag
+    var seeAlsoStyle = {
+      cursor: 'pointer'
+    };
+
+    // indent definition left 25px
     var defStyle = {
       paddingLeft: 25
     };
 
+    // map array of see also terms
     var seeAlsoNodes = this.props.seealso.map(function (item, index) {
       return React.createElement(
         'a',
-        { onClick: this.clickMove.bind(null, item), key: item + index },
+        { style: seeAlsoStyle, onClick: this.clickMove.bind(null, item), key: item + index },
         item
       );
     }, this);
