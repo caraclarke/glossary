@@ -9,10 +9,13 @@ var GlossaryItem = React.createClass({
   
   // onClick to toggle visibility of definition
   onClick: function() {
+    
     // get id of parent class
     var parentElement = document.getElementById(this.props.id);
+    
     // get name of classes on parent element
-    var checkClass = parentElement.getAttribute("class")
+    var checkClass = parentElement.getAttribute("class");
+    
     // toggle hideMe class
     // responsible for showing/hiding definition
     // hideMe is in main_style.css sheet in public folder
