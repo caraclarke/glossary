@@ -19342,17 +19342,24 @@ var GlossaryItem = React.createClass({
 
     // pointer over <a /> tag
     var seeAlsoStyle = {
-      cursor: 'pointer'
+      cursor: 'pointer',
+      paddingRight: 5
     };
+
+    var multiple = this.props.seealso.length >= 2;
 
     // indent definition left 25px
     var defStyle = {
-      paddingLeft: 25
+      paddingRight: 5
     };
 
     // map array of see also terms
     var seeAlsoNodes = this.props.seealso.map(function (item, index) {
-      return React.createElement(
+      return multiple ? React.createElement(
+        'a',
+        { className: 'commaList', style: seeAlsoStyle, onClick: this.clickMove.bind(null, item), key: item + index },
+        item
+      ) : React.createElement(
         'a',
         { style: seeAlsoStyle, onClick: this.clickMove.bind(null, item), key: item + index },
         item
@@ -19377,13 +19384,17 @@ var GlossaryItem = React.createClass({
         ),
         React.createElement(
           'div',
-          { style: defStyle },
+          null,
           React.createElement(
-            'strong',
-            null,
-            'See Also'
+            'span',
+            { style: defStyle },
+            React.createElement(
+              'strong',
+              null,
+              'See Also'
+            ),
+            ':'
           ),
-          ':',
           seeAlsoNodes
         )
       )
