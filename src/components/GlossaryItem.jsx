@@ -2,15 +2,20 @@ var React = require('react');
 
 var GlossaryItem = React.createClass({
   
+  // initial state of variable to move is empty
   getInitialState: function() {
-    return {
-      moveThis: ''
-    }
+    return { moveThis: '' }
   },
   
+  // onClick to toggle visibility of definition
   onClick: function() {
+    // get id of parent class
     var parentElement = document.getElementById(this.props.id);
+    // get name of classes on parent element
     var checkClass = parentElement.getAttribute("class")
+    // toggle hideMe class
+    // responsible for showing/hiding definition
+    // hideMe is in main_style.css sheet in public folder
     if (checkClass == "hideMe") {
       parentElement.className = "";
     } else {
@@ -18,28 +23,41 @@ var GlossaryItem = React.createClass({
     }
   },
   
+  // click handler to help move to see also term when <a /> clicked
   clickMove: function(item, e) {
     
+    // get Id of parent element clicked,
+    // toggle the class so definition hides when scroll away
     var clickedElement = document.getElementById(this.props.id);
     $(clickedElement).toggleClass('hideMe');
     
+    // get rid of spaces in <a /> id
+    // assign to moveThis and pass to parent <Glossary />
     moveThis = item.split(' ').join('');
     this.props.onValueChange(moveThis);
   },
 
   render: function()  {
     
+    // style for glossary items
     var titleStyle = {
         cursor: 'pointer'
     };
     
+    // pointer over <a /> tag
+    var seeAlsoStyle = {
+      cursor: 'pointer'
+    }
+    
+    // indent definition left 25px
     var defStyle = {
       paddingLeft: 25
     };
     
+    // map array of see also terms
     var seeAlsoNodes = this.props.seealso.map(function(item, index) {
       return (
-        <a onClick={this.clickMove.bind(null, item)} key={item + index}>{item}</a>
+        <a style={seeAlsoStyle} onClick={this.clickMove.bind(null, item)} key={item + index}>{item}</a>
       );
     }, this
   );
