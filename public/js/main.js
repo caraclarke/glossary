@@ -19219,32 +19219,34 @@ var Glossary = React.createClass({
   displayName: 'Glossary',
 
 
+  // initial state of variable to move is empty
   getInitialState: function () {
     return { moveThis: '' };
   },
 
+  // clickHandler to handle moveThis passed up from GlossaryItem
   handleMoveClick: function (element) {
+    // get current page location
     var pageLocation = $(window).scrollTop() + $(window).height();
 
+    // set moveThis to moveThis recieved from GlossaryItem
     this.setState({ moveThis: moveThis });
     var moveIt = $('#' + moveThis);
 
+    // scrollTop to scroll to new term
     var change = moveIt.offset().top - 200;
-
     $('html, body').animate({ scrollTop: change }, 'slow');
 
+    //  detect whether element scrolling to has "hideMe" class
+    // remove hideMe class to show or hide description
     var newElement = document.getElementById(moveThis);
     var classCheck = newElement.getAttribute("class");
-
-    if (classCheck == "hideMe") {
-      newElement.className = "";
-    } else {
-      newElement.className = "hideMe";
-    }
+    newElement.className = "";
   },
 
   render: function () {
 
+    // map data passed from BasePage, return individual <GlossaryItem />
     var glossaryNodes = this.props.data.map(function (data, index) {
       // get see also terms from google object
       var seeAlsoReplace = data.gsx$seealso.$t;
