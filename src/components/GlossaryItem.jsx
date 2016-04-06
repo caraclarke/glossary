@@ -15,7 +15,7 @@ var GlossaryItem = React.createClass({
     
     // get name of classes on parent element
     var checkClass = parentElement.getAttribute("class");
-    
+
     // toggle hideMe class
     // responsible for showing/hiding definition
     // hideMe is in main_style.css sheet in public folder
@@ -53,6 +53,8 @@ var GlossaryItem = React.createClass({
       paddingRight: 5
     }
     
+    var multiple = this.props.seealso.length >= 2;
+    
     // indent definition left 25px
     var defStyle = {
       paddingRight: 5
@@ -61,7 +63,7 @@ var GlossaryItem = React.createClass({
     // map array of see also terms
     var seeAlsoNodes = this.props.seealso.map(function(item, index) {
       return (
-        <a style={seeAlsoStyle} onClick={this.clickMove.bind(null, item)} key={item + index}>{item}</a>
+        (multiple) ? <a className="commaList" style={seeAlsoStyle} onClick={this.clickMove.bind(null, item)} key={item + index}>{item}</a> : <a style={seeAlsoStyle} onClick={this.clickMove.bind(null, item)} key={item + index}>{item}</a>
       );
     }, this
   );
