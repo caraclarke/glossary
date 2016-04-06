@@ -19101,8 +19101,11 @@ var BasePage = React.createClass({
 
     // mapping data array and pushing objects that start with that letter
     this.state.data.map(function (item, index) {
+      // check first letter of title against alphId
+      // push to alphArray if it matches
       if (item.title.$t.match(regex) == alphId) {
         alphArray.push(item);
+        // set this.state.data to the array that matches alphId
         this.setState({ data: alphArray });
       }
     }.bind(this));
