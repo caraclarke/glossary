@@ -49,12 +49,13 @@ var GlossaryItem = React.createClass({
     
     // pointer over <a /> tag
     var seeAlsoStyle = {
-      cursor: 'pointer'
+      cursor: 'pointer',
+      paddingRight: 5
     }
     
     // indent definition left 25px
     var defStyle = {
-      paddingLeft: 25
+      paddingRight: 5
     };
     
     // map array of see also terms
@@ -70,7 +71,7 @@ var GlossaryItem = React.createClass({
         <h4 onClick={this.onClick} style={titleStyle}>{this.props.title}</h4>
           <div>
             <p style={defStyle}>{this.props.content}</p>
-            <div style={defStyle}><strong>See Also</strong>:  
+            <div><span style={defStyle}><strong>See Also</strong>:</span>
             {seeAlsoNodes}
             </div>
           </div>

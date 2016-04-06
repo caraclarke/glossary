@@ -19342,12 +19342,13 @@ var GlossaryItem = React.createClass({
 
     // pointer over <a /> tag
     var seeAlsoStyle = {
-      cursor: 'pointer'
+      cursor: 'pointer',
+      paddingRight: 5
     };
 
     // indent definition left 25px
     var defStyle = {
-      paddingLeft: 25
+      paddingRight: 5
     };
 
     // map array of see also terms
@@ -19377,13 +19378,17 @@ var GlossaryItem = React.createClass({
         ),
         React.createElement(
           'div',
-          { style: defStyle },
+          null,
           React.createElement(
-            'strong',
-            null,
-            'See Also'
+            'span',
+            { style: defStyle },
+            React.createElement(
+              'strong',
+              null,
+              'See Also'
+            ),
+            ':'
           ),
-          ':',
           seeAlsoNodes
         )
       )
