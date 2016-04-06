@@ -6,6 +6,7 @@ var NavItem = React.createClass({
     return { hover: false };
   },
   
+  // mouseOver and mouseOut changing state of over to change style
   mouseOver: function(e) {
     this.setState({hover: true});
   },
@@ -14,6 +15,7 @@ var NavItem = React.createClass({
     this.setState({hover: false});
   },
   
+  // click handler to pass alphId up to BasePage to filter Glossary
   handleChange: function(e) {
     alphId = this.props.id;
     this.props.onValueChange(alphId)
