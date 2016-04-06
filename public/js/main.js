@@ -19096,15 +19096,16 @@ var BasePage = React.createClass({
 
     var alphArray = [];
     var oldArray = [];
+    // reset data to whole data array from google everytime
     this.state.data = this.state.constantArray;
 
-    // looping through whole data array and pushing objects that start with that letter
-    for (var i = 0; i < this.state.data.length; i++) {
-      if (this.state.data[i].title.$t.match(regex) == alphId) {
-        alphArray.push(this.state.data[i]);
+    // mapping data array and pushing objects that start with that letter
+    this.state.data.map(function (item, index) {
+      if (item.title.$t.match(regex) == alphId) {
+        alphArray.push(item);
         this.setState({ data: alphArray });
-      } else {}
-    }
+      }
+    }.bind(this));
   },
 
   // click Glossary title to get rid of alphId and reset it to showing all terms
