@@ -6,7 +6,9 @@ var Glossary = React.createClass({
   
   // initial state of variable to move is empty
   getInitialState: function() {
-      return { moveThis: '' }
+      return { 
+        moveThis: ''
+      }
   },
   
   // clickHandler to handle moveThis passed up from GlossaryItem

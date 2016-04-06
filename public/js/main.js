@@ -19069,8 +19069,9 @@ module.exports = Alphabet;
 },{"./GlossaryItem.jsx":162,"./nav/NavItem.jsx":163,"react":157}],160:[function(require,module,exports){
 var React = require('react');
 var NavItem = require('./nav/NavItem.jsx');
-var Alphabet = require('./Alphabet.jsx');
 var Glossary = require('./Glossary.jsx');
+var regex = new RegExp('^[a-zA-Z]');
+var filter;
 
 var BasePage = React.createClass({
   displayName: 'BasePage',
@@ -19083,7 +19084,8 @@ var BasePage = React.createClass({
       data: [],
       navLinks: [],
       alphId: '',
-      moveThis: ''
+      moveThis: '',
+      constantArray: []
     };
   },
 
@@ -19094,7 +19096,10 @@ var BasePage = React.createClass({
       cache: false,
       success: function (data) {
         // set data to data array recieved from google spreadsheet
-        this.setState({ data: data.feed.entry });
+        this.setState({
+          data: data.feed.entry,
+          constantArray: data.feed.entry
+        });
       }.bind(this),
       error: function (xhr, status, err) {
         console.log('url: ', this.props.url);
@@ -19120,9 +19125,22 @@ var BasePage = React.createClass({
     this.setState({ navLinks: tempArray });
   },
 
-  // set state in basePage of alphId so it knows to switch to <Alphabet />
+  // set state in basePage of alphId
   handleChildClick: function (event) {
+
     this.setState({ alphId: alphId });
+
+    var alphArray = [];
+    var oldArray = [];
+    this.state.data = this.state.constantArray;
+
+    // looping through whole data array and pushing objects that start with that letter
+    for (var i = 0; i < this.state.data.length; i++) {
+      if (this.state.data[i].title.$t.match(regex) == alphId) {
+        alphArray.push(this.state.data[i]);
+        this.setState({ data: alphArray });
+      } else {}
+    }
   },
 
   // click Glossary title to get rid of alphId and reset it to showing all terms
@@ -19206,7 +19224,7 @@ var BasePage = React.createClass({
           React.createElement(
             'div',
             { className: 'col-sm-10 col-md-10' },
-            this.state.alphId ? React.createElement(Alphabet, { data: this.state.data }) : React.createElement(Glossary, { data: this.state.data })
+            React.createElement(Glossary, { data: this.state.data })
           )
         )
       )
@@ -19217,7 +19235,7 @@ var BasePage = React.createClass({
 
 module.exports = BasePage;
 
-},{"./Alphabet.jsx":159,"./Glossary.jsx":161,"./nav/NavItem.jsx":163,"react":157}],161:[function(require,module,exports){
+},{"./Glossary.jsx":161,"./nav/NavItem.jsx":163,"react":157}],161:[function(require,module,exports){
 var React = require('react');
 var GlossaryItem = require('./GlossaryItem.jsx');
 var regex = new RegExp('^[a-zA-Z]');
@@ -19228,7 +19246,9 @@ var Glossary = React.createClass({
 
   // initial state of variable to move is empty
   getInitialState: function () {
-    return { moveThis: '' };
+    return {
+      moveThis: ''
+    };
   },
 
   // clickHandler to handle moveThis passed up from GlossaryItem
