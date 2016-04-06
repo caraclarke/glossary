@@ -36,7 +36,7 @@ var GlossaryItem = React.createClass({
     
     // get rid of spaces in <a /> id
     // assign to moveThis and pass to parent <Glossary />
-    moveThis = item.split(' ').join('');
+    moveThis = item.split(' ').join('').toLowerCase();
     this.props.onValueChange(moveThis);
   },
 
