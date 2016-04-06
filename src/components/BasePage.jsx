@@ -75,7 +75,7 @@ var BasePage = React.createClass({
   
   // click Glossary title to get rid of alphId and reset it to showing all terms
   resetAllTerms: function(event) {
-    this.setState({ alphId: '' });
+    this.setState({ data: this.state.constantArray });
   },
 
   render: function() {
