@@ -34,7 +34,7 @@ var GlossaryItem = React.createClass({
     var clickedElement = document.getElementById(this.props.id);
     $(clickedElement).toggleClass('hideMe');
     
-    // get rid of spaces in <a /> id
+    // get rid of spaces in <a /> id and turn to lower case
     // assign to moveThis and pass to parent <Glossary />
     moveThis = item.split(' ').join('').toLowerCase();
     this.props.onValueChange(moveThis);
