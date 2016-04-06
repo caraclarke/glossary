@@ -19032,42 +19032,6 @@ process.umask = function() { return 0; };
 
 },{}],159:[function(require,module,exports){
 var React = require('react');
-var GlossaryItem = require('./GlossaryItem.jsx');
-var NavItem = require('./nav/NavItem.jsx');
-var regex = new RegExp('^[a-zA-Z]');
-
-var Alphabet = React.createClass({
-  displayName: 'Alphabet',
-
-
-  render: function () {
-    var alphabetNodes = this.props.data.map(function (data, index) {
-      var seeAlsoReplace = data.gsx$seealso.$t;
-      var seeAlsoArray = seeAlsoReplace.trim().split(', ');
-      if (data.title.$t.match(regex) == alphId) {
-        if (/(\[\[Glossary:\s)/g.test(data.content.$t) == true) {
-          var replacement = data.content.$t.replace(/(\[\[Glossary:\s)(.+\])(.+)\]/g, seeAlsoReplace).replace(/(\,\s)(seealso:\s)+(.+)*/g, '');
-          return React.createElement(GlossaryItem, { onValueChange: this.handleMoveClick, key: index, id: data.title.$t, title: data.title.$t, content: replacement, seealso: seeAlsoArray });
-        } else {
-          return React.createElement(GlossaryItem, { key: index, id: data.title.$t, title: data.title.$t, content: data.content.$t, seealso: seeAlsoArray });
-        }
-      } else {}
-    });
-
-    return React.createElement(
-      'div',
-      null,
-      ' ',
-      alphabetNodes,
-      ' '
-    );
-  }
-});
-
-module.exports = Alphabet;
-
-},{"./GlossaryItem.jsx":162,"./nav/NavItem.jsx":163,"react":157}],160:[function(require,module,exports){
-var React = require('react');
 var NavItem = require('./nav/NavItem.jsx');
 var Glossary = require('./Glossary.jsx');
 var regex = new RegExp('^[a-zA-Z]');
@@ -19145,7 +19109,7 @@ var BasePage = React.createClass({
 
   // click Glossary title to get rid of alphId and reset it to showing all terms
   resetAllTerms: function (event) {
-    this.setState({ alphId: '' });
+    this.setState({ data: this.state.constantArray });
   },
 
   render: function () {
@@ -19235,10 +19199,9 @@ var BasePage = React.createClass({
 
 module.exports = BasePage;
 
-},{"./Glossary.jsx":161,"./nav/NavItem.jsx":163,"react":157}],161:[function(require,module,exports){
+},{"./Glossary.jsx":160,"./nav/NavItem.jsx":162,"react":157}],160:[function(require,module,exports){
 var React = require('react');
 var GlossaryItem = require('./GlossaryItem.jsx');
-var regex = new RegExp('^[a-zA-Z]');
 
 var Glossary = React.createClass({
   displayName: 'Glossary',
@@ -19308,7 +19271,7 @@ var Glossary = React.createClass({
 
 module.exports = Glossary;
 
-},{"./GlossaryItem.jsx":162,"react":157}],162:[function(require,module,exports){
+},{"./GlossaryItem.jsx":161,"react":157}],161:[function(require,module,exports){
 var React = require('react');
 
 var GlossaryItem = React.createClass({
@@ -19424,22 +19387,25 @@ var GlossaryItem = React.createClass({
 
 module.exports = GlossaryItem;
 
-},{"react":157}],163:[function(require,module,exports){
+},{"react":157}],162:[function(require,module,exports){
 var React = require('react');
-var Alphabet = require('../Alphabet.jsx');
 
 var NavItem = React.createClass({
-  displayName: 'NavItem',
+  displayName: "NavItem",
+
 
   getInitialState: function () {
     return { hover: false };
   },
+
   mouseOver: function (e) {
     this.setState({ hover: true });
   },
+
   mouseOut: function (e) {
     this.setState({ hover: false });
   },
+
   handleChange: function (e) {
     alphId = this.props.id;
     this.props.onValueChange(alphId);
@@ -19447,10 +19413,10 @@ var NavItem = React.createClass({
 
   render: function () {
     return React.createElement(
-      'li',
+      "li",
       { onClick: this.handleChange, className: this.state.hover ? "active" : "", onMouseOver: this.mouseOver, onMouseOut: this.mouseOut },
       React.createElement(
-        'a',
+        "a",
         { style: this.props.aStyle, id: this.props.id },
         this.props.title
       )
@@ -19460,11 +19426,11 @@ var NavItem = React.createClass({
 
 module.exports = NavItem;
 
-},{"../Alphabet.jsx":159,"react":157}],164:[function(require,module,exports){
+},{"react":157}],163:[function(require,module,exports){
 var React = require('react');
 var ReactDOM = require('react-dom');
 var BasePage = require('./components/BasePage.jsx');
 
 ReactDOM.render(React.createElement(BasePage, { bgColor: '#fff', titleColor: '#3097d1', linkColor: '' }), document.getElementById('gloss'));
 
-},{"./components/BasePage.jsx":160,"react":157,"react-dom":1}]},{},[164]);
+},{"./components/BasePage.jsx":159,"react":157,"react-dom":1}]},{},[163]);

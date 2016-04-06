@@ -1,16 +1,19 @@
 var React = require('react');
-var Alphabet = require('../Alphabet.jsx');
 
 var NavItem = React.createClass({
+  
   getInitialState: function() {
     return { hover: false };
   },
+  
   mouseOver: function(e) {
     this.setState({hover: true});
   },
+  
   mouseOut: function(e) {
     this.setState({hover: false});
   },
+  
   handleChange: function(e) {
     alphId = this.props.id;
     this.props.onValueChange(alphId)

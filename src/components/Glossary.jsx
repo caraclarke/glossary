@@ -1,6 +1,5 @@
 var React = require('react');
 var GlossaryItem = require('./GlossaryItem.jsx');
-var regex= new RegExp('^[a-zA-Z]');
 
 var Glossary = React.createClass({
   
