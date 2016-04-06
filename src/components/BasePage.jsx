@@ -5,6 +5,8 @@ var Glossary = require('./Glossary.jsx');
 
 var BasePage = React.createClass({
   
+  // data from google spreadsheet, navLinks for navbar, 
+  // alphId to filter, moveThis to scroll to seealso term
   getInitialState: function() {
       return  {
         data: [],
@@ -20,6 +22,7 @@ var BasePage = React.createClass({
       dataType: 'json',
       cache: false,
       success: function(data) {
+        // set data to data array recieved from google spreadsheet
         this.setState({ data: data.feed.entry });
       }.bind(this),
       error: function(xhr, status, err) {
@@ -28,9 +31,11 @@ var BasePage = React.createClass({
       }.bind(this)
     });
     
+    // split alphabet into array
     var alph = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('');
     var tempArray = [];
     
+    // loop through alphabet and push into temp array with keys and values
     for (var i = 0; i < alph.length; i++) {
       tempArray.push({
         href: alph[i],
@@ -38,20 +43,25 @@ var BasePage = React.createClass({
         id: alph[i]
       })
     }
+    // set state of navLinks from temporary array
     this.setState({ navLinks: tempArray });
 
   },
   
+  // set state in basePage of alphId so it knows to switch to <Alphabet />
   handleChildClick: function(event) {
     this.setState({ alphId: alphId });
   },
   
+  // click Glossary title to get rid of alphId and reset it to showing all terms
   resetAllTerms: function(event) {
     this.setState({ alphId: '' });
   },
 
   render: function() {
     
+    // styling for navbar below
+    // can pass in colors in main.jsx <BasePage />
     var style = {
       paddingTop: 15
     }
@@ -66,6 +76,7 @@ var BasePage = React.createClass({
     var titleStyle = {};
     var linkStyle = {}
     
+    // three if statements below changing nav background, link (navLink) and title colors
     if (this.props.bgColor)
       navStyle.background = this.props.bgColor;
     
@@ -75,6 +86,7 @@ var BasePage = React.createClass({
     if (this.props.linkColor)
       linkStyle.color = this.props.linkColor;
 
+    // map navLinks, return <NavItem /> to be rendered
     var createLinkItem = this.state.navLinks.map(function(item, alphId, index) {
       return <NavItem onValueChange={this.handleChildClick} aStyle={linkStyle} key={item.title + index} id={item.id} title={item.title} />
     }.bind(this));
