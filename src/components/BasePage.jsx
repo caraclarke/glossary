@@ -36,13 +36,15 @@ var BasePage = React.createClass({
     var tempArray = [];
     
     // loop through alphabet and push into temp array with keys and values
-    for (var i = 0; i < alph.length; i++) {
+    alph.map(function(item, index) {
       tempArray.push({
-        href: alph[i],
-        title: alph[i],
-        id: alph[i]
+        href: item,
+        title: item,
+        id: item,
+        key: item + index
       })
-    }
+    });
+    
     // set state of navLinks from temporary array
     this.setState({ navLinks: tempArray });
 
@@ -73,8 +75,13 @@ var BasePage = React.createClass({
       borderRadius: 0
     };
     
-    var titleStyle = {};
-    var linkStyle = {}
+    var titleStyle = {
+      cursor: 'pointer'
+    };
+    
+    var linkStyle = {
+      cursor: 'pointer'
+    }
     
     // three if statements below changing nav background, link (navLink) and title colors
     if (this.props.bgColor)

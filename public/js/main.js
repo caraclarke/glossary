@@ -19107,13 +19107,15 @@ var BasePage = React.createClass({
     var tempArray = [];
 
     // loop through alphabet and push into temp array with keys and values
-    for (var i = 0; i < alph.length; i++) {
+    alph.map(function (item, index) {
       tempArray.push({
-        href: alph[i],
-        title: alph[i],
-        id: alph[i]
+        href: item,
+        title: item,
+        id: item,
+        key: item + index
       });
-    }
+    });
+
     // set state of navLinks from temporary array
     this.setState({ navLinks: tempArray });
   },
@@ -19143,8 +19145,13 @@ var BasePage = React.createClass({
       borderRadius: 0
     };
 
-    var titleStyle = {};
-    var linkStyle = {};
+    var titleStyle = {
+      cursor: 'pointer'
+    };
+
+    var linkStyle = {
+      cursor: 'pointer'
+    };
 
     // three if statements below changing nav background, link (navLink) and title colors
     if (this.props.bgColor) navStyle.background = this.props.bgColor;
@@ -19226,6 +19233,7 @@ var Glossary = React.createClass({
 
   // clickHandler to handle moveThis passed up from GlossaryItem
   handleMoveClick: function (element) {
+
     // get current page location
     var pageLocation = $(window).scrollTop() + $(window).height();
 
@@ -19294,10 +19302,13 @@ var GlossaryItem = React.createClass({
 
   // onClick to toggle visibility of definition
   onClick: function () {
+
     // get id of parent class
     var parentElement = document.getElementById(this.props.id);
+
     // get name of classes on parent element
     var checkClass = parentElement.getAttribute("class");
+
     // toggle hideMe class
     // responsible for showing/hiding definition
     // hideMe is in main_style.css sheet in public folder
