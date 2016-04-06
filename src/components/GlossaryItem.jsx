@@ -23,7 +23,8 @@ var GlossaryItem = React.createClass({
     var clickedElement = document.getElementById(this.props.id);
     $(clickedElement).toggleClass('hideMe');
     
-    moveThis = item;
+    moveThis = item.split(' ').join('');
+    console.log(moveThis);
     this.props.onValueChange(moveThis);
   },
 

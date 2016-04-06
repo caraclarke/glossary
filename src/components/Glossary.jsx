@@ -12,10 +12,10 @@ var Glossary = React.createClass({
     var pageLocation = ($(window).scrollTop() + $(window).height());
     
     this.setState({ moveThis: moveThis });
-    var moveIt = '#' + moveThis;
+    var moveIt = $('#' + moveThis);
     
-    var change = $(moveIt).offset().top - 200;
-    console.log('change is', change);
+    var change = moveIt.offset().top - 200;
+    
     $('html, body').animate({scrollTop: change }, 'slow');
     
       var newElement = document.getElementById(moveThis);
@@ -26,15 +26,21 @@ var Glossary = React.createClass({
       } else {
         newElement.className = "hideMe";
       }
-  //  this.setState({ moveThis: '' });
   },
   
   render: function() {
     
     var glossaryNodes = this.props.data.map(function(data, index) {
+      // get see also terms from google object
       var seeAlsoReplace = data.gsx$seealso.$t;
+      
+      // split the terms on comma and turn it into an array
       var seeAlsoArray = seeAlsoReplace.replace(/(\s\(.+\))+/g, '').split(', ');
-      var newTextId = data.title.$t.replace(/(\s\(.+\))+/g, '')
+      
+      // get rid of any parenthesis for the id, get rid of spaces
+      var newTextId = data.title.$t.replace(/(\s\(.+\))+/g, '').split(' ').join('');
+      
+      // test if the indicator for a see also term appears in the text
       if ((/(\[\[Glossary:\s)/g).test(data.content.$t) == true) {
         // get rid of [[Glossary: etc text with regex, replace with see also term
         var replacement = data.content.$t.replace(/(\[\[Glossary:\s)(.+\])(.+)\]/g, seeAlsoReplace).replace(/(\,\s)(seealso:\s)+(.+)*/g, '');
