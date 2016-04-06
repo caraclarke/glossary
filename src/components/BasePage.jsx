@@ -1,7 +1,8 @@
 var React = require('react');
 var NavItem = require('./nav/NavItem.jsx');
-var Alphabet = require('./Alphabet.jsx');
 var Glossary = require('./Glossary.jsx');
+var regex= new RegExp('^[a-zA-Z]');
+var filter;
 
 var BasePage = React.createClass({
   
@@ -12,7 +13,8 @@ var BasePage = React.createClass({
         data: [],
         navLinks: [],
         alphId: '',
-        moveThis: ''
+        moveThis: '',
+        constantArray: []
       }
   },
   
@@ -23,7 +25,10 @@ var BasePage = React.createClass({
       cache: false,
       success: function(data) {
         // set data to data array recieved from google spreadsheet
-        this.setState({ data: data.feed.entry });
+        this.setState({ 
+          data: data.feed.entry,
+          constantArray: data.feed.entry
+        });
       }.bind(this),
       error: function(xhr, status, err) {
         console.log('url: ', this.props.url);
@@ -50,9 +55,22 @@ var BasePage = React.createClass({
 
   },
   
-  // set state in basePage of alphId so it knows to switch to <Alphabet />
+  // set state in basePage of alphId
   handleChildClick: function(event) {
+    
     this.setState({ alphId: alphId });
+
+    var alphArray = [];
+    var oldArray = [];
+    this.state.data = this.state.constantArray;
+    
+    // looping through whole data array and pushing objects that start with that letter
+    for (var i = 0; i < this.state.data.length; i++) {
+        if (this.state.data[i].title.$t.match(regex) == alphId) {
+          alphArray.push(this.state.data[i]);
+          this.setState({ data: alphArray });
+        } else {}
+    }
   },
   
   // click Glossary title to get rid of alphId and reset it to showing all terms
@@ -116,7 +134,7 @@ var BasePage = React.createClass({
         <div className="container" style={style}>
           <div className="row">
             <div className="col-sm-10 col-md-10">
-            { this.state.alphId ? <Alphabet data={this.state.data} /> : <Glossary  data={this.state.data} /> }
+              <Glossary data={this.state.data} />
             </div>
           </div>
         </div>
