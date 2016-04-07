@@ -34,9 +34,9 @@ var GlossaryItem = React.createClass({
     var clickedElement = document.getElementById(this.props.id);
     $(clickedElement).toggleClass('hideMe');
     
-    // get rid of spaces in <a /> id
+    // get rid of spaces in <a /> id and turn to lower case
     // assign to moveThis and pass to parent <Glossary />
-    moveThis = item.split(' ').join('');
+    moveThis = item.split(' ').join('').toLowerCase();
     this.props.onValueChange(moveThis);
   },
 
@@ -47,12 +47,18 @@ var GlossaryItem = React.createClass({
         cursor: 'pointer'
     };
     
+    // indent the definition
+    var indentDef = {
+      marginLeft: 15
+    }
+    
     // pointer over <a /> tag
     var seeAlsoStyle = {
       cursor: 'pointer',
       paddingRight: 5
     }
     
+    // check if array has more than one element
     var multiple = this.props.seealso.length >= 2;
     
     // indent definition left 25px
@@ -61,9 +67,11 @@ var GlossaryItem = React.createClass({
     };
     
     // map array of see also terms
+    // ternary adds className so if there are mutiple terms a comma is added
     var seeAlsoNodes = this.props.seealso.map(function(item, index) {
       return (
-        (multiple) ? <a className="commaList" style={seeAlsoStyle} onClick={this.clickMove.bind(null, item)} key={item + index}>{item}</a> : <a style={seeAlsoStyle} onClick={this.clickMove.bind(null, item)} key={item + index}>{item}</a>
+        (multiple) ? <a className="commaList" style={seeAlsoStyle} onClick={this.clickMove.bind(null, item)} key={item + index}>{item}</a> : 
+        <a style={seeAlsoStyle} onClick={this.clickMove.bind(null, item)} key={item + index}>{item}</a>
       );
     }, this
   );
@@ -71,7 +79,7 @@ var GlossaryItem = React.createClass({
     return (
       <div className="hideMe" id={this.props.id}>
         <h4 onClick={this.onClick} style={titleStyle}>{this.props.title}</h4>
-          <div>
+          <div style={indentDef}>
             <p style={defStyle}>{this.props.content}</p>
             <div><span style={defStyle}><strong>See Also</strong>:</span>
             {seeAlsoNodes}
