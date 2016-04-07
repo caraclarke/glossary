@@ -19217,13 +19217,13 @@ var BasePage = React.createClass({
       ),
       React.createElement(
         'div',
-        { className: 'container', style: style },
+        { className: 'container-fluid', style: style },
         React.createElement(
           'div',
           { className: 'row' },
           React.createElement(
             'div',
-            { className: 'col-sm-10 col-md-10' },
+            { className: 'col-xs-11 col-xs-offset-1' },
             React.createElement(Glossary, { onClick: this.scrollToTerm, data: this.state.data, constantArray: this.state.constantArray })
           )
         )
@@ -19346,6 +19346,11 @@ var GlossaryItem = React.createClass({
       cursor: 'pointer'
     };
 
+    // indent the definition
+    var indentDef = {
+      marginLeft: 15
+    };
+
     // pointer over <a /> tag
     var seeAlsoStyle = {
       cursor: 'pointer',
@@ -19384,7 +19389,7 @@ var GlossaryItem = React.createClass({
       ),
       React.createElement(
         'div',
-        null,
+        { style: indentDef },
         React.createElement(
           'p',
           { style: defStyle },

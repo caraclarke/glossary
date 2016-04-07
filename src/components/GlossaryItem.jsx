@@ -47,6 +47,11 @@ var GlossaryItem = React.createClass({
         cursor: 'pointer'
     };
     
+    // indent the definition
+    var indentDef = {
+      marginLeft: 15
+    }
+    
     // pointer over <a /> tag
     var seeAlsoStyle = {
       cursor: 'pointer',
@@ -74,7 +79,7 @@ var GlossaryItem = React.createClass({
     return (
       <div className="hideMe" id={this.props.id}>
         <h4 onClick={this.onClick} style={titleStyle}>{this.props.title}</h4>
-          <div>
+          <div style={indentDef}>
             <p style={defStyle}>{this.props.content}</p>
             <div><span style={defStyle}><strong>See Also</strong>:</span>
             {seeAlsoNodes}

@@ -168,9 +168,9 @@ var BasePage = React.createClass({
             <ul className="nav navbar-nav">{createLinkItem}</ul>
           </div>
         </nav>
-        <div className="container" style={style}>
+        <div className="container-fluid" style={style}>
           <div className="row">
-            <div className="col-sm-10 col-md-10">
+            <div className="col-xs-11 col-xs-offset-1">
               <Glossary onClick={this.scrollToTerm} data={this.state.data} constantArray={this.state.constantArray} />
             </div>
           </div>
