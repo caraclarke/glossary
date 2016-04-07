@@ -91,10 +91,14 @@ var BasePage = React.createClass({
       // push to alphArray if it matches
       if (item.title.$t.match(regex) == alphId) {
         alphArray.push(item);
-        // set this.state.data to the array that matches alphId
-        this.setState({ data: alphArray });
+      } else {
+        // if no letters start with alphId just render an empty page
+        this.state.data = [];
       }
     }.bind(this));
+    
+    // set this.state.data to the array that matches alphId
+    this.state.data = alphArray;
     $("html, body").animate({ scrollTop: 0 }, "slow");
   },
   
