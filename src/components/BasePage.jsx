@@ -56,7 +56,7 @@ var BasePage = React.createClass({
   
   componentDidUpdate: function(element) {
     
-    if (!moveThis) {
+    if (moveThis == undefined) {
       return;
     } else {
       
@@ -95,6 +95,7 @@ var BasePage = React.createClass({
         this.setState({ data: alphArray });
       }
     }.bind(this));
+    $("html, body").animate({ scrollTop: 0 }, "slow");
   },
   
   // click Glossary title to get rid of alphId and reset it to showing all terms
