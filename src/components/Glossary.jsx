@@ -12,7 +12,6 @@ var Glossary = React.createClass({
   
   // clickHandler to handle moveThis passed up from GlossaryItem
   handleMoveClick: function(element) {
-    
     this.props.onClick(moveThis);
   },
   
