@@ -62,6 +62,7 @@ var GlossaryItem = React.createClass({
     };
     
     // map array of see also terms
+    // ternary adds className so if there are mutiple terms a comma is added
     var seeAlsoNodes = this.props.seealso.map(function(item, index) {
       return (
         (multiple) ? <a className="commaList" style={seeAlsoStyle} onClick={this.clickMove.bind(null, item)} key={item + index}>{item}</a> : 

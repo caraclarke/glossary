@@ -19342,6 +19342,7 @@ var GlossaryItem = React.createClass({
     };
 
     // map array of see also terms
+    // ternary adds className so if there are mutiple terms a comma is added
     var seeAlsoNodes = this.props.seealso.map(function (item, index) {
       return multiple ? React.createElement(
         'a',
@@ -19403,7 +19404,7 @@ var NavItem = React.createClass({
     return { hover: false };
   },
 
-  // mouseOver and mouseOut changing state of over to change style
+  // mouseOver and mouseOut changing state of hover to change style
   mouseOver: function (e) {
     this.setState({ hover: true });
   },
