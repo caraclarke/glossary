@@ -19086,6 +19086,10 @@ var BasePage = React.createClass({
         console.error(this.props.url, status, err.toString());
       }.bind(this)
     });
+
+    $('html').click(function () {
+      $('.showDefTitle').addClass('hideMe');
+    });
   },
 
   componentDidUpdate: function (element) {
@@ -19105,8 +19109,7 @@ var BasePage = React.createClass({
       // detect whether element scrolling to has "hideMe" class
       // remove hideMe class to show or hide description
       var newElement = document.getElementById(moveThis);
-      var classCheck = newElement.getAttribute("class");
-      newElement.className = "";
+      $(newElement).toggleClass('hideMe');
     }
   },
 
@@ -19309,32 +19312,23 @@ var GlossaryItem = React.createClass({
     return { moveThis: '' };
   },
 
+  onBlur: function () {},
+
   // onClick to toggle visibility of definition
-  onClick: function () {
+  onClick: function (event) {
 
+    event.stopPropagation();
     // get id of parent class
-    var parentElement = document.getElementById(this.props.id);
-
-    // get name of classes on parent element
-    var checkClass = parentElement.getAttribute("class");
+    var parentElement = '#' + this.props.id;
 
     // toggle hideMe class
     // responsible for showing/hiding definition
     // hideMe is in main_style.css sheet in public folder
-    if (checkClass == "hideMe") {
-      parentElement.className = "";
-    } else {
-      parentElement.className = "hideMe";
-    }
+    $(parentElement).toggleClass('hideMe');
   },
 
   // click handler to help move to see also term when <a /> clicked
   clickMove: function (item, e) {
-
-    // get Id of parent element clicked,
-    // toggle the class so definition hides when scroll away
-    var clickedElement = document.getElementById(this.props.id);
-    $(clickedElement).toggleClass('hideMe');
 
     // get rid of spaces in <a /> id and turn to lower case
     // assign to moveThis and pass to parent <Glossary />
@@ -19384,7 +19378,7 @@ var GlossaryItem = React.createClass({
 
     return React.createElement(
       'div',
-      { className: 'hideMe', id: this.props.id },
+      { className: 'hideMe showDefTitle', id: this.props.id },
       React.createElement(
         'h4',
         { onClick: this.onClick, style: titleStyle },

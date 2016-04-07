@@ -7,32 +7,25 @@ var GlossaryItem = React.createClass({
     return { moveThis: '' }
   },
   
+  onBlur: function () {
+    
+  },
+  
   // onClick to toggle visibility of definition
-  onClick: function() {
+  onClick: function(event) {
     
+    event.stopPropagation();
     // get id of parent class
-    var parentElement = document.getElementById(this.props.id);
+    var parentElement = '#' + this.props.id;
     
-    // get name of classes on parent element
-    var checkClass = parentElement.getAttribute("class");
-
     // toggle hideMe class
     // responsible for showing/hiding definition
     // hideMe is in main_style.css sheet in public folder
-    if (checkClass == "hideMe") {
-      parentElement.className = "";
-    } else {
-      parentElement.className = "hideMe";
-    }
+    $(parentElement).toggleClass('hideMe');
   },
   
   // click handler to help move to see also term when <a /> clicked
   clickMove: function(item, e) {
-    
-    // get Id of parent element clicked,
-    // toggle the class so definition hides when scroll away
-    var clickedElement = document.getElementById(this.props.id);
-    $(clickedElement).toggleClass('hideMe');
     
     // get rid of spaces in <a /> id and turn to lower case
     // assign to moveThis and pass to parent <Glossary />
@@ -77,7 +70,7 @@ var GlossaryItem = React.createClass({
   );
     
     return (
-      <div className="hideMe" id={this.props.id}>
+      <div className="hideMe showDefTitle" id={this.props.id}>
         <h4 onClick={this.onClick} style={titleStyle}>{this.props.title}</h4>
           <div style={indentDef}>
             <p style={defStyle}>{this.props.content}</p>

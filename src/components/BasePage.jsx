@@ -51,6 +51,10 @@ var BasePage = React.createClass({
         console.error(this.props.url, status, err.toString());
       }.bind(this)
     });
+    
+    $('html').click(function() {
+        $('.showDefTitle').addClass('hideMe');
+    });
 
   },
   
@@ -71,8 +75,7 @@ var BasePage = React.createClass({
       // detect whether element scrolling to has "hideMe" class
       // remove hideMe class to show or hide description
       var newElement = document.getElementById(moveThis);
-      var classCheck = newElement.getAttribute("class");
-      newElement.className = "";
+      $(newElement).toggleClass('hideMe');
     }
   },
   
