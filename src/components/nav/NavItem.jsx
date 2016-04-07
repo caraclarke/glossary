@@ -1,5 +1,4 @@
 var React = require('react');
-var Alphabet = require('../Alphabet.jsx');
 
 var NavItem = React.createClass({
   getInitialState: function() {
