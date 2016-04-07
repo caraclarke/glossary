@@ -13,7 +13,7 @@ var BasePage = React.createClass({
         data: [],
         navLinks: [],
         alphId: '',
-        moveThis: null,
+        moveThis: '',
         constantArray: []
       }
   },
@@ -43,7 +43,8 @@ var BasePage = React.createClass({
         this.setState({ 
           navLinks: tempArray,
           data: data.feed.entry,
-          constantArray: data.feed.entry
+          constantArray: data.feed.entry,
+          moveThis: ''
         });
       }.bind(this),
       error: function(xhr, status, err) {
@@ -55,11 +56,14 @@ var BasePage = React.createClass({
   },
   
   componentDidUpdate: function(element) {
-
-    if (moveThis != null) {
-      console.log('yes moveThis: ', moveThis);
+    
+    if (!moveThis) {
+      return;
+    } else {
       
       var moveIt = $('#' + moveThis);
+      
+      // get current pageLocation and the change that needs to be made to move to term
       var pageLocation = ($(window).scrollTop() + $(window).height());
       var change = moveIt.offset().top - 200;
       
@@ -70,9 +74,6 @@ var BasePage = React.createClass({
       var newElement = document.getElementById(moveThis);
       var classCheck = newElement.getAttribute("class");
       newElement.className = "";
-      
-    } else {
-      console.log('no moveThis');
     }
   },
   
@@ -99,14 +100,14 @@ var BasePage = React.createClass({
   
   // click Glossary title to get rid of alphId and reset it to showing all terms
   resetAllTerms: function(event) {
-    alphId = null;
+    alphId = '';
     this.setState({ data: this.state.constantArray });
   },
   
   scrollToTerm: function(element) {
     
     // set data to full array, set moveThis to moveThis recieved from Glossary
-    alphId = null;
+    alphId = '';
     this.setState({
       data: this.state.constantArray,
       moveThis: moveThis
