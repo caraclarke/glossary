@@ -18,7 +18,7 @@ var BasePage = React.createClass({
       }
   },
   
-  componentDidMount: function() {
+  componentWillMount: function() {
     // split alphabet into array
     var alph = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('');
     var tempArray = [];
@@ -97,15 +97,14 @@ var BasePage = React.createClass({
   },
   
   scrollToTerm: function(element) {
-    this.componentDidUpdate(moveThis);
+    
     // set data to full array, set moveThis to moveThis recieved from Glossary
-    this.state.data = this.state.constantArray;
-    moveThis = moveThis;
     this.setState({
-      data: this.state.data,
+      alphId: null,
+      data: this.state.constantArray,
       moveThis: moveThis
     });
-    
+    console.log(alphId);
     // var moveIt = $('#' + moveThis);
     //   
     // var pageLocation = ($(window).scrollTop() + $(window).height());
