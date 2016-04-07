@@ -19033,12 +19033,12 @@ process.umask = function() { return 0; };
 },{}],159:[function(require,module,exports){
 var React = require('react');
 var NavItem = require('./nav/NavItem.jsx');
-var Glossary = require('./Glossary.jsx');
+var Index = require('./Index.jsx');
 var regex = new RegExp('^[a-zA-Z]');
 var filter;
 
-var BasePage = React.createClass({
-  displayName: 'BasePage',
+var Glossary = React.createClass({
+  displayName: 'Glossary',
 
 
   // data from google spreadsheet, navLinks for navbar,
@@ -19139,7 +19139,7 @@ var BasePage = React.createClass({
     $("html, body").animate({ scrollTop: 0 }, "slow");
   },
 
-  // click Glossary title to get rid of alphId and reset it to showing all terms
+  // click Index title to get rid of alphId and reset it to showing all terms
   resetAllTerms: function (event) {
     alphId = '';
     this.setState({ data: this.state.constantArray });
@@ -19147,7 +19147,7 @@ var BasePage = React.createClass({
 
   scrollToTerm: function (element) {
 
-    // set data to full array, set moveThis to moveThis recieved from Glossary
+    // set data to full array, set moveThis to moveThis recieved from Index
     alphId = '';
     this.setState({
       data: this.state.constantArray,
@@ -19231,7 +19231,7 @@ var BasePage = React.createClass({
           React.createElement(
             'div',
             { className: 'col-xs-11 col-xs-offset-1' },
-            React.createElement(Glossary, { onClick: this.scrollToTerm, data: this.state.data, constantArray: this.state.constantArray })
+            React.createElement(Index, { onClick: this.scrollToTerm, data: this.state.data, constantArray: this.state.constantArray })
           )
         )
       )
@@ -19240,67 +19240,9 @@ var BasePage = React.createClass({
 
 });
 
-module.exports = BasePage;
-
-},{"./Glossary.jsx":160,"./nav/NavItem.jsx":162,"react":157}],160:[function(require,module,exports){
-var React = require('react');
-var GlossaryItem = require('./GlossaryItem.jsx');
-
-var Glossary = React.createClass({
-  displayName: 'Glossary',
-
-
-  // initial state of variable to move is empty
-  getInitialState: function () {
-    return {
-      moveThis: ''
-    };
-  },
-
-  // clickHandler to handle moveThis passed up from GlossaryItem
-  handleMoveClick: function (element) {
-    this.props.onClick(moveThis);
-  },
-
-  render: function () {
-
-    // // map data passed from BasePage, return individual <GlossaryItem />
-    var glossaryNodes = this.props.data.map(function (data, index) {
-      // console.log(this.props.constantArray[1].title);
-
-      // get see also terms from google object
-      var seeAlsoReplace = data.gsx$seealso.$t;
-
-      // split the terms on comma and turn it into an array
-      var seeAlsoArray = seeAlsoReplace.replace(/(\s\(.+\))+/g, '').split(', ');
-
-      // get rid of any parenthesis for the id, get rid of spaces, turn lowercase
-      var newTextId = data.title.$t.replace(/(\s\(.+\))+/g, '').split(' ').join('').toLowerCase();
-
-      // test if the indicator for a see also term appears in the text
-      if (/(\[\[Glossary:\s)/g.test(data.content.$t) == true) {
-        // get rid of [[Glossary: etc text with regex, replace with see also term
-        var replacement = data.content.$t.replace(/(\[\[Glossary:\s)(.+\])(.+)\]/g, seeAlsoReplace).replace(/(\,\s)(seealso:\s)+(.+)*/g, '');
-        // returning glossary item with edited content
-        return React.createElement(GlossaryItem, { onValueChange: this.handleMoveClick, key: index, id: newTextId, title: data.title.$t, content: replacement, seealso: seeAlsoArray });
-      } else {
-        return React.createElement(GlossaryItem, { onValueChange: this.handleMoveClick, key: index, id: newTextId, title: data.title.$t, content: data.content.$t, seealso: seeAlsoArray });
-      }
-    }.bind(this));
-
-    return React.createElement(
-      'div',
-      null,
-      ' ',
-      glossaryNodes,
-      ' '
-    );
-  }
-});
-
 module.exports = Glossary;
 
-},{"./GlossaryItem.jsx":161,"react":157}],161:[function(require,module,exports){
+},{"./Index.jsx":161,"./nav/NavItem.jsx":162,"react":157}],160:[function(require,module,exports){
 var React = require('react');
 
 var GlossaryItem = React.createClass({
@@ -19414,7 +19356,65 @@ var GlossaryItem = React.createClass({
 
 module.exports = GlossaryItem;
 
-},{"react":157}],162:[function(require,module,exports){
+},{"react":157}],161:[function(require,module,exports){
+var React = require('react');
+var GlossaryItem = require('./GlossaryItem.jsx');
+
+var Index = React.createClass({
+  displayName: 'Index',
+
+
+  // initial state of variable to move is empty
+  getInitialState: function () {
+    return {
+      moveThis: ''
+    };
+  },
+
+  // clickHandler to handle moveThis passed up from GlossaryItem
+  handleMoveClick: function (element) {
+    this.props.onClick(moveThis);
+  },
+
+  render: function () {
+
+    // // map data passed from BasePage, return individual <GlossaryItem />
+    var glossaryNodes = this.props.data.map(function (data, index) {
+      // console.log(this.props.constantArray[1].title);
+
+      // get see also terms from google object
+      var seeAlsoReplace = data.gsx$seealso.$t;
+
+      // split the terms on comma and turn it into an array
+      var seeAlsoArray = seeAlsoReplace.replace(/(\s\(.+\))+/g, '').split(', ');
+
+      // get rid of any parenthesis for the id, get rid of spaces, turn lowercase
+      var newTextId = data.title.$t.replace(/(\s\(.+\))+/g, '').split(' ').join('').toLowerCase();
+
+      // test if the indicator for a see also term appears in the text
+      if (/(\[\[Glossary:\s)/g.test(data.content.$t) == true) {
+        // get rid of [[Glossary: etc text with regex, replace with see also term
+        var replacement = data.content.$t.replace(/(\[\[Glossary:\s)(.+\])(.+)\]/g, seeAlsoReplace).replace(/(\,\s)(seealso:\s)+(.+)*/g, '');
+        // returning glossary item with edited content
+        return React.createElement(GlossaryItem, { onValueChange: this.handleMoveClick, key: index, id: newTextId, title: data.title.$t, content: replacement, seealso: seeAlsoArray });
+      } else {
+        return React.createElement(GlossaryItem, { onValueChange: this.handleMoveClick, key: index, id: newTextId, title: data.title.$t, content: data.content.$t, seealso: seeAlsoArray });
+      }
+    }.bind(this));
+
+    return React.createElement(
+      'div',
+      null,
+      ' ',
+      glossaryNodes,
+      ' '
+    );
+  }
+});
+
+module.exports = Index;
+
+},{"./GlossaryItem.jsx":160,"react":157}],162:[function(require,module,exports){
 var React = require('react');
 
 var NavItem = React.createClass({
@@ -19458,8 +19458,8 @@ module.exports = NavItem;
 },{"react":157}],163:[function(require,module,exports){
 var React = require('react');
 var ReactDOM = require('react-dom');
-var BasePage = require('./components/BasePage.jsx');
+var Glossary = require('./components/Glossary.jsx');
 
-ReactDOM.render(React.createElement(BasePage, { bgColor: '#fff', titleColor: '#3097d1', linkColor: '' }), document.getElementById('gloss'));
+ReactDOM.render(React.createElement(Glossary, { bgColor: '#fff', titleColor: '#3097d1', linkColor: '' }), document.getElementById('gloss'));
 
-},{"./components/BasePage.jsx":159,"react":157,"react-dom":1}]},{},[163]);
+},{"./components/Glossary.jsx":159,"react":157,"react-dom":1}]},{},[163]);
