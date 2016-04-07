@@ -26,7 +26,6 @@ var BasePage = React.createClass({
     // loop through alphabet and push into temp array with keys and values
     alph.map(function(item, index) {
       tempArray.push({
-        href: item,
         title: item,
         id: item,
         key: item + index
