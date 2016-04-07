@@ -19048,29 +19048,12 @@ var BasePage = React.createClass({
       data: [],
       navLinks: [],
       alphId: '',
-      moveThis: '',
+      moveThis: null,
       constantArray: []
     };
   },
 
-  componentDidMount: function () {
-    $.ajax({
-      url: 'https://spreadsheets.google.com/feeds/list/1cupv1Po0tGnQ60YPCkKZ9ARqQJb-4diOfTZ07AnAz8s/default/public/values?alt=json',
-      dataType: 'json',
-      cache: false,
-      success: function (data) {
-        // set data to data array recieved from google spreadsheet
-        this.setState({
-          data: data.feed.entry,
-          constantArray: data.feed.entry
-        });
-      }.bind(this),
-      error: function (xhr, status, err) {
-        console.log('url: ', this.props.url);
-        console.error(this.props.url, status, err.toString());
-      }.bind(this)
-    });
-
+  componentWillMount: function () {
     // split alphabet into array
     var alph = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('');
     var tempArray = [];
@@ -19085,8 +19068,45 @@ var BasePage = React.createClass({
       });
     });
 
-    // set state of navLinks from temporary array
-    this.setState({ navLinks: tempArray });
+    $.ajax({
+      url: 'https://spreadsheets.google.com/feeds/list/1cupv1Po0tGnQ60YPCkKZ9ARqQJb-4diOfTZ07AnAz8s/default/public/values?alt=json',
+      dataType: 'json',
+      cache: false,
+      success: function (data) {
+        // set state of navLinks from temporary array
+        // set data to data array recieved from google spreadsheet
+        this.setState({
+          navLinks: tempArray,
+          data: data.feed.entry,
+          constantArray: data.feed.entry
+        });
+      }.bind(this),
+      error: function (xhr, status, err) {
+        console.log('url: ', this.props.url);
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
+  },
+
+  componentDidUpdate: function (element) {
+
+    if (moveThis != null) {
+      console.log('yes moveThis: ', moveThis);
+
+      var moveIt = $('#' + moveThis);
+      var pageLocation = $(window).scrollTop() + $(window).height();
+      var change = moveIt.offset().top - 200;
+
+      $('html, body').animate({ scrollTop: change }, 'slow');
+
+      // detect whether element scrolling to has "hideMe" class
+      // remove hideMe class to show or hide description
+      var newElement = document.getElementById(moveThis);
+      var classCheck = newElement.getAttribute("class");
+      newElement.className = "";
+    } else {
+      console.log('no moveThis');
+    }
   },
 
   // set state in basePage of alphId
@@ -19095,7 +19115,6 @@ var BasePage = React.createClass({
     this.setState({ alphId: alphId });
 
     var alphArray = [];
-    var oldArray = [];
     // reset data to whole data array from google everytime
     this.state.data = this.state.constantArray;
 
@@ -19113,7 +19132,18 @@ var BasePage = React.createClass({
 
   // click Glossary title to get rid of alphId and reset it to showing all terms
   resetAllTerms: function (event) {
+    alphId = null;
     this.setState({ data: this.state.constantArray });
+  },
+
+  scrollToTerm: function (element) {
+
+    // set data to full array, set moveThis to moveThis recieved from Glossary
+    alphId = null;
+    this.setState({
+      data: this.state.constantArray,
+      moveThis: moveThis
+    });
   },
 
   render: function () {
@@ -19192,7 +19222,7 @@ var BasePage = React.createClass({
           React.createElement(
             'div',
             { className: 'col-sm-10 col-md-10' },
-            React.createElement(Glossary, { data: this.state.data, constantArray: this.state.constantArray })
+            React.createElement(Glossary, { onClick: this.scrollToTerm, data: this.state.data, constantArray: this.state.constantArray })
           )
         )
       )
@@ -19221,28 +19251,15 @@ var Glossary = React.createClass({
   // clickHandler to handle moveThis passed up from GlossaryItem
   handleMoveClick: function (element) {
 
-    // get current page location
-    var pageLocation = $(window).scrollTop() + $(window).height();
-
-    // set moveThis to moveThis recieved from GlossaryItem
-    this.setState({ moveThis: moveThis });
-    var moveIt = $('#' + moveThis);
-
-    // scrollTop to scroll to new term
-    var change = moveIt.offset().top - 200;
-    $('html, body').animate({ scrollTop: change }, 'slow');
-
-    //  detect whether element scrolling to has "hideMe" class
-    // remove hideMe class to show or hide description
-    var newElement = document.getElementById(moveThis);
-    var classCheck = newElement.getAttribute("class");
-    newElement.className = "";
+    this.props.onClick(moveThis);
   },
 
   render: function () {
 
-    // map data passed from BasePage, return individual <GlossaryItem />
+    // // map data passed from BasePage, return individual <GlossaryItem />
     var glossaryNodes = this.props.data.map(function (data, index) {
+      // console.log(this.props.constantArray[1].title);
+
       // get see also terms from google object
       var seeAlsoReplace = data.gsx$seealso.$t;
 
@@ -19314,7 +19331,7 @@ var GlossaryItem = React.createClass({
     var clickedElement = document.getElementById(this.props.id);
     $(clickedElement).toggleClass('hideMe');
 
-    // get rid of spaces in <a /> id
+    // get rid of spaces in <a /> id and turn to lower case
     // assign to moveThis and pass to parent <Glossary />
     moveThis = item.split(' ').join('').toLowerCase();
     this.props.onValueChange(moveThis);
@@ -19342,6 +19359,7 @@ var GlossaryItem = React.createClass({
     };
 
     // map array of see also terms
+    // ternary adds className so if there are mutiple terms a comma is added
     var seeAlsoNodes = this.props.seealso.map(function (item, index) {
       return multiple ? React.createElement(
         'a',
@@ -19403,7 +19421,7 @@ var NavItem = React.createClass({
     return { hover: false };
   },
 
-  // mouseOver and mouseOut changing state of over to change style
+  // mouseOver and mouseOut changing state of hover to change style
   mouseOver: function (e) {
     this.setState({ hover: true });
   },

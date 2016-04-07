@@ -34,7 +34,7 @@ var GlossaryItem = React.createClass({
     var clickedElement = document.getElementById(this.props.id);
     $(clickedElement).toggleClass('hideMe');
     
-    // get rid of spaces in <a /> id
+    // get rid of spaces in <a /> id and turn to lower case
     // assign to moveThis and pass to parent <Glossary />
     moveThis = item.split(' ').join('').toLowerCase();
     this.props.onValueChange(moveThis);
@@ -62,6 +62,7 @@ var GlossaryItem = React.createClass({
     };
     
     // map array of see also terms
+    // ternary adds className so if there are mutiple terms a comma is added
     var seeAlsoNodes = this.props.seealso.map(function(item, index) {
       return (
         (multiple) ? <a className="commaList" style={seeAlsoStyle} onClick={this.clickMove.bind(null, item)} key={item + index}>{item}</a> : 

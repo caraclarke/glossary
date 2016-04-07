@@ -13,29 +13,12 @@ var BasePage = React.createClass({
         data: [],
         navLinks: [],
         alphId: '',
-        moveThis: '',
+        moveThis: null,
         constantArray: []
       }
   },
   
-  componentDidMount: function() {
-    $.ajax({
-      url: 'https://spreadsheets.google.com/feeds/list/1cupv1Po0tGnQ60YPCkKZ9ARqQJb-4diOfTZ07AnAz8s/default/public/values?alt=json',
-      dataType: 'json',
-      cache: false,
-      success: function(data) {
-        // set data to data array recieved from google spreadsheet
-        this.setState({ 
-          data: data.feed.entry,
-          constantArray: data.feed.entry
-        });
-      }.bind(this),
-      error: function(xhr, status, err) {
-        console.log('url: ', this.props.url);
-        console.error(this.props.url, status, err.toString());
-      }.bind(this)
-    });
-    
+  componentWillMount: function() {
     // split alphabet into array
     var alph = 'abcdefghijklmnopqrstuvwxyz'.toUpperCase().split('');
     var tempArray = [];
@@ -50,9 +33,47 @@ var BasePage = React.createClass({
       })
     });
     
-    // set state of navLinks from temporary array
-    this.setState({ navLinks: tempArray });
+    $.ajax({
+      url: 'https://spreadsheets.google.com/feeds/list/1cupv1Po0tGnQ60YPCkKZ9ARqQJb-4diOfTZ07AnAz8s/default/public/values?alt=json',
+      dataType: 'json',
+      cache: false,
+      success: function(data) {
+        // set state of navLinks from temporary array
+        // set data to data array recieved from google spreadsheet
+        this.setState({ 
+          navLinks: tempArray,
+          data: data.feed.entry,
+          constantArray: data.feed.entry
+        });
+      }.bind(this),
+      error: function(xhr, status, err) {
+        console.log('url: ', this.props.url);
+        console.error(this.props.url, status, err.toString());
+      }.bind(this)
+    });
 
+  },
+  
+  componentDidUpdate: function(element) {
+
+    if (moveThis != null) {
+      console.log('yes moveThis: ', moveThis);
+      
+      var moveIt = $('#' + moveThis);
+      var pageLocation = ($(window).scrollTop() + $(window).height());
+      var change = moveIt.offset().top - 200;
+      
+      $('html, body').animate({scrollTop: change }, 'slow');
+      
+      // detect whether element scrolling to has "hideMe" class
+      // remove hideMe class to show or hide description
+      var newElement = document.getElementById(moveThis);
+      var classCheck = newElement.getAttribute("class");
+      newElement.className = "";
+      
+    } else {
+      console.log('no moveThis');
+    }
   },
   
   // set state in basePage of alphId
@@ -61,7 +82,6 @@ var BasePage = React.createClass({
     this.setState({ alphId: alphId });
 
     var alphArray = [];
-    var oldArray = [];
     // reset data to whole data array from google everytime
     this.state.data = this.state.constantArray;
     
@@ -79,7 +99,19 @@ var BasePage = React.createClass({
   
   // click Glossary title to get rid of alphId and reset it to showing all terms
   resetAllTerms: function(event) {
+    alphId = null;
     this.setState({ data: this.state.constantArray });
+  },
+  
+  scrollToTerm: function(element) {
+    
+    // set data to full array, set moveThis to moveThis recieved from Glossary
+    alphId = null;
+    this.setState({
+      data: this.state.constantArray,
+      moveThis: moveThis
+    });
+    
   },
 
   render: function() {
@@ -138,7 +170,7 @@ var BasePage = React.createClass({
         <div className="container" style={style}>
           <div className="row">
             <div className="col-sm-10 col-md-10">
-              <Glossary data={this.state.data} constantArray={this.state.constantArray} />
+              <Glossary onClick={this.scrollToTerm} data={this.state.data} constantArray={this.state.constantArray} />
             </div>
           </div>
         </div>

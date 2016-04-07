@@ -6,7 +6,7 @@ var NavItem = React.createClass({
     return { hover: false };
   },
   
-  // mouseOver and mouseOut changing state of over to change style
+  // mouseOver and mouseOut changing state of hover to change style
   mouseOver: function(e) {
     this.setState({hover: true});
   },
