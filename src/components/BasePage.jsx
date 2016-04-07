@@ -59,11 +59,17 @@ var BasePage = React.createClass({
     if (moveThis != null) {
       console.log('yes moveThis: ', moveThis);
       
-      // var moveIt = $('#' + moveThis);
-      // 
-      // var pageLocation = ($(window).scrollTop() + $(window).height());
-      // var change = moveIt.offset().top - 200;
-      // console.log(change);
+      var moveIt = $('#' + moveThis);
+      var pageLocation = ($(window).scrollTop() + $(window).height());
+      var change = moveIt.offset().top - 200;
+      
+      $('html, body').animate({scrollTop: change }, 'slow');
+      
+      // detect whether element scrolling to has "hideMe" class
+      // remove hideMe class to show or hide description
+      var newElement = document.getElementById(moveThis);
+      var classCheck = newElement.getAttribute("class");
+      newElement.className = "";
       
     } else {
       console.log('no moveThis');
@@ -93,29 +99,18 @@ var BasePage = React.createClass({
   
   // click Glossary title to get rid of alphId and reset it to showing all terms
   resetAllTerms: function(event) {
+    alphId = null;
     this.setState({ data: this.state.constantArray });
   },
   
   scrollToTerm: function(element) {
     
     // set data to full array, set moveThis to moveThis recieved from Glossary
+    alphId = null;
     this.setState({
-      alphId: null,
       data: this.state.constantArray,
       moveThis: moveThis
     });
-    console.log(alphId);
-    // var moveIt = $('#' + moveThis);
-    //   
-    // var pageLocation = ($(window).scrollTop() + $(window).height());
-    // var change = moveIt.offset().top - 200;
-    // $('html, body').animate({scrollTop: change }, 'slow');
-
-    // detect whether element scrolling to has "hideMe" class
-    // remove hideMe class to show or hide description
-    // var newElement = document.getElementById(moveThis);
-    // var classCheck = newElement.getAttribute("class");
-    // newElement.className = "";
     
   },
 
