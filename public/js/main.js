@@ -19285,7 +19285,8 @@ var GlossaryItem = React.createClass({
 
     // get rid of spaces in <a /> name, turn to lower case and get rid of non-word characters
     // assign to moveThis and pass to parent <Glossary />
-    moveThis = item.split(' ').join('').replace(/\W+/g, '').toLowerCase();
+    moveThis = item.replace(/(\s\()/g, '').replace(/(\))/g, '').replace(/\W+/g, '').split(' ').join('').toLowerCase();
+
     this.props.onValueChange(moveThis);
   },
 
@@ -19400,8 +19401,7 @@ var Index = React.createClass({
       var seeAlsoReplace = data.gsx$seealso.$t;
 
       // split the terms on comma and turn it into an array
-      var seeAlsoArray = seeAlsoReplace.replace(/(\s\(.+\))+/g, '').split(', ');
-
+      var seeAlsoArray = seeAlsoReplace.split(', ');
       // get rid of any parenthesis for the id, get rid of spaces, turn lowercase
       var newTextId = data.title.$t.replace(/(\s\()/g, '').replace(/(\))/g, '').replace(/\W+/g, '').split(' ').join('').toLowerCase();
 

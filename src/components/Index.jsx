@@ -28,8 +28,7 @@ var Index = React.createClass({
       var seeAlsoReplace = data.gsx$seealso.$t;
       
       // split the terms on comma and turn it into an array
-      var seeAlsoArray = seeAlsoReplace.replace(/(\s\(.+\))+/g, '').split(', ');
-      
+      var seeAlsoArray = seeAlsoReplace.split(', ');
       // get rid of any parenthesis for the id, get rid of spaces, turn lowercase
       var newTextId = data.title.$t.replace(/(\s\()/g, '').replace(/(\))/g, '').replace(/\W+/g, '').split(' ').join('').toLowerCase();
       
