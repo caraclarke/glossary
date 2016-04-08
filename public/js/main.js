@@ -19094,7 +19094,7 @@ var Glossary = React.createClass({
 
   componentDidUpdate: function (element) {
 
-    if (moveThis == undefined) {
+    if (!moveThis) {
       return;
     } else {
 
