@@ -19142,7 +19142,7 @@ var Glossary = React.createClass({
   // click Index title to get rid of alphId and reset it to showing all terms
   resetAllTerms: function (event) {
     alphId = '';
-    this.setState({ data: this.state.constantArray });
+    this.state.data = this.state.constantArray;
   },
 
   scrollToTerm: function (element) {
