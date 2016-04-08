@@ -27,7 +27,8 @@ var Index = React.createClass({
       var seeAlsoArray = seeAlsoReplace.replace(/(\s\(.+\))+/g, '').split(', ');
       
       // get rid of any parenthesis for the id, get rid of spaces, turn lowercase
-      var newTextId = data.title.$t.replace(/(\s\(.+\))+/g, '').replace(/\W+/g, '').split(' ').join('').toLowerCase();
+      var newTextId = data.title.$t.replace(/(\s\()/g, '').replace(/(\))/g, '').replace(/\W+/g, '').split(' ').join('').toLowerCase();
+      console.log(newTextId);
       
       // test if the indicator for a see also term appears in the text
       if ((/(\[\[Glossary:\s)/g).test(data.content.$t) == true) {
