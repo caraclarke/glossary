@@ -109,6 +109,7 @@ var Glossary = React.createClass({
   resetAllTerms: function(event) {
     alphId = '';
     this.state.data = this.state.constantArray;
+    $("html, body").animate({ scrollTop: 0 }, "slow");
   },
   
   scrollToTerm: function(element) {

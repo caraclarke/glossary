@@ -19,7 +19,6 @@ var Index = React.createClass({
     
     // // map data passed from BasePage, return individual <GlossaryItem />
     var glossaryNodes = this.props.data.map(function(data, index) {
-      // console.log(this.props.constantArray[1].title);
       
       // get see also terms from google object
       var seeAlsoReplace = data.gsx$seealso.$t;
@@ -29,6 +28,7 @@ var Index = React.createClass({
       
       // get rid of any parenthesis for the id, get rid of spaces, turn lowercase
       var newTextId = data.title.$t.replace(/(\s\(.+\))+/g, '').replace(/\W+/g, '').split(' ').join('').toLowerCase();
+      // console.log(newTextId)
       
       // test if the indicator for a see also term appears in the text
       if ((/(\[\[Glossary:\s)/g).test(data.content.$t) == true) {
