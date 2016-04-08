@@ -19254,8 +19254,6 @@ var GlossaryItem = React.createClass({
     return { moveThis: '' };
   },
 
-  onBlur: function () {},
-
   // onClick to toggle visibility of definition
   onClick: function (event) {
 
