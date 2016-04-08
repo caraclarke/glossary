@@ -95,13 +95,18 @@ var Glossary = React.createClass({
       if (item.title.$t.match(regex) == alphId) {
         alphArray.push(item);
       } else {
-        // if no letters start with alphId just render an empty page
-        this.state.data = [];
+        return false;
       }
+      
     }.bind(this));
+    
+    // if no letters start with alphId render string
+    alphArray.length == 0 ? $('#noFilterMatch').removeClass('hiddenMessage') : $('#noFilterMatch').addClass('hiddenMessage');
     
     // set this.state.data to the array that matches alphId
     this.state.data = alphArray;
+    
+    // scroll to top of the page when switch to filtered page
     $("html, body").animate({ scrollTop: 0 }, "slow");
   },
   
@@ -179,6 +184,10 @@ var Glossary = React.createClass({
           <div className="row">
             <div className="col-xs-11 col-xs-offset-1">
               <Index onClick={this.scrollToTerm} data={this.state.data} constantArray={this.state.constantArray} />
+              
+              <div id="noFilterMatch" className="hiddenMessage">
+                <h2>No terms match this filter</h2>
+              </div>
             </div>
           </div>
         </div>

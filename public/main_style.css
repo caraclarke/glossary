@@ -9,3 +9,7 @@
 .commaList:last-child:after {
   content: '';
 }
+
+div.hiddenMessage {
+  display: none;
+}

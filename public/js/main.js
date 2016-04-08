@@ -19129,13 +19129,17 @@ var Glossary = React.createClass({
       if (item.title.$t.match(regex) == alphId) {
         alphArray.push(item);
       } else {
-        // if no letters start with alphId just render an empty page
-        this.state.data = [];
+        return false;
       }
     }.bind(this));
 
+    // if no letters start with alphId render string
+    alphArray.length == 0 ? $('#noFilterMatch').removeClass('hiddenMessage') : $('#noFilterMatch').addClass('hiddenMessage');
+
     // set this.state.data to the array that matches alphId
     this.state.data = alphArray;
+
+    // scroll to top of the page when switch to filtered page
     $("html, body").animate({ scrollTop: 0 }, "slow");
   },
 
@@ -19231,7 +19235,16 @@ var Glossary = React.createClass({
           React.createElement(
             'div',
             { className: 'col-xs-11 col-xs-offset-1' },
-            React.createElement(Index, { onClick: this.scrollToTerm, data: this.state.data, constantArray: this.state.constantArray })
+            React.createElement(Index, { onClick: this.scrollToTerm, data: this.state.data, constantArray: this.state.constantArray }),
+            React.createElement(
+              'div',
+              { id: 'noFilterMatch', className: 'hiddenMessage' },
+              React.createElement(
+                'h2',
+                null,
+                'No terms match this filter'
+              )
+            )
           )
         )
       )
@@ -19391,7 +19404,6 @@ var Index = React.createClass({
 
       // get rid of any parenthesis for the id, get rid of spaces, turn lowercase
       var newTextId = data.title.$t.replace(/(\s\()/g, '').replace(/(\))/g, '').replace(/\W+/g, '').split(' ').join('').toLowerCase();
-      console.log(newTextId);
 
       // test if the indicator for a see also term appears in the text
       if (/(\[\[Glossary:\s)/g.test(data.content.$t) == true) {
