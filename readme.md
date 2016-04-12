@@ -28,6 +28,13 @@ $.ajax({
 });
 ```
 
+To view google spreadsheet with terms
+--------
+
+If you want to edit please contact me (Cara Clarke) for editing permissions
+
+https://docs.google.com/spreadsheets/d/1cupv1Po0tGnQ60YPCkKZ9ARqQJb-4diOfTZ07AnAz8s/edit?usp=sharing
+
 Features
 --------
 
@@ -47,7 +54,7 @@ $ npm install
 
 ```  
 
-To view page
+To view page locally
 ------------
 
 ```
