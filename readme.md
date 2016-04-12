@@ -7,7 +7,7 @@ The glossary can also be filtered alphabetically using the navbar located at the
 
 The project currently gets the terms as a JSON object from the Google Spreadsheets API using AJAX.
 
-``
+```
 $.ajax({
 url: 'https://spreadsheets.google.com/feeds/list/1cupv1Po0tGnQ60YPCkKZ9ARqQJb-4diOfTZ07AnAz8s/default/public/values?alt=json',
 dataType: 'json',
@@ -27,7 +27,7 @@ console.log('url: ', this.props.url);
 console.error(this.props.url, status, err.toString());
 }.bind(this)
 });
-``
+```
 
 Features
 --------
@@ -41,23 +41,23 @@ Installation
 
 Install the project by:
 
-``
+```
 $ git clone git@bitbucket.org:caraclarke/codiscope-glossary.git
 $ cd codiscope-glossary/
 $ npm install
 
-``  
+```  
 
 To view page
 ------------
 
-``
+```
 $ npm start
 // change to new window
 $ cd public/
 $ ruby -run -e httpd . -p5000
 
-``
+```
 
 Where changes could/should be made
 ----------
