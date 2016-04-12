@@ -31,6 +31,11 @@ $.ajax({
 
 ####To view google spreadsheet with terms
 
+The spreadhseet is set up with 3 columns: 
+  1. Term
+  2. Definition
+  3. See Also - the word(s) in the See Also column must be the **term name** of the word being referred to or the link will not work. 
+
 If you want to edit please contact me (Cara Clarke) for editing permissions
 
 https://docs.google.com/spreadsheets/d/1cupv1Po0tGnQ60YPCkKZ9ARqQJb-4diOfTZ07AnAz8s/edit?usp=sharing
