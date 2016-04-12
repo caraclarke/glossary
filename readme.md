@@ -16,10 +16,10 @@ $.ajax({
     // set state of navLinks from temporary array
     // set data to data array recieved from google spreadsheet
     this.setState({ 
-    navLinks: tempArray,
-    data: data.feed.entry,
-    constantArray: data.feed.entry,
-    moveThis: ''
+      navLinks: tempArray,
+      data: data.feed.entry,
+      constantArray: data.feed.entry,
+      moveThis: ''
     });
   }.bind(this),
   error: function(xhr, status, err) {
