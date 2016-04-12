@@ -29,22 +29,19 @@ $.ajax({
 });
 ```
 
-##### To view google spreadsheet with terms
----
+####To view google spreadsheet with terms
 
 If you want to edit please contact me (Cara Clarke) for editing permissions
 
 https://docs.google.com/spreadsheets/d/1cupv1Po0tGnQ60YPCkKZ9ARqQJb-4diOfTZ07AnAz8s/edit?usp=sharing
 
-##### Features
----
+####Features
 
 - Display all terms
 - Link between terms
 - Filter by letter
 
-##### Installation
----
+####Installation
 
 Install the project by:
 
@@ -55,8 +52,7 @@ $ npm install
 
 ```  
 
-##### To view page locally
----
+####To view page locally
 
 ```
 $ npm start
@@ -66,8 +62,7 @@ $ ruby -run -e httpd . -p5000
 
 ```
 
-##### Where changes could/should be made
----
+####Where changes could/should be made
 
 - The AJAX call that gets the information is in componentWillMount function in Glossary.jsx
 - The glossaryNodes map function that is in the return function of Index.jsx will need to be updated for any changes in the JSON object
