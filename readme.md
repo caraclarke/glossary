@@ -1,4 +1,5 @@
 #Codiscope glossary
+---
 
 The Codiscope Glossary is an alphabetical list of terms that appear in our courses. These terms display as just the title and when clicked, reveal the definition. They also display a link to any related term that, when clicked, brings the user to that new term and reveals the definition.
 
@@ -30,6 +31,7 @@ $.ajax({
 
 To view google spreadsheet with terms
 --------
+---
 
 If you want to edit please contact me (Cara Clarke) for editing permissions
 
@@ -37,6 +39,7 @@ https://docs.google.com/spreadsheets/d/1cupv1Po0tGnQ60YPCkKZ9ARqQJb-4diOfTZ07AnA
 
 Features
 --------
+---
 
 - Display all terms
 - Link between terms
@@ -44,6 +47,7 @@ Features
 
 Installation
 ------------
+---
 
 Install the project by:
 
@@ -56,6 +60,7 @@ $ npm install
 
 To view page locally
 ------------
+---
 
 ```
 $ npm start
@@ -67,6 +72,7 @@ $ ruby -run -e httpd . -p5000
 
 Where changes could/should be made
 ----------
+---
 
 - The AJAX call that gets the information is in componentWillMount function in Glossary.jsx
 - The glossaryNodes map function that is in the return function of Index.jsx will need to be updated for any changes in the JSON object
