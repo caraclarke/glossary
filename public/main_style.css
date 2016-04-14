@@ -1,5 +1,6 @@
 .hideMe > div {
   display: none;
+  color: #000;
 }
 
 .commaList:after {
@@ -12,4 +13,12 @@
 
 div.hiddenMessage {
   display: none;
+}
+
+div:not(.hideMe) > h4 {
+  color: #23BAD8;
+}
+
+.definitionStyle {
+  border-top: 5px solid #999;
 }

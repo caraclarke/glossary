@@ -180,9 +180,9 @@ var Glossary = React.createClass({
             <ul className="nav navbar-nav">{createLinkItem}</ul>
           </div>
         </nav>
-        <div className="container-fluid" style={style}>
+        <div className="container" style={style}>
           <div className="row">
-            <div className="col-xs-11 col-xs-offset-1">
+            <div className="col-xs-10">
               <Index onClick={this.scrollToTerm} data={this.state.data} constantArray={this.state.constantArray} />
               
               <div id="noFilterMatch" className="hiddenMessage">

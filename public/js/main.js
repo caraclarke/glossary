@@ -19228,13 +19228,13 @@ var Glossary = React.createClass({
       ),
       React.createElement(
         'div',
-        { className: 'container-fluid', style: style },
+        { className: 'container', style: style },
         React.createElement(
           'div',
           { className: 'row' },
           React.createElement(
             'div',
-            { className: 'col-xs-11 col-xs-offset-1' },
+            { className: 'col-xs-10' },
             React.createElement(Index, { onClick: this.scrollToTerm, data: this.state.data, constantArray: this.state.constantArray }),
             React.createElement(
               'div',
@@ -19264,7 +19264,19 @@ var GlossaryItem = React.createClass({
 
   // initial state of variable to move is empty
   getInitialState: function () {
-    return { moveThis: '' };
+    return {
+      moveThis: '',
+      hover: false
+    };
+  },
+
+  // mouseOver and mouseOut changing state of hover to change style
+  mouseOver: function (e) {
+    this.setState({ hover: true });
+  },
+
+  mouseOut: function (e) {
+    this.setState({ hover: false });
   },
 
   // onClick to toggle visibility of definition
@@ -19294,12 +19306,21 @@ var GlossaryItem = React.createClass({
 
     // style for glossary items
     var titleStyle = {
+      marginTop: 25,
       cursor: 'pointer'
+    };
+
+    var hoverTitle = {
+      marginTop: 25,
+      cursor: 'pointer',
+      color: '#23BAD8'
     };
 
     // indent the definition
     var indentDef = {
-      marginLeft: 15
+      backgroundColor: '#eee',
+      padding: 15,
+      marginBottom: 25
     };
 
     // pointer over <a /> tag
@@ -19311,9 +19332,13 @@ var GlossaryItem = React.createClass({
     // check if array has more than one element
     var multiple = this.props.seealso.length >= 2;
 
-    // indent definition left 25px
+    // indent definition left 5px
     var defStyle = {
       paddingRight: 5
+    };
+
+    var activeStyle = {
+      color: '#23BAD8'
     };
 
     // map array of see also terms
@@ -19335,12 +19360,12 @@ var GlossaryItem = React.createClass({
       { className: 'hideMe showDefTitle', id: this.props.id },
       React.createElement(
         'h4',
-        { onClick: this.onClick, style: titleStyle },
+        { onClick: this.onClick, onMouseOver: this.mouseOver, onMouseOut: this.mouseOut, style: this.state.hover ? hoverTitle : titleStyle },
         this.props.title
       ),
       React.createElement(
         'div',
-        { style: indentDef },
+        { className: 'definitionStyle', style: indentDef },
         React.createElement(
           'p',
           { style: defStyle },
