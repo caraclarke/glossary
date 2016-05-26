@@ -53,7 +53,7 @@ Install the project by:
 
 ```
 $ git clone git@github.com:caraclarke/glossary.git
-$ cd codiscope-glossary/
+$ cd glossary/
 $ npm install
 
 ```  
