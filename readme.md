@@ -52,7 +52,7 @@ https://docs.google.com/spreadsheets/d/1cupv1Po0tGnQ60YPCkKZ9ARqQJb-4diOfTZ07AnA
 Install the project by:
 
 ```
-$ git clone git@bitbucket.org:caraclarke/codiscope-glossary.git
+$ git clone git@github.com:caraclarke/glossary.git
 $ cd codiscope-glossary/
 $ npm install
 
