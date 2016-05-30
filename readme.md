@@ -1,7 +1,7 @@
-#Codiscope glossary
+# Glossary
 ---
 
-The Codiscope Glossary is an alphabetical list of terms that appear in our courses. These terms display as just the title and when clicked, reveal the definition. They also display a link to any related term that, when clicked, brings the user to that new term and reveals the definition.
+The Glossary is an alphabetical list of Computer Science terms. These terms display as just the title and when clicked, reveal the definition. They also display a link to any related term that, when clicked, brings the user to that new term and reveals the definition.
 
 The glossary can also be filtered alphabetically using the navbar located at the top of the screen. If a term has a related or "see also" term that does not appear in the same filter, the glossary will re-render all of the terms and then go to the appropriate term.
 
