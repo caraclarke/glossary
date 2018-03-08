@@ -7,7 +7,7 @@ The glossary can also be filtered alphabetically using the navbar located at the
 
 The project currently gets the terms as a JSON object from the Google Spreadsheets API using AJAX.
 
-####To view google spreadsheet with terms
+## To view google spreadsheet with terms
 
 The spreadhseet is set up with 3 columns:
 
@@ -19,13 +19,13 @@ If you want to edit please contact me (Cara Clarke) for editing permissions at c
 
 https://docs.google.com/spreadsheets/d/1cupv1Po0tGnQ60YPCkKZ9ARqQJb-4diOfTZ07AnAz8s/edit?usp=sharing
 
-####Features
+## Features
 
 - Display all terms
 - Link between terms
 - Filter by letter
 
-####Installation
+## Installation
 
 Install the project by:
 
@@ -34,9 +34,9 @@ $ git clone git@github.com:caraclarke/glossary.git
 $ cd glossary/
 $ npm install
 
-```  
+```
 
-####To view page locally
+## To view page locally
 
 ```
 $ npm start
@@ -46,7 +46,7 @@ $ ruby -run -e httpd . -p5000
 
 ```
 
-####Where changes could/should be made
+## Where changes could/should be made
 
 - The AJAX call that gets the information is in componentWillMount function in Glossary.jsx
 - The glossaryNodes map function that is in the return function of Index.jsx will need to be updated for any changes in the JSON object
