@@ -45,9 +45,3 @@ $ cd public/
 $ ruby -run -e httpd . -p5000
 
 ```
-
-## Where changes could/should be made
-
-- The AJAX call that gets the information is in componentWillMount function in Glossary.jsx
-- The glossaryNodes map function that is in the return function of Index.jsx will need to be updated for any changes in the JSON object
-- The background color and "title" color of the navbar are set in main.jsx
